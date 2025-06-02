@@ -9,9 +9,11 @@ import (
 
 func Day03() {
 	moves := data03(true)
+
 	// Part 1
 	visited := walk(moves)
 	fmt.Println(len(visited))
+
 	// Part 2
 	limit := len(moves)
 	santa := make([]Delta, 0)

@@ -12,9 +12,12 @@ func Day05() {
 	words := data05(true)
 	count1, count2 := 0, 0
 	for _, word := range words {
+		// Part 1
 		if isNice(word) {
 			count1 += 1
 		}
+
+		// Part 2
 		if isNice2(word) {
 			count2 += 1
 		}

@@ -8,9 +8,11 @@ import (
 
 func Day01() {
 	line := data01(true)
+
 	// Part 1
 	level := elevatorFloor(line, nil)
 	fmt.Println(level)
+
 	// Part 2
 	goal := -1
 	level = elevatorFloor(line, &goal)

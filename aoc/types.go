@@ -5,3 +5,7 @@ type (
 	Delta  = [2]int
 	Coords = [2]int
 )
+
+type (
+	IntGrid = [][]int
+)

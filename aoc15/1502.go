@@ -12,10 +12,12 @@ func Day02() {
 	items := data02(true)
 	total1, total2 := 0, 0
 	for _, dims := range items {
+		// Part 1
 		l, w, h := dims[0], dims[1], dims[2]
 		lw, wh, lh := l*w, w*h, l*h
 		total1 += (2 * lw) + (2 * wh) + (2 * lh) + min(lw, wh, lh)
 
+		// Part 2
 		d := dims[:]
 		slices.Sort(d)
 		total2 += (2 * (d[0] + d[1])) + (l * w * h)

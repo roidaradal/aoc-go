@@ -9,9 +9,11 @@ import (
 
 func Day04() {
 	key := data04(true)
+
 	// Part 1
 	idx := findHash(key, 5)
 	fmt.Println(idx)
+
 	// Part 2
 	idx = findHash(key, 6)
 	fmt.Println(idx)
