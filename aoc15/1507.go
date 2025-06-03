@@ -1,0 +1,176 @@
+package aoc15
+
+import (
+	"fmt"
+	"maps"
+	"strconv"
+	"strings"
+
+	. "github.com/roidaradal/aoc-go/aoc"
+	"github.com/roidaradal/fn"
+)
+
+func Day07() {
+	operations := data07(true)
+
+	// Part 1
+	a := solveA(operations, nil)
+	fmt.Println(a)
+
+	// Part 2
+	override := map[string]int{"b": a}
+	a = solveA(operations, override)
+	fmt.Println(a)
+}
+
+const (
+	LET    string = "LET"
+	AND    string = "AND"
+	OR     string = "OR"
+	NOT    string = "NOT"
+	LSHIFT string = "LSHIFT"
+	RSHIFT string = "RSHIFT"
+)
+
+func data07(full bool) []Operation {
+	binaryCommands := []string{AND, OR, LSHIFT, RSHIFT}
+	return fn.Map(ReadLines(full), func(line string) Operation {
+		var opType, p1, p2 string
+		p := fn.CleanSplit(line, "->")
+		expr, result := p[0], p[1]
+		found := false
+		for _, cmd := range binaryCommands {
+			if strings.Contains(expr, cmd) {
+				v := fn.CleanSplit(expr, cmd)
+				p1, p2 = v[0], v[1]
+				opType = cmd
+				found = true
+				break
+			}
+		}
+		if !found {
+			if strings.Contains(expr, NOT) {
+				p1 = Last(fn.CleanSplit(expr, NOT))
+				opType = NOT
+			} else {
+				p1 = expr
+				opType = LET
+			}
+		}
+
+		return Operation{
+			Type:      opType,
+			Result:    result,
+			Param1:    p1,
+			Param2:    p2,
+			Variables: []string{},
+			Values:    []int{},
+		}
+	})
+}
+
+type Operation struct {
+	Type      string
+	Result    string
+	Param1    string
+	Param2    string
+	Variables []string
+	Values    []int
+}
+
+func (o *Operation) SetVariables() {
+	p1 := tryParseInt(o.Param1)
+	if p1 == nil {
+		o.Variables = append(o.Variables, o.Param1)
+	} else {
+		o.Values = append(o.Values, *p1)
+	}
+	p2 := tryParseInt(o.Param2)
+	if p2 == nil {
+		o.Variables = append(o.Variables, o.Param2)
+	} else {
+		o.Values = append(o.Values, *p2)
+	}
+}
+
+func solveA(operations []Operation, override map[string]int) int {
+	value := make(map[string]int)
+	q := make([]Operation, 0)
+
+	for _, op := range operations {
+		if op.Type == LET {
+			x := tryParseInt(op.Param1)
+			if x == nil {
+				op.Variables = append(op.Variables, op.Param1)
+				q = append(q, op)
+			} else {
+				value[op.Result] = *x
+			}
+		} else if op.Type == NOT || op.Type == LSHIFT || op.Type == RSHIFT {
+			op.Variables = append(op.Variables, op.Param1)
+			q = append(q, op)
+		} else if op.Type == AND || op.Type == OR {
+			op.SetVariables()
+			q = append(q, op)
+		}
+	}
+
+	if override != nil {
+		maps.Copy(value, override)
+	}
+
+	for len(q) > 0 {
+		q2 := make([]Operation, 0)
+		for _, op := range q {
+			hasUnknown := fn.Any(op.Variables, func(v string) bool {
+				_, found := value[v]
+				return !found
+			})
+			if hasUnknown {
+				q2 = append(q2, op)
+				continue
+			}
+			var0 := op.Variables[0]
+			if op.Type == AND || op.Type == OR {
+				var param int
+				if len(op.Variables) == 2 {
+					param = value[op.Variables[1]]
+				} else {
+					param = op.Values[0]
+				}
+				var result int
+				if op.Type == AND {
+					result = value[var0] & param
+				} else {
+					result = value[var0] | param
+				}
+				value[op.Result] = result
+			} else if op.Type == LSHIFT {
+				value[op.Result] = value[var0] << fn.ParseInt(op.Param2)
+			} else if op.Type == RSHIFT {
+				value[op.Result] = value[var0] >> fn.ParseInt(op.Param2)
+			} else if op.Type == NOT {
+				value[op.Result] = ^value[var0]
+			} else if op.Type == LET {
+				value[op.Result] = value[var0]
+			}
+			if value[op.Result] < 0 {
+				value[op.Result] += 65536
+			}
+		}
+		q = q2
+		if _, ok := value["a"]; ok {
+			break
+		}
+	}
+	return value["a"]
+}
+
+func tryParseInt(text string) *int {
+	x, err := strconv.Atoi(text)
+	if err == nil {
+		return &x
+	} else {
+		return nil
+	}
+}

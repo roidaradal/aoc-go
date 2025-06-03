@@ -10,7 +10,7 @@ import (
 func main() {
 	start := time.Now()
 
-	aoc15.Day06()
+	aoc15.Day07()
 
 	fmt.Printf("\nTime: %v\n", time.Since(start))
 }
