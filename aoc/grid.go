@@ -51,3 +51,14 @@ func Manhattan(c1 Coords, c2 Coords) int {
 func ManhattanOrigin(c Coords) int {
 	return Manhattan(c, Coords{0, 0})
 }
+
+func InsideBounds(c Coords, maxBounds Dims2) bool {
+	return InsideBoundsFull(c, maxBounds, Dims2{0, 0})
+}
+
+func InsideBoundsFull(c Coords, maxBounds Dims2, minBounds Dims2) bool {
+	row, col := c[0], c[1]
+	minRows, minCols := minBounds[0], minBounds[1]
+	numRows, numCols := maxBounds[0], maxBounds[1]
+	return minRows <= row && row < numRows && minCols <= col && col < numCols
+}
