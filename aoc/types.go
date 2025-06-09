@@ -11,3 +11,13 @@ type (
 type (
 	IntGrid = [][]int
 )
+
+type CharInt struct {
+	Char rune
+	Int  int
+}
+
+type StrInt struct {
+	Str string
+	Int int
+}
