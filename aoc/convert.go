@@ -3,7 +3,13 @@ package aoc
 import "github.com/roidaradal/fn"
 
 func ToIntList(line string, sep string) []int {
-	return fn.Map(fn.CleanSplit(line, sep), func(x string) int {
+	var parts []string
+	if sep == " " {
+		parts = fn.SpaceSplit(line)
+	} else {
+		parts = fn.CleanSplit(line, sep)
+	}
+	return fn.Map(parts, func(x string) int {
 		return fn.ParseInt(x)
 	})
 }
