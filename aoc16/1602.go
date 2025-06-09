@@ -9,6 +9,7 @@ import (
 func Day02() {
 	movesList := data02(true)
 
+	// Part 1
 	grid1 := []string{"123", "456", "789"}
 	pad1 := Keypad{
 		Grid:  grid1,
@@ -20,6 +21,7 @@ func Day02() {
 	code := solveCode(pad1, movesList)
 	fmt.Println(code)
 
+	// Part 2
 	grid2 := []string{"00100", "02340", "56789", "0ABC0", "00D00"}
 	pad2 := Keypad{
 		Grid:  grid2,

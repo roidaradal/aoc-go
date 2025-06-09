@@ -15,9 +15,11 @@ func Day04() {
 	total := 0
 	roomID := 0
 	for _, room := range rooms {
+		// Part 1
 		if room.isReal() {
 			total += room.id
 		}
+		// Part 2
 		if roomID == 0 && room.decrypt() == "northpole-object-storage" {
 			roomID = room.id
 		}
