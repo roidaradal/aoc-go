@@ -1,7 +1,6 @@
 package aoc16
 
 import (
-	"cmp"
 	"fmt"
 	"slices"
 	"strings"
@@ -57,13 +56,7 @@ func (r Room) isReal() bool {
 	for k, v := range freq {
 		pairs = append(pairs, CharInt{Char: k, Int: v})
 	}
-	slices.SortFunc(pairs, func(a, b CharInt) int {
-		cmp1 := cmp.Compare(b.Int, a.Int)
-		if cmp1 != 0 {
-			return cmp1
-		}
-		return cmp.Compare(a.Char, b.Char)
-	})
+	slices.SortFunc(pairs, SortCharIntDesc)
 	top5 := fn.Map(pairs[:5], func(pair CharInt) rune {
 		return pair.Char
 	})
