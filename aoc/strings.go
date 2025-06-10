@@ -31,3 +31,13 @@ func CharFreq(word string, skip []rune) map[rune]int {
 	}
 	return freq
 }
+
+func ReverseString(word string) string {
+	chars := make([]byte, 0)
+	i := len(word) - 1
+	for i >= 0 {
+		chars = append(chars, word[i])
+		i -= 1
+	}
+	return string(chars)
+}
