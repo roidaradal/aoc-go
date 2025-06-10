@@ -6,6 +6,7 @@ type (
 	Delta  = [2]int
 	Coords = [2]int
 	Int2   = [2]int
+	Str2   = [2]string
 )
 
 type (

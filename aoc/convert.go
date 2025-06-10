@@ -18,3 +18,8 @@ func ToDims3(line string, sep string) Dims3 {
 	p := ToIntList(line, sep)
 	return Dims3{p[0], p[1], p[2]}
 }
+
+func ToInt2(line string, sep string) Int2 {
+	p := ToIntList(line, sep)
+	return Int2{p[0], p[1]}
+}

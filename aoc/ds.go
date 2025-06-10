@@ -1,7 +1,5 @@
 package aoc
 
-type Str2 = [2]string
-
 type Graph struct {
 	Vertices map[string]bool
 	Edges    map[Str2]int
