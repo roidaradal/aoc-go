@@ -62,3 +62,12 @@ func InsideBoundsFull(c Coords, maxBounds Dims2, minBounds Dims2) bool {
 	numRows, numCols := maxBounds[0], maxBounds[1]
 	return minRows <= row && row < numRows && minCols <= col && col < numCols
 }
+
+func Surround8(c Coords) []Coords {
+	y, x := c[0], c[1]
+	return []Coords{
+		{y - 1, x - 1}, {y - 1, x}, {y - 1, x + 1},
+		{y, x - 1}, {y, x + 1},
+		{y + 1, x - 1}, {y + 1, x}, {y + 1, x + 1},
+	}
+}
