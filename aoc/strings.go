@@ -41,3 +41,12 @@ func ReverseString(word string) string {
 	}
 	return string(chars)
 }
+
+func SortedString(word string) string {
+	letters := make([]rune, len(word))
+	for i, letter := range word {
+		letters[i] = letter
+	}
+	slices.Sort(letters)
+	return string(letters)
+}
