@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/roidaradal/aoc-go/aoc17"
+	"github.com/roidaradal/aoc-go/aoc18"
 )
 
 func main() {
 	start := time.Now()
 
-	aoc17.Day10()
+	aoc18.Day01()
 
 	fmt.Printf("\nTime: %v\n", time.Since(start))
 }
