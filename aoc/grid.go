@@ -67,3 +67,11 @@ func Surround8(c Coords) []Coords {
 		{y + 1, x - 1}, {y + 1, x}, {y + 1, x + 1},
 	}
 }
+
+func GetCoordsY(c Coords) int {
+	return c[0]
+}
+
+func GetCoordsX(c Coords) int {
+	return c[1]
+}
