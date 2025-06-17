@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"slices"
+	"strings"
 )
 
 func MD5Hash(word string) string {
@@ -49,4 +50,8 @@ func SortedString(word string) string {
 	}
 	slices.Sort(letters)
 	return string(letters)
+}
+
+func LowerChar(char byte) byte {
+	return strings.ToLower(string(char))[0]
 }
