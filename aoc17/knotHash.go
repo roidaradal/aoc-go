@@ -3,6 +3,8 @@ package aoc17
 import (
 	"fmt"
 	"slices"
+
+	"github.com/roidaradal/aoc-go/aoc"
 )
 
 const knotHashLimit int = 256
@@ -26,9 +28,7 @@ func knotHash(lengths []int, rounds int) []int {
 			} else {
 				s := knotHashLimit - i
 				j = length - s
-				chunk := make([]int, 0)
-				chunk = append(chunk, numbers[i:]...)
-				chunk = append(chunk, numbers[:j]...)
+				chunk := aoc.JoinLists(numbers[i:], numbers[:j])
 				slices.Reverse(chunk)
 				for x := range s {
 					numbers[i+x] = chunk[x]

@@ -1,14 +1,13 @@
 package aoc15
 
 import (
-	"fmt"
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-func Day02() {
+func Day02() Solution {
 	items := data02(true)
 	total1, total2 := 0, 0
 	for _, dims := range items {
@@ -20,14 +19,13 @@ func Day02() {
 		// Part 2
 		d := dims[:]
 		slices.Sort(d)
-		total2 += (2 * (d[0] + d[1])) + (l * w * h)
+		total2 += (2 * (d[0] + d[1])) + (lw * h)
 	}
-	fmt.Println(total1)
-	fmt.Println(total2)
+	return NewSolution(total1, total2)
 }
 
 func data02(full bool) []Dims3 {
-	return fn.Map(ReadLines(full), func(line string) Dims3 {
+	return fn.Map(ReadLines(15, 2, full), func(line string) Dims3 {
 		return ToDims3(line, "x")
 	})
 }

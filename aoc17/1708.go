@@ -1,29 +1,30 @@
 package aoc17
 
 import (
-	"fmt"
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-func Day08() {
+func Day08() Solution {
 	instructions := data08(true)
 	reg := make(map[string]int)
 	maxVal := 0
 	for _, cmd := range instructions {
 		if cmd.isSatisfied(reg[cmd.condReg]) {
 			reg[cmd.targetReg] += cmd.inc
+			// Part 2
 			maxVal = max(maxVal, reg[cmd.targetReg])
 		}
 	}
-	fmt.Println(slices.Max(fn.MapValues(reg)))
-	fmt.Println(maxVal)
+	// Part 1
+	maxReg := slices.Max(fn.MapValues(reg))
+	return NewSolution(maxReg, maxVal)
 }
 
 func data08(full bool) []Instruction {
-	return fn.Map(ReadLines(full), func(line string) Instruction {
+	return fn.Map(ReadLines(17, 8, full), func(line string) Instruction {
 		cmd := Instruction{}
 		p := fn.CleanSplit(line, " if ")
 		head, tail := p[0], p[1]

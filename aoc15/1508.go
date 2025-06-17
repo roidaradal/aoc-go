@@ -8,26 +8,26 @@ import (
 	. "github.com/roidaradal/aoc-go/aoc"
 )
 
-func Day08() {
+func Day08() Solution {
 	words := data08(true)
 
 	// Part 1
-	total := 0
+	total1 := 0
 	for _, word := range words {
-		total += len(word) - len(parseString(word))
+		total1 += len(word) - len(parseString(word))
 	}
-	fmt.Println(total)
 
 	// Part 2
-	total = 0
+	total2 := 0
 	for _, word := range words {
-		total += len(expandString(word)) - len(word)
+		total2 += len(expandString(word)) - len(word)
 	}
-	fmt.Println(total)
+
+	return NewSolution(total1, total2)
 }
 
 func data08(full bool) []string {
-	return ReadLines(full)
+	return ReadLines(15, 8, full)
 }
 
 func parseString(text string) string {

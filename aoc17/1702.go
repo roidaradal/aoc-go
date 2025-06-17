@@ -1,7 +1,6 @@
 package aoc17
 
 import (
-	"fmt"
 	"slices"
 	"sort"
 
@@ -9,12 +8,14 @@ import (
 	"github.com/roidaradal/fn"
 )
 
-func Day02() {
+func Day02() Solution {
 	numbersList := data02(true)
 	total1, total2 := 0, 0
 	for _, numbers := range numbersList {
+		// Part 1
 		total1 += slices.Max(numbers) - slices.Min(numbers)
 
+		// Part 2
 		for _, pair := range Combinations(numbers, 2) {
 			sort.Ints(pair)
 			a, b := pair[0], pair[1]
@@ -24,12 +25,11 @@ func Day02() {
 			}
 		}
 	}
-	fmt.Println(total1)
-	fmt.Println(total2)
+	return NewSolution(total1, total2)
 }
 
 func data02(full bool) [][]int {
-	return fn.Map(ReadLines(full), func(line string) []int {
+	return fn.Map(ReadLines(17, 2, full), func(line string) []int {
 		return ToIntList(line, " ")
 	})
 }

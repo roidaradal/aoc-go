@@ -7,20 +7,20 @@ import (
 	. "github.com/roidaradal/aoc-go/aoc"
 )
 
-func Day10() {
+func Day10() Solution {
 	text := data10(true)
 
 	// Part 1
-	length := repeatExpand(text, 40)
-	fmt.Println(length)
+	length1 := repeatExpand(text, 40)
 
 	// Part 2
-	length = repeatExpand(text, 50)
-	fmt.Println(length)
+	length2 := repeatExpand(text, 50)
+
+	return NewSolution(length1, length2)
 }
 
 func data10(full bool) string {
-	return ReadLines(full)[0]
+	return ReadFirstLine(15, 10, full)
 }
 
 func repeatExpand(text string, count int) int {

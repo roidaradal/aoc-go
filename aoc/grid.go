@@ -33,13 +33,9 @@ func Move(c Coords, d Delta) Coords {
 }
 
 func GridSum(grid IntGrid) int {
-	total := 0
-	for _, line := range grid {
-		for _, x := range line {
-			total += x
-		}
-	}
-	return total
+	return fn.Sum(fn.Map(grid, func(line []int) int {
+		return fn.Sum(line)
+	}))
 }
 
 func Manhattan(c1 Coords, c2 Coords) int {
@@ -67,7 +63,7 @@ func Surround8(c Coords) []Coords {
 	y, x := c[0], c[1]
 	return []Coords{
 		{y - 1, x - 1}, {y - 1, x}, {y - 1, x + 1},
-		{y, x - 1}, {y, x + 1},
+		{y - 0, x - 1}, {y - 0, x + 1},
 		{y + 1, x - 1}, {y + 1, x}, {y + 1, x + 1},
 	}
 }

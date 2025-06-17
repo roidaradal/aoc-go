@@ -1,17 +1,18 @@
 package aoc17
 
 import (
-	"fmt"
-
 	. "github.com/roidaradal/aoc-go/aoc"
+	"github.com/roidaradal/fn/ds"
 )
 
-func Day09() {
+func Day09() Solution {
 	stream := data09(true)
+
+	// Part 1 and 2
 	i, limit := 0, len(stream)
 	count, total := 0, 0
 	garbage := false
-	stack := NewStack[int]()
+	stack := ds.NewStack[int]()
 	for i < limit {
 		char := stream[i]
 		if garbage {
@@ -35,10 +36,9 @@ func Day09() {
 		}
 		i += 1
 	}
-	fmt.Println(total)
-	fmt.Println(count)
+	return NewSolution(total, count)
 }
 
 func data09(full bool) string {
-	return ReadLines(full)[0]
+	return ReadFirstLine(17, 9, full)
 }

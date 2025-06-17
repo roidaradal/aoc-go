@@ -23,3 +23,10 @@ func ArgMax(items []int) int {
 	})
 	return best[1]
 }
+
+func JoinLists[T any](items1 []T, items2 []T) []T {
+	items := make([]T, 0)
+	items = append(items, items1...)
+	items = append(items, items2...)
+	return items
+}

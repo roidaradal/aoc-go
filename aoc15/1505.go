@@ -1,14 +1,13 @@
 package aoc15
 
 import (
-	"fmt"
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-func Day05() {
+func Day05() Solution {
 	words := data05(true)
 	count1, count2 := 0, 0
 	for _, word := range words {
@@ -22,24 +21,24 @@ func Day05() {
 			count2 += 1
 		}
 	}
-	fmt.Println(count1)
-	fmt.Println(count2)
+	return NewSolution(count1, count2)
 }
 
 func data05(full bool) []string {
-	return ReadLines(full)
+	return ReadLines(15, 5, full)
 }
 
 var (
 	invalids = []string{"ab", "cd", "pq", "xy"}
-	vowels   = []rune{'a', 'e', 'i', 'o', 'u'}
+	vowels   = []rune("aeiou")
 )
 
 func isNice(word string) bool {
-	for _, invalid := range invalids {
-		if strings.Contains(word, invalid) {
-			return false
-		}
+	hasInvalid := fn.Any(invalids, func(invalid string) bool {
+		return strings.Contains(word, invalid)
+	})
+	if hasInvalid {
+		return false
 	}
 
 	if !HasTwins(word, 0) {
@@ -58,7 +57,7 @@ func isNice2(word string) bool {
 		return false
 	}
 
-	pairs := substringPositions(word, 2)
+	pairs := substringGroups(word, 2)
 	for _, idxs := range pairs {
 		if len(idxs) >= 3 {
 			return true
@@ -69,15 +68,12 @@ func isNice2(word string) bool {
 	return false
 }
 
-func substringPositions(word string, length int) map[string][]int {
+func substringGroups(word string, length int) [][]int {
 	at := make(map[string][]int)
 	limit := len(word) - (length - 1)
 	for i := range limit {
 		sub := word[i : i+length]
-		if _, ok := at[sub]; !ok {
-			at[sub] = make([]int, 0)
-		}
 		at[sub] = append(at[sub], i)
 	}
-	return at
+	return fn.MapValues(at)
 }

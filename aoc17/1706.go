@@ -8,7 +8,7 @@ import (
 	"github.com/roidaradal/fn"
 )
 
-func Day06() {
+func Day06() Solution {
 	banks := data06(true)
 	numBanks := len(banks)
 	done := make(map[string]int)
@@ -27,16 +27,15 @@ func Day06() {
 		count += 1
 		state = bankState(banks)
 		if stateCount, ok := done[state]; ok {
-			fmt.Println(count)
-			fmt.Println(count - stateCount)
-			return
+			// Part 1 and 2
+			return NewSolution(count, count-stateCount)
 		}
 		done[state] = count
 	}
 }
 
 func data06(full bool) []int {
-	return ToIntList(ReadLines(full)[0], " ")
+	return ToIntList(ReadFirstLine(17, 6, full), " ")
 }
 
 func bankState(banks []int) string {

@@ -1,7 +1,6 @@
 package aoc15
 
 import (
-	"fmt"
 	"maps"
 	"strconv"
 	"strings"
@@ -10,17 +9,17 @@ import (
 	"github.com/roidaradal/fn"
 )
 
-func Day07() {
+func Day07() Solution {
 	operations := data07(true)
 
 	// Part 1
-	a := solveA(operations, nil)
-	fmt.Println(a)
+	a1 := solveA(operations, nil)
 
 	// Part 2
-	override := map[string]int{"b": a}
-	a = solveA(operations, override)
-	fmt.Println(a)
+	override := map[string]int{"b": a1}
+	a2 := solveA(operations, override)
+
+	return NewSolution(a1, a2)
 }
 
 const (
@@ -34,7 +33,7 @@ const (
 
 func data07(full bool) []Operation {
 	binaryCommands := []string{AND, OR, LSHIFT, RSHIFT}
-	return fn.Map(ReadLines(full), func(line string) Operation {
+	return fn.Map(ReadLines(15, 7, full), func(line string) Operation {
 		var opType, p1, p2 string
 		p := fn.CleanSplit(line, "->")
 		expr, result := p[0], p[1]
@@ -159,7 +158,7 @@ func solveA(operations []Operation, override map[string]int) int {
 			}
 		}
 		q = q2
-		if _, ok := value["a"]; ok {
+		if fn.HasKey(value, "a") {
 			break
 		}
 	}

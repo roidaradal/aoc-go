@@ -1,22 +1,23 @@
 package aoc16
 
 import (
-	"fmt"
-
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/ds"
 )
 
-func Day01() {
+func Day01() Solution {
 	moves := data01(true)
 
 	// Part 1
 	hq := findHQ(moves, false)
-	fmt.Println(ManhattanOrigin(hq))
+	dist1 := ManhattanOrigin(hq)
 
 	// Part 2
 	hq = findHQ(moves, true)
-	fmt.Println(ManhattanOrigin(hq))
+	dist2 := ManhattanOrigin(hq)
+
+	return NewSolution(dist1, dist2)
 }
 
 const (
@@ -29,7 +30,7 @@ func data01(full bool) []Int2 {
 		'L': left,
 		'R': right,
 	}
-	line := ReadLines(full)[0]
+	line := ReadFirstLine(16, 1, full)
 	return fn.Map(fn.CleanSplit(line, ","), func(move string) Int2 {
 		turn := T[move[0]]
 		steps := fn.ParseInt(move[1:])
@@ -40,7 +41,7 @@ func data01(full bool) []Int2 {
 func findHQ(moves []Int2, atVisitedTwice bool) Coords {
 	curr := Coords{0, 0}
 	d := Delta{0, 0}
-	visited := make(map[Coords]bool)
+	visited := ds.NewSet[Coords]()
 	for _, move := range moves {
 		turn, steps := move[0], move[1]
 		if d[0] == 0 && d[1] == 0 {
@@ -56,10 +57,10 @@ func findHQ(moves []Int2, atVisitedTwice bool) Coords {
 		}
 		for range steps {
 			curr = Move(curr, d)
-			if atVisitedTwice && visited[curr] {
+			if atVisitedTwice && visited.Contains(curr) {
 				return curr
 			}
-			visited[curr] = true
+			visited.Add(curr)
 		}
 	}
 	return curr

@@ -1,15 +1,17 @@
 package aoc18
 
 import (
-	"fmt"
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/ds"
 )
 
-func Day03() {
+func Day03() Solution {
 	claims := data03(true)
+
+	// Part 1
 	g := NewIntGrid(1000, 1000, 0)
 	for _, claim := range claims {
 		row, col := claim.coords[0], claim.coords[1]
@@ -31,10 +33,10 @@ func Day03() {
 		}
 		return count
 	}))
-	fmt.Println(total)
 
+	// Part 2
 	g = NewIntGrid(1000, 1000, 0)
-	clean := make(map[int]bool)
+	clean := ds.NewSet[int]()
 	for _, claim := range claims {
 		row, col := claim.coords[0], claim.coords[1]
 		h, w := claim.dims[0], claim.dims[1]
@@ -48,23 +50,23 @@ func Day03() {
 				} else {
 					ok = false
 					owner := g[r][c]
-					if clean[owner] {
-						delete(clean, owner)
+					if clean.Contains(owner) {
+						clean.Delete(owner)
 					}
 				}
 			}
 		}
 		if ok {
-			clean[claim.id] = true
+			clean.Add(claim.id)
 		}
 	}
-	for id := range clean {
-		fmt.Println(id)
-	}
+	id := clean.Items()[0]
+
+	return NewSolution(total, id)
 }
 
 func data03(full bool) []Claim {
-	return fn.Map(ReadLines(full), func(line string) Claim {
+	return fn.Map(ReadLines(18, 3, full), func(line string) Claim {
 		claim := Claim{}
 		p := fn.CleanSplit(line, "@")
 		claim.id = fn.ParseInt(strings.TrimPrefix(p[0], "#"))

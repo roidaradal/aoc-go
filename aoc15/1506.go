@@ -1,16 +1,13 @@
 package aoc15
 
 import (
-	"fmt"
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-type command = [5]int
-
-func Day06() {
+func Day06() Solution {
 	side := 1000
 
 	// Part 1
@@ -26,14 +23,14 @@ func Day06() {
 		for y := y1; y < y2; y++ {
 			for x := x1; x < x2; x++ {
 				if b == -1 {
-					grid[y][x] = flipBit(grid[y][x])
+					grid[y][x] ^= 1 // flip bit
 				} else {
 					grid[y][x] = b
 				}
 			}
 		}
 	}
-	fmt.Println(GridSum(grid))
+	part1 := GridSum(grid)
 
 	// Part 2
 	mask = map[string]int{
@@ -52,7 +49,9 @@ func Day06() {
 			}
 		}
 	}
-	fmt.Println(GridSum(grid))
+	part2 := GridSum(grid)
+
+	return NewSolution(part1, part2)
 }
 
 var (
@@ -61,8 +60,10 @@ var (
 	toggle string = "toggle"
 )
 
+type command = [5]int
+
 func data06(mask map[string]int, full bool) []command {
-	return fn.Map(ReadLines(full), func(line string) command {
+	return fn.Map(ReadLines(15, 6, full), func(line string) command {
 		b := 0
 		if strings.HasPrefix(line, on) {
 			b = mask[on]
@@ -78,13 +79,6 @@ func data06(mask map[string]int, full bool) []command {
 		c2 := ToIntList(tail, ",")
 		x1, y1 := c1[0], c1[1]
 		x2, y2 := c2[0], c2[1]
-		return [5]int{b, y1, x1, y2 + 1, x2 + 1}
+		return command{b, y1, x1, y2 + 1, x2 + 1}
 	})
-}
-
-func flipBit(bit int) int {
-	if bit == 0 {
-		return 1
-	}
-	return 0
 }

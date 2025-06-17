@@ -1,29 +1,29 @@
 package aoc16
 
 import (
-	"fmt"
-
 	. "github.com/roidaradal/aoc-go/aoc"
+	"github.com/roidaradal/fn/ds"
 )
 
-func Day07() {
+func Day07() Solution {
 	words := data07(true)
-
 	count1, count2 := 0, 0
 	for _, word := range words {
+		// Part 1
 		if isValidWord(word) {
 			count1 += 1
 		}
+
+		// Part 2
 		if isValidWord2(word) {
 			count2 += 1
 		}
 	}
-	fmt.Println(count1)
-	fmt.Println(count2)
+	return NewSolution(count1, count2)
 }
 
 func data07(full bool) []string {
-	return ReadLines(full)
+	return ReadLines(16, 7, full)
 }
 
 func isValidWord(word string) bool {
@@ -45,8 +45,8 @@ func isValidWord(word string) bool {
 }
 
 func isValidWord2(word string) bool {
-	look := make(map[string]bool)
-	found := make(map[string]bool)
+	look := ds.NewSet[string]()
+	found := ds.NewSet[string]()
 	flip := false
 	for i := range len(word) - 2 {
 		sub := word[i : i+3]
@@ -56,14 +56,14 @@ func isValidWord2(word string) bool {
 			flip = false
 		} else if isABA(sub) {
 			if flip {
-				found[toABA(sub)] = true
+				found.Add(toABA(sub))
 			} else {
-				look[sub] = true
+				look.Add(sub)
 			}
 		}
 	}
-	common := SetIntersection(look, found)
-	return len(common) > 0
+	common := look.Intersection(found)
+	return common.Len() > 0
 }
 
 func isABBA(word string) bool {
@@ -87,6 +87,5 @@ func isABA(word string) bool {
 
 func toABA(bab string) string {
 	b, a := bab[0], bab[1]
-	chars := []byte{a, b, a}
-	return string(chars)
+	return string([]byte{a, b, a})
 }

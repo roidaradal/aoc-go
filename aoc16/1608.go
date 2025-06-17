@@ -7,7 +7,7 @@ import (
 	"github.com/roidaradal/fn"
 )
 
-func Day08() {
+func Day08() Solution {
 	grid, commands := data08(true)
 	for _, cmd := range commands {
 		if cmd.Type == "rect" {
@@ -18,9 +18,11 @@ func Day08() {
 			rotateCol(grid, cmd.Int2)
 		}
 	}
+	// Part 1
 	count := GridSum(grid)
-	fmt.Println(count)
+	// Part 2
 	displayGrid(grid)
+	return NewSolution(count, "")
 }
 
 type Command struct {
@@ -30,7 +32,7 @@ type Command struct {
 
 func data08(full bool) (IntGrid, []Command) {
 	commands := make([]Command, 0)
-	for _, line := range ReadLines(full) {
+	for _, line := range ReadLines(16, 8, full) {
 		p := fn.SpaceSplit(line)
 		lastIdx := len(p) - 1
 		if p[0] == "rect" {
@@ -75,10 +77,7 @@ func rotateRow(grid IntGrid, p Int2) {
 	row := grid[rowIdx]
 	last := len(row) - 1
 	for range steps {
-		row2 := make([]int, 0)
-		row2 = append(row2, row[last:]...)
-		row2 = append(row2, row[:last]...)
-		row = row2
+		row = JoinLists(row[last:], row[:last])
 	}
 	grid[rowIdx] = row
 }
@@ -92,10 +91,7 @@ func rotateCol(grid IntGrid, p Int2) {
 	}
 	last := len(col) - 1
 	for range steps {
-		col2 := make([]int, 0)
-		col2 = append(col2, col[last:]...)
-		col2 = append(col2, col[:last]...)
-		col = col2
+		col = JoinLists(col[last:], col[:last])
 	}
 	for row := range numRows {
 		grid[row][colIdx] = col[row]

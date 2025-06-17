@@ -1,35 +1,36 @@
 package aoc17
 
 import (
-	"fmt"
-
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-func Day01() {
+func Day01() Solution {
 	word := data01(true)
+
+	// Part 1
 	limit := len(word)
-	total := 0
+	total1 := 0
 	for i := range limit {
 		j := (i + 1) % limit
 		if word[i] == word[j] {
-			total += fn.ParseInt(string(word[i]))
+			total1 += fn.ParseInt(string(word[i]))
 		}
 	}
-	fmt.Println(total)
 
+	// Part 2
 	mid := limit / 2
-	total = 0
+	total2 := 0
 	for i := range mid {
 		j := mid + i
 		if word[i] == word[j] {
-			total += fn.ParseInt(string(word[i])) * 2
+			total2 += fn.ParseInt(string(word[i])) * 2
 		}
 	}
-	fmt.Println(total)
+
+	return NewSolution(total1, total2)
 }
 
 func data01(full bool) string {
-	return ReadLines(full)[0]
+	return ReadFirstLine(17, 1, full)
 }

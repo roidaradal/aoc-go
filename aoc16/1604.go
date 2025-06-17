@@ -1,7 +1,6 @@
 package aoc16
 
 import (
-	"fmt"
 	"slices"
 	"strings"
 
@@ -9,7 +8,7 @@ import (
 	"github.com/roidaradal/fn"
 )
 
-func Day04() {
+func Day04() Solution {
 	rooms := data04(true)
 	total := 0
 	roomID := 0
@@ -18,17 +17,17 @@ func Day04() {
 		if room.isReal() {
 			total += room.id
 		}
+
 		// Part 2
 		if roomID == 0 && room.decrypt() == "northpole-object-storage" {
 			roomID = room.id
 		}
 	}
-	fmt.Println(total)
-	fmt.Println(roomID)
+	return NewSolution(total, roomID)
 }
 
 func data04(full bool) []Room {
-	return fn.Map(ReadLines(full), func(line string) Room {
+	return fn.Map(ReadLines(16, 4, full), func(line string) Room {
 		p := fn.CleanSplit(line, "[")
 		head, tail := p[0], p[1]
 		h := fn.CleanSplit(head, "-")

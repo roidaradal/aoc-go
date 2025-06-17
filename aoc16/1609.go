@@ -1,23 +1,26 @@
 package aoc16
 
 import (
-	"fmt"
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-func Day09() {
+func Day09() Solution {
 	word := data09(true)
+
+	// Part 1
 	size1 := decompressLength(word, true)
-	fmt.Println(size1)
+
+	// Part 2
 	size2 := decompressLength(word, false)
-	fmt.Println(size2)
+
+	return NewSolution(size1, size2)
 }
 
 func data09(full bool) string {
-	return ReadLines(full)[0]
+	return ReadLines(16, 9, full)[0]
 }
 
 func decompressLength(word string, skip bool) int {

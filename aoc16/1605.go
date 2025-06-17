@@ -8,34 +8,34 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/ds"
 )
 
-func Day05() {
+func Day05() Solution {
 	door := data05(true)
 	pwdLength := 8
 
 	// Part 1
 	hashGen := md5HashGenerator(door, "00000", 0)
 	next, stop := iter.Pull2(hashGen)
-	pwdChars := make([]byte, pwdLength)
+	pwdChars := slices.Repeat([]byte{'.'}, pwdLength)
 	for i := range pwdLength {
 		_, hash, ok := next()
 		if ok {
 			pwdChars[i] = hash[5]
+			fmt.Println(string(pwdChars))
 		}
 	}
 	stop()
-	pwd := string(pwdChars)
-	fmt.Println(pwd)
+	pwd1 := string(pwdChars)
 
 	// Part 2
 	hashGen = md5HashGenerator(door, "00000", 0)
 	next, stop = iter.Pull2(hashGen)
-	defer stop()
-	indexes := make(map[byte]bool)
+	indexes := ds.NewSet[byte]()
 	for x := range pwdLength {
 		b := fmt.Sprintf("%d", x)[0]
-		indexes[b] = true
+		indexes.Add(b)
 	}
 	pwdChars = slices.Repeat([]byte{'.'}, pwdLength)
 	for {
@@ -43,7 +43,7 @@ func Day05() {
 		if !ok {
 			break
 		}
-		if !indexes[hash[5]] {
+		if !indexes.Contains(hash[5]) {
 			continue
 		}
 		idx := fn.ParseInt(string(hash[5]))
@@ -58,10 +58,14 @@ func Day05() {
 			break
 		}
 	}
+	stop()
+	pwd2 := string(pwdChars)
+
+	return NewSolution(pwd1, pwd2)
 }
 
 func data05(full bool) string {
-	return ReadLines(full)[0]
+	return ReadFirstLine(16, 5, full)
 }
 
 func md5HashGenerator(key string, goal string, start int) iter.Seq2[int, string] {

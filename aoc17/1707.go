@@ -1,48 +1,53 @@
 package aoc17
 
 import (
-	"fmt"
 	"sort"
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/ds"
 )
 
-func Day07() {
+func Day07() Solution {
 	t := data07(true)
+
+	// Part 1
+	var root string
 	for _, name := range t.nodes {
-		if _, ok := t.parentOf[name]; !ok {
-			fmt.Println(name)
+		if !fn.HasKey(t.parentOf, name) {
+			root = name
 			break
 		}
 	}
 
+	// Part 2
+	var targetWeight int
 	weight := make(map[string]int)
 	q := t.nodes
+mainLoop:
 	for len(q) > 0 {
 		q2 := make([]string, 0)
 		for _, node := range q {
-			if _, ok := t.children[node]; !ok {
+			if !fn.HasKey(t.children, node) {
 				weight[node] = t.weight[node]
 				continue
 			}
 			computable := fn.All(t.children[node], func(child string) bool {
-				_, ok := weight[child]
-				return ok
+				return fn.HasKey(weight, child)
 			})
 			if computable {
-				childWeights := make(map[int]bool)
+				childWeights := ds.NewSet[int]()
 				totalChild := 0
 				for _, child := range t.children[node] {
 					w := weight[child]
-					childWeights[w] = true
+					childWeights.Add(w)
 					totalChild += w
 				}
 				weight[node] = t.weight[node] + totalChild
 
-				if len(childWeights) == 2 {
-					weights := fn.MapKeys(childWeights)
+				if childWeights.Len() == 2 {
+					weights := childWeights.Items()
 					sort.Ints(weights)
 					target, heavy := weights[0], weights[1]
 					heavyChild := ""
@@ -52,9 +57,8 @@ func Day07() {
 							break
 						}
 					}
-					targetWeight := t.weight[heavyChild] - (heavy - target)
-					fmt.Println(targetWeight)
-					return
+					targetWeight = t.weight[heavyChild] - (heavy - target)
+					break mainLoop
 				}
 			} else {
 				q2 = append(q2, node)
@@ -62,6 +66,8 @@ func Day07() {
 		}
 		q = q2
 	}
+
+	return NewSolution(root, targetWeight)
 }
 
 func data07(full bool) Tree {
@@ -71,7 +77,7 @@ func data07(full bool) Tree {
 		parentOf: make(map[string]string),
 		children: make(map[string][]string),
 	}
-	for _, line := range ReadLines(full) {
+	for _, line := range ReadLines(17, 7, full) {
 		p := fn.CleanSplit(line, "->")
 		node := fn.CleanSplit(p[0], "(")
 		name := node[0]

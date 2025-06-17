@@ -1,36 +1,34 @@
 package aoc15
 
 import (
-	"fmt"
-
 	. "github.com/roidaradal/aoc-go/aoc"
 )
 
-func Day01() {
+func Day01() Solution {
 	line := data01(true)
 
 	// Part 1
 	level := elevatorFloor(line, nil)
-	fmt.Println(level)
 
 	// Part 2
 	goal := -1
-	level = elevatorFloor(line, &goal)
-	fmt.Println(level)
+	index := elevatorFloor(line, &goal)
+
+	return NewSolution(level, index)
 }
 
 func data01(full bool) string {
-	return ReadLines(full)[0]
+	return ReadFirstLine(15, 1, full)
 }
 
 func elevatorFloor(line string, goal *int) int {
-	T := map[rune]int{
-		'(': 1,
-		')': -1,
-	}
 	level := 0
 	for i, x := range line {
-		level += T[x]
+		if x == '(' {
+			level += 1
+		} else if x == ')' {
+			level -= 1
+		}
 		if goal != nil && level == *goal {
 			return i + 1
 		}

@@ -1,13 +1,12 @@
 package aoc16
 
 import (
-	"fmt"
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 )
 
-func Day06() {
+func Day06() Solution {
 	words := data06(true)
 	numCols := len(words[0])
 	freq := columnFrequency(words, numCols)
@@ -19,17 +18,20 @@ func Day06() {
 			colFreq = append(colFreq, CharInt{Char: k, Int: v})
 		}
 		slices.SortFunc(colFreq, SortCharIntAsc)
+
+		// Part 1
 		minPair := colFreq[0]
-		maxPair := colFreq[len(colFreq)-1]
 		minMsg[col] = minPair.Char
+
+		// Part 2
+		maxPair := Last(colFreq)
 		maxMsg[col] = maxPair.Char
 	}
-	fmt.Println(string(maxMsg))
-	fmt.Println(string(minMsg))
+	return NewSolution(string(maxMsg), string(minMsg))
 }
 
 func data06(full bool) []string {
-	return ReadLines(full)
+	return ReadLines(16, 6, full)
 }
 
 func columnFrequency(words []string, numCols int) map[int]map[rune]int {

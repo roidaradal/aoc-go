@@ -1,18 +1,20 @@
 package aoc17
 
 import (
-	"fmt"
 	"math"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-func Day03() {
+func Day03() Solution {
 	x := data03(true)
-	c := spiralCoords(x)
-	fmt.Println(ManhattanOrigin(c))
 
+	// Part 1
+	c := spiralCoords(x)
+	dist := ManhattanOrigin(c)
+
+	// Part 2
 	goal := x
 	spiral := map[Coords]int{
 		{0, 0}: 1,
@@ -22,8 +24,7 @@ func Day03() {
 	for value <= goal {
 		curr := spiralCoords(x)
 		near := fn.Filter(Surround8(curr), func(c Coords) bool {
-			_, found := spiral[c]
-			return found
+			return fn.HasKey(spiral, c)
 		})
 		value = fn.Sum(fn.Map(near, func(c Coords) int {
 			return values[spiral[c]]
@@ -32,11 +33,12 @@ func Day03() {
 		spiral[curr] = x
 		x += 1
 	}
-	fmt.Println(value)
+
+	return NewSolution(dist, value)
 }
 
 func data03(full bool) int {
-	return fn.ParseInt(ReadLines(full)[0])
+	return fn.ParseInt(ReadFirstLine(17, 3, full))
 }
 
 func spiralCoords(x int) Coords {

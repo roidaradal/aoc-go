@@ -1,29 +1,25 @@
 package aoc16
 
 import (
-	"fmt"
-
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-func Day03() {
-	triples1 := data03(true)
-	triples2 := readVertical(triples1)
+func Day03() Solution {
+	triples := data03(true)
 
-	for _, triples := range [][]Dims3{triples1, triples2} {
-		count := 0
-		for _, triple := range triples {
-			if isValidTriple(triple) {
-				count += 1
-			}
-		}
-		fmt.Println(count)
-	}
+	// Part 1
+	count1 := countValidTriples(triples)
+
+	// Part 2
+	triples = readVertical(triples)
+	count2 := countValidTriples(triples)
+
+	return NewSolution(count1, count2)
 }
 
 func data03(full bool) []Dims3 {
-	return fn.Map(ReadLines(full), func(line string) Dims3 {
+	return fn.Map(ReadLines(16, 3, full), func(line string) Dims3 {
 		return ToDims3(line, " ")
 	})
 }
@@ -40,6 +36,16 @@ func readVertical(t []Dims3) []Dims3 {
 		}
 	}
 	return t2
+}
+
+func countValidTriples(triples []Dims3) int {
+	count := 0
+	for _, triple := range triples {
+		if isValidTriple(triple) {
+			count += 1
+		}
+	}
+	return count
 }
 
 func isValidTriple(t Dims3) bool {

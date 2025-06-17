@@ -1,15 +1,16 @@
 package aoc18
 
 import (
-	"fmt"
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 )
 
-func Day02() {
+func Day02() Solution {
 	words := data02(true)
+
+	// Part 1
 	count2, count3 := 0, 0
 	for _, word := range words {
 		freq := fn.MapValues(CharFreq(word, nil))
@@ -20,23 +21,25 @@ func Day02() {
 			count3 += 1
 		}
 	}
-	fmt.Println(count2 * count3)
+	part1 := count2 * count3
 
+	// Part 2
+	var word string
 	for _, pair := range Combinations(words, 2) {
 		word1, word2 := pair[0], pair[1]
 		diff := strDiff(word1, word2)
-		if len(diff) != 1 {
-			continue
+		if len(diff) == 1 {
+			idx := diff[0]
+			word = word1[:idx] + word1[idx+1:]
+			break
 		}
-		idx := diff[0]
-		word := word1[:idx] + word1[idx+1:]
-		fmt.Println(word)
-		break
 	}
+
+	return NewSolution(part1, word)
 }
 
 func data02(full bool) []string {
-	return ReadLines(full)
+	return ReadLines(18, 2, full)
 }
 
 func strDiff(word1, word2 string) []int {

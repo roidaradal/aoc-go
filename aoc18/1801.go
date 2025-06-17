@@ -1,31 +1,33 @@
 package aoc18
 
 import (
-	"fmt"
-
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/ds"
 )
 
-func Day01() {
+func Day01() Solution {
 	numbers := data01(true)
-	total := fn.Sum(numbers)
-	fmt.Println(total)
 
+	// Part 1
+	total := fn.Sum(numbers)
+
+	// Part 2
 	limit := len(numbers)
-	done := make(map[int]bool)
+	done := ds.NewSet[int]()
 	i, curr := 0, 0
 	for {
 		curr += numbers[i]
-		if done[curr] {
+		if done.Contains(curr) {
 			break
 		}
-		done[curr] = true
+		done.Add(curr)
 		i = (i + 1) % limit
 	}
-	fmt.Println(curr)
+
+	return NewSolution(total, curr)
 }
 
 func data01(full bool) []int {
-	return fn.Map(ReadLines(full), fn.ParseInt)
+	return fn.Map(ReadLines(18, 1, full), fn.ParseInt)
 }
