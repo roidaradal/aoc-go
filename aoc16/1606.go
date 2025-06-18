@@ -24,7 +24,7 @@ func Day06() Solution {
 		minMsg[col] = minPair.Char
 
 		// Part 2
-		maxPair := Last(colFreq)
+		maxPair := Last(colFreq, 1)
 		maxMsg[col] = maxPair.Char
 	}
 	return NewSolution(string(maxMsg), string(minMsg))

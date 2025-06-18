@@ -43,7 +43,6 @@ func Day06() Solution {
 	maxArea := slices.MaxFunc(entries, SortInt2)[0]
 
 	// Part 2
-	goal := 10_000
 	valid := 0
 	for row := range rows {
 		for col := range cols {
@@ -51,7 +50,7 @@ func Day06() Solution {
 			total := fn.Sum(fn.Map(points, func(pt Coords) int {
 				return Manhattan(c, pt)
 			}))
-			if total < goal {
+			if total < 10_000 {
 				valid += 1
 			}
 		}

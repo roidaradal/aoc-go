@@ -49,7 +49,7 @@ func data07(full bool) []Operation {
 		}
 		if !found {
 			if strings.Contains(expr, NOT) {
-				p1 = Last(fn.CleanSplit(expr, NOT))
+				p1 = Last(fn.CleanSplit(expr, NOT), 1)
 				opType = NOT
 			} else {
 				p1 = expr

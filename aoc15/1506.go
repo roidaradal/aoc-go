@@ -73,7 +73,7 @@ func data06(mask map[string]int, full bool) []command {
 			b = mask[toggle]
 		}
 		p := fn.CleanSplit(line, "through")
-		head := Last(fn.SpaceSplit(p[0]))
+		head := Last(fn.SpaceSplit(p[0]), 1)
 		tail := p[1]
 		c1 := ToIntList(head, ",")
 		c2 := ToIntList(tail, ",")
