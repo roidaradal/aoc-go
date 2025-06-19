@@ -55,3 +55,24 @@ func SortedString(word string) string {
 func LowerChar(char byte) byte {
 	return strings.ToLower(string(char))[0]
 }
+
+func GroupChunks(word string) []string {
+	chunks := make([]string, 0)
+	letters := []rune(word)
+	curr, count := letters[0], 1
+	for i := 1; i < len(letters); i++ {
+		char := letters[i]
+		if char == curr {
+			count += 1
+		} else {
+			chunks = append(chunks, RepeatChar(curr, count))
+			curr, count = char, 1
+		}
+	}
+	chunks = append(chunks, RepeatChar(curr, count))
+	return chunks
+}
+
+func RepeatChar(char rune, count int) string {
+	return string(slices.Repeat([]rune{char}, count))
+}
