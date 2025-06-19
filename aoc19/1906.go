@@ -59,10 +59,9 @@ func bfsTraversal(t *Tree, start string, goal *string) int {
 			return depth
 		}
 		for _, node2 := range t.edges[node] {
-			if fn.HasKey(visited, node2) {
-				continue
+			if !fn.HasKey(visited, node2) {
+				q.Enqueue(StrInt{Str: node2, Int: depth + 1})
 			}
-			q.Enqueue(StrInt{Str: node2, Int: depth + 1})
 		}
 	}
 
