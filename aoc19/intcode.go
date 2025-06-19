@@ -35,3 +35,21 @@ func intcodeParam(x int, mode int, numbers []int) int {
 	}
 	return x
 }
+
+func intcodeParam2(x int, mode int, rbase int, numbers map[int]int) int {
+	if mode == 0 || mode == 2 {
+		idx := intcodeIndex(x, mode, rbase)
+		return numbers[idx]
+	} else if mode == 1 {
+		return x
+	}
+	return 0
+}
+
+func intcodeIndex(x int, mode int, rbase int) int {
+	idx := x
+	if mode == 2 {
+		idx += rbase
+	}
+	return idx
+}
