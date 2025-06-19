@@ -23,3 +23,11 @@ func ToInt2(line string, sep string) Int2 {
 	p := ToIntList(line, sep)
 	return Int2{p[0], p[1]}
 }
+
+func ToCharInt(line string) CharInt {
+	chars := []rune(line)
+	return CharInt{
+		Char: chars[0],
+		Int:  fn.ParseInt(string(chars[1:])),
+	}
+}
