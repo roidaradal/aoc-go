@@ -45,3 +45,14 @@ func JoinLists[T any](items1 []T, items2 []T) []T {
 	items = append(items, items2...)
 	return items
 }
+
+func RemoveIndex[T any](items []T, index int) []T {
+	return append(items[:index], items[index+1:]...)
+}
+
+func UniqueAppend[T comparable](items []T, item T) []T {
+	if !slices.Contains(items, item) {
+		items = append(items, item)
+	}
+	return items
+}

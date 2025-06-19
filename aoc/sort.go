@@ -37,3 +37,11 @@ func SortInt3(a, b Int3) int {
 	}
 	return cmp.Compare(a[2], b[2])
 }
+
+func SortCoordsX(a, b Coords) int {
+	return cmp.Compare(a[1], b[1])
+}
+
+func SortCoordsY(a, b Coords) int {
+	return cmp.Compare(a[0], b[0])
+}
