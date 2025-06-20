@@ -9,12 +9,28 @@ import (
 	"github.com/roidaradal/fn/io"
 )
 
-func ReadLines(year int, day int, full bool) []string {
+func dataPath(year int, day int, full bool) string {
 	folder := "test"
 	if full {
 		folder = fmt.Sprintf("20%d", year)
 	}
 	path := fmt.Sprintf("%s/%s/%d%.02d.txt", rootDir(), folder, year, day)
+	return path
+
+}
+
+func ReadRawLines(year int, day int, full bool) []string {
+	path := dataPath(year, day, full)
+	text, err := io.ReadTextFile(path)
+	if err != nil {
+		log.Fatal("Error:", err)
+	}
+	lines := fn.CleanSplit(text, "\n")
+	return lines
+}
+
+func ReadLines(year int, day int, full bool) []string {
+	path := dataPath(year, day, full)
 	lines, err := io.ReadTextLines(path)
 	if err != nil {
 		log.Fatal("Error:", err)
