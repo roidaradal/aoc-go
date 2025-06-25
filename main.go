@@ -230,6 +230,8 @@ func solve21(day int) aoc.Solution {
 	switch day {
 	case 1:
 		return aoc21.Day01()
+	case 2:
+		return aoc21.Day02()
 	}
 	panic("Invalid day")
 }
