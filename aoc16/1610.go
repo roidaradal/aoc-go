@@ -30,7 +30,7 @@ func Day10() Solution {
 					goalBot = b
 				}
 				for i, p := range bots[b] {
-					dest, who := p.Str, p.Int
+					dest, who := p.Tuple()
 					if dest == "bot" {
 						botValues2[who] = append(botValues2[who], v[i])
 					} else {
@@ -60,10 +60,11 @@ func data10(full bool) ([]Int2, map[int]Bot) {
 	for _, line := range ReadLines(16, 10, full) {
 		p := fn.SpaceSplit(line)
 		N := len(p)
-		if p[0] == "value" {
+		switch p[0] {
+		case "value":
 			value, who := fn.ParseInt(p[1]), fn.ParseInt(p[N-1])
 			chips = append(chips, Int2{value, who})
-		} else if p[0] == "bot" {
+		case "bot":
 			who := fn.ParseInt(p[1])
 			low := StrInt{
 				Str: p[5],

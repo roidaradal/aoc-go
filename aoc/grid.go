@@ -7,6 +7,7 @@ var (
 	D Delta = [2]int{1, 0}
 	L Delta = [2]int{0, -1}
 	R Delta = [2]int{0, 1}
+	X Delta = [2]int{0, 0}
 )
 
 var (

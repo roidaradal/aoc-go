@@ -22,13 +22,14 @@ func Day07() Solution {
 	order := strings.Join(done, "")
 
 	// Part 2
+	emptyTask := StrInt{Str: "", Int: 0}
 	fixed, workers := 60, 5
 	timer := 0
 	done = make([]string, 0)
 	ongoing := ds.NewSet[string]()
 	queue := make(map[int]StrInt)
 	for i := range workers {
-		queue[i] = EmptyTask
+		queue[i] = emptyTask
 	}
 	for len(done) < limit {
 		candidates := fn.Filter(taskCandidates(g, done), func(task string) bool {
@@ -49,13 +50,13 @@ func Day07() Solution {
 
 		for worker := range workers {
 			work := queue[worker]
-			task, left := work.Str, work.Int
+			task, left := work.Tuple()
 			if task == "" {
 				continue
 			}
 			left -= 1
 			if left == 0 {
-				queue[worker] = EmptyTask
+				queue[worker] = emptyTask
 				done = append(done, task)
 				ongoing.Delete(task)
 			} else {
@@ -68,8 +69,6 @@ func Day07() Solution {
 
 	return NewSolution(order, timer)
 }
-
-var EmptyTask = StrInt{Str: "", Int: 0}
 
 func data07(full bool) *ds.Graph {
 	g := ds.NewGraph()

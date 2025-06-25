@@ -11,7 +11,7 @@ func Day02() Solution {
 
 	// Part 2
 	output2 := 0
-outerLoop:
+mainLoop:
 	for noun := range 100 {
 		for verb := range 100 {
 			numbers = data02(true)
@@ -19,7 +19,7 @@ outerLoop:
 			numbers[2] = verb
 			if runProgram02(numbers) == 19690720 {
 				output2 = (100 * noun) + verb
-				break outerLoop
+				break mainLoop
 			}
 		}
 	}
@@ -41,9 +41,10 @@ func runProgram02(numbers []int) int {
 		}
 		in1, in2, out := numbers[i+1], numbers[i+2], numbers[i+3]
 		a, b := numbers[in1], numbers[in2]
-		if cmd == 1 {
+		switch cmd {
+		case 1:
 			numbers[out] = a + b
-		} else if cmd == 2 {
+		case 2:
 			numbers[out] = a * b
 		}
 		i += 4

@@ -37,10 +37,11 @@ func intcodeParam(x int, mode int, numbers []int) int {
 }
 
 func intcodeParam2(x int, mode int, rbase int, numbers map[int]int) int {
-	if mode == 0 || mode == 2 {
+	switch mode {
+	case 0, 2:
 		idx := intcodeIndex(x, mode, rbase)
 		return numbers[idx]
-	} else if mode == 1 {
+	case 1:
 		return x
 	}
 	return 0

@@ -97,7 +97,8 @@ func solveA(operations []Operation, override map[string]int) int {
 	q := make([]Operation, 0)
 
 	for _, op := range operations {
-		if op.Type == LET {
+		switch op.Type {
+		case LET:
 			x := tryParseInt(op.Param1)
 			if x == nil {
 				op.Variables = append(op.Variables, op.Param1)
@@ -105,10 +106,10 @@ func solveA(operations []Operation, override map[string]int) int {
 			} else {
 				value[op.Result] = *x
 			}
-		} else if op.Type == NOT || op.Type == LSHIFT || op.Type == RSHIFT {
+		case NOT, LSHIFT, RSHIFT:
 			op.Variables = append(op.Variables, op.Param1)
 			q = append(q, op)
-		} else if op.Type == AND || op.Type == OR {
+		case AND, OR:
 			op.SetVariables()
 			q = append(q, op)
 		}
@@ -130,7 +131,8 @@ func solveA(operations []Operation, override map[string]int) int {
 				continue
 			}
 			var0 := op.Variables[0]
-			if op.Type == AND || op.Type == OR {
+			switch op.Type {
+			case AND, OR:
 				var param int
 				if len(op.Variables) == 2 {
 					param = value[op.Variables[1]]
@@ -138,19 +140,20 @@ func solveA(operations []Operation, override map[string]int) int {
 					param = op.Values[0]
 				}
 				var result int
-				if op.Type == AND {
+				switch op.Type {
+				case AND:
 					result = value[var0] & param
-				} else {
+				case OR:
 					result = value[var0] | param
 				}
 				value[op.Result] = result
-			} else if op.Type == LSHIFT {
+			case LSHIFT:
 				value[op.Result] = value[var0] << fn.ParseInt(op.Param2)
-			} else if op.Type == RSHIFT {
+			case RSHIFT:
 				value[op.Result] = value[var0] >> fn.ParseInt(op.Param2)
-			} else if op.Type == NOT {
+			case NOT:
 				value[op.Result] = ^value[var0]
-			} else if op.Type == LET {
+			case LET:
 				value[op.Result] = value[var0]
 			}
 			if value[op.Result] < 0 {

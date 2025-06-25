@@ -10,11 +10,12 @@ import (
 func Day08() Solution {
 	grid, commands := data08(true)
 	for _, cmd := range commands {
-		if cmd.Type == "rect" {
+		switch cmd.Type {
+		case "rect":
 			turnOn(grid, cmd.Int2)
-		} else if cmd.Type == "row" {
+		case "row":
 			rotateRow(grid, cmd.Int2)
-		} else if cmd.Type == "col" {
+		case "col":
 			rotateCol(grid, cmd.Int2)
 		}
 	}
@@ -100,13 +101,9 @@ func rotateCol(grid IntGrid, p Int2) {
 
 func displayGrid(grid IntGrid) {
 	for _, line := range grid {
-		out := make([]byte, len(line))
+		out := make([]rune, len(line))
 		for i, x := range line {
-			if x == 0 {
-				out[i] = ' '
-			} else {
-				out[i] = '#'
-			}
+			out[i] = fn.Ternary(x == 0, ' ', '#')
 		}
 		fmt.Println(string(out))
 	}

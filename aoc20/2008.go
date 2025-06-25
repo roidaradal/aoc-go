@@ -50,8 +50,7 @@ func runCodes(codes []StrInt) (int, bool) {
 		}
 
 		done.Add(i)
-		code := codes[i]
-		cmd, y := code.Str, code.Int
+		cmd, y := codes[i].Tuple()
 		switch cmd {
 		case "nop":
 			i += 1
@@ -67,12 +66,8 @@ func runCodes(codes []StrInt) (int, bool) {
 func flipNopJmp(codes []StrInt, idx int) []StrInt {
 	codes2 := make([]StrInt, len(codes))
 	copy(codes2, codes)
-	code := codes2[idx]
-	cmd, y := code.Str, code.Int
-	cmd2 := "jmp"
-	if cmd == "jmp" {
-		cmd2 = "nop"
-	}
+	cmd, y := codes2[idx].Tuple()
+	cmd2 := fn.Ternary(cmd == "jmp", "nop", "jmp")
 	codes2[idx] = StrInt{Str: cmd2, Int: y}
 	return codes2
 }

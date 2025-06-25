@@ -40,16 +40,12 @@ func data01(full bool) []Int2 {
 
 func findHQ(moves []Int2, atVisitedTwice bool) Coords {
 	curr := Coords{0, 0}
-	d := Delta{0, 0}
+	d := X
 	visited := ds.NewSet[Coords]()
 	for _, move := range moves {
 		turn, steps := move[0], move[1]
-		if d[0] == 0 && d[1] == 0 {
-			if turn == left {
-				d = L
-			} else {
-				d = R
-			}
+		if d == X {
+			d = fn.Ternary(turn == left, L, R)
 		} else if turn == left {
 			d = LeftOf[d]
 		} else if turn == right {

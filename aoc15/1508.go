@@ -42,11 +42,12 @@ func parseString(text string) string {
 func expandString(text string) string {
 	chars := make([]string, 0)
 	for _, x := range text {
-		if x == '"' {
+		switch x {
+		case '"':
 			chars = append(chars, `\"`)
-		} else if x == '\\' {
+		case '\\':
 			chars = append(chars, `\\`)
-		} else {
+		default:
 			chars = append(chars, string(x))
 		}
 	}

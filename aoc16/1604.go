@@ -73,11 +73,12 @@ func (r Room) decrypt() string {
 }
 
 func rotateLetter(letter rune) rune {
-	if letter == '-' {
+	switch letter {
+	case '-':
 		return '-'
-	} else if letter == 'z' {
+	case 'z':
 		return 'a'
-	} else {
+	default:
 		return letter + 1
 	}
 }

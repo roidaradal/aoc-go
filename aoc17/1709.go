@@ -16,11 +16,12 @@ func Day09() Solution {
 	for i < limit {
 		char := stream[i]
 		if garbage {
-			if char == '!' {
+			switch char {
+			case '!':
 				i += 1
-			} else if char == '>' {
+			case '>':
 				garbage = false
-			} else {
+			default:
 				count += 1
 			}
 		} else if char == '{' {

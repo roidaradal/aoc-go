@@ -82,48 +82,39 @@ func runProgram07(p *Program) (*int, int) {
 			break
 		}
 
-		if cmd == 1 || cmd == 2 || cmd == 7 || cmd == 8 {
+		switch cmd {
+		case 1, 2, 7, 8:
 			in1, in2, out := p.numbers[i+1], p.numbers[i+2], p.numbers[i+3]
 			m := intcodeModes(head, 3)
 			m1, m2 := m[0], m[1]
 			a := intcodeParam(in1, m1, p.numbers)
 			b := intcodeParam(in2, m2, p.numbers)
-			if cmd == 1 {
+			switch cmd {
+			case 1:
 				p.numbers[out] = a + b
-			} else if cmd == 2 {
+			case 2:
 				p.numbers[out] = a * b
-			} else if cmd == 7 {
-				if a < b {
-					p.numbers[out] = 1
-				} else {
-					p.numbers[out] = 0
-				}
-			} else if cmd == 8 {
-				if a == b {
-					p.numbers[out] = 1
-				} else {
-					p.numbers[out] = 0
-				}
+			case 7:
+				p.numbers[out] = fn.Ternary(a < b, 1, 0)
+			case 8:
+				p.numbers[out] = fn.Ternary(a == b, 1, 0)
 			}
 			i += 4
-		} else if cmd == 3 {
+		case 3:
 			idx := p.numbers[i+1]
 			p.numbers[idx], p.inputs = p.inputs[0], p.inputs[1:]
 			i += 2
-		} else if cmd == 4 {
+		case 4:
 			m := intcodeModes(head, 1)[0]
 			out := intcodeParam(p.numbers[i+1], m, p.numbers)
 			i += 2
 			return &out, i
-		} else if cmd == 5 || cmd == 6 {
+		case 5, 6:
 			p1, p2 := p.numbers[i+1], p.numbers[i+2]
 			m := intcodeModes(head, 2)
 			m1, m2 := m[0], m[1]
 			isZero := intcodeParam(p1, m1, p.numbers) == 0
-			doJump := isZero // cmd == 6
-			if cmd == 5 {
-				doJump = !isZero
-			}
+			doJump := fn.Ternary(cmd == 6, isZero, !isZero)
 			if doJump {
 				i = intcodeParam(p2, m2, p.numbers)
 			} else {

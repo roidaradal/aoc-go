@@ -36,54 +36,45 @@ func runProgram09(numbers map[int]int, start int) int {
 			break
 		}
 
-		if cmd == 1 || cmd == 2 || cmd == 7 || cmd == 8 {
+		switch cmd {
+		case 1, 2, 7, 8:
 			in1, in2, out := numbers[i+1], numbers[i+2], numbers[i+3]
 			m := intcodeModes(head, 3)
 			m1, m2, m3 := m[0], m[1], m[2]
 			a := intcodeParam2(in1, m1, rbase, numbers)
 			b := intcodeParam2(in2, m2, rbase, numbers)
 			c := intcodeIndex(out, m3, rbase)
-			if cmd == 1 {
+			switch cmd {
+			case 1:
 				numbers[c] = a + b
-			} else if cmd == 2 {
+			case 2:
 				numbers[c] = a * b
-			} else if cmd == 7 {
-				if a < b {
-					numbers[c] = 1
-				} else {
-					numbers[c] = 0
-				}
-			} else if cmd == 8 {
-				if a == b {
-					numbers[c] = 1
-				} else {
-					numbers[c] = 0
-				}
+			case 7:
+				numbers[c] = fn.Ternary(a < b, 1, 0)
+			case 8:
+				numbers[c] = fn.Ternary(a == b, 1, 0)
 			}
 			i += 4
-		} else if cmd == 3 {
+		case 3:
 			m := intcodeModes(head, 1)[0]
 			idx := intcodeIndex(numbers[i+1], m, rbase)
 			numbers[idx] = start
 			i += 2
-		} else if cmd == 4 {
+		case 4:
 			m := intcodeModes(head, 1)[0]
 			output = intcodeParam2(numbers[i+1], m, rbase, numbers)
 			i += 2
-		} else if cmd == 9 {
+		case 9:
 			m := intcodeModes(head, 1)[0]
 			jmp := intcodeParam2(numbers[i+1], m, rbase, numbers)
 			rbase += jmp
 			i += 2
-		} else if cmd == 5 || cmd == 6 {
+		case 5, 6:
 			p1, p2 := numbers[i+1], numbers[i+2]
 			m := intcodeModes(head, 2)
 			m1, m2 := m[0], m[1]
 			isZero := intcodeParam2(p1, m1, rbase, numbers) == 0
-			doJump := isZero // cmd == 6
-			if cmd == 5 {
-				doJump = !isZero
-			}
+			doJump := fn.Ternary(cmd == 6, isZero, !isZero)
 			if doJump {
 				i = intcodeParam2(p2, m2, rbase, numbers)
 			} else {

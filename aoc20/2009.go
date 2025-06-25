@@ -23,7 +23,7 @@ func Day09() Solution {
 
 	// Part 2
 	part2 := 0
-outerLoop:
+mainLoop:
 	for i := range limit {
 		j := i
 		total := numbers[i]
@@ -33,7 +33,7 @@ outerLoop:
 			if total == target {
 				options := numbers[i : j+1]
 				part2 = slices.Min(options) + slices.Max(options)
-				break outerLoop
+				break mainLoop
 			}
 		}
 	}

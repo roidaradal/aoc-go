@@ -72,10 +72,7 @@ func spiralOffset(x int, layer int) (byte, int) {
 		}
 
 		mid := (c1 + c2) / 2
-		offset := mid - x
-		if i < 2 {
-			offset = -offset
-		}
+		offset := fn.Ternary(i < 2, x-mid, mid-x)
 		return side[i], offset
 	}
 	return 'C', 0

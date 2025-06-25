@@ -66,10 +66,11 @@ func processLogs(logs []Int2) map[int]map[int]int {
 	sleep := make(map[int]map[int]int)
 	for i < limit {
 		cmd, x := logs[i][0], logs[i][1]
-		if cmd == GUARD {
+		switch cmd {
+		case GUARD:
 			guard = x
 			i += 1
-		} else if cmd == ON {
+		case ON:
 			end := logs[i+1][1]
 			for m := x; m < end; m++ {
 				if !fn.HasKey(sleep, guard) {

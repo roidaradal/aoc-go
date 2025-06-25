@@ -22,9 +22,17 @@ type CharInt struct {
 	Int  int
 }
 
+func (c CharInt) Tuple() (rune, int) {
+	return c.Char, c.Int
+}
+
 type StrInt struct {
 	Str string
 	Int int
+}
+
+func (s StrInt) Tuple() (string, int) {
+	return s.Str, s.Int
 }
 
 func NewSolution[T any, V any](part1 T, part2 V) Solution {

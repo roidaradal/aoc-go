@@ -49,8 +49,7 @@ func bfsTraversal(t *Tree, start string, goal *string) int {
 	q := ds.NewQueue[StrInt]()
 	q.Enqueue(StrInt{Str: start, Int: 0})
 	for q.Len() > 0 {
-		item := q.Dequeue()
-		node, depth := item.Str, item.Int
+		node, depth := q.Dequeue().Tuple()
 		if fn.HasKey(visited, node) {
 			continue
 		}

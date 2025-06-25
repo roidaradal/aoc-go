@@ -13,6 +13,7 @@ import (
 	"github.com/roidaradal/aoc-go/aoc18"
 	"github.com/roidaradal/aoc-go/aoc19"
 	"github.com/roidaradal/aoc-go/aoc20"
+	"github.com/roidaradal/aoc-go/aoc21"
 	"github.com/roidaradal/fn"
 )
 
@@ -63,6 +64,8 @@ func solve(year, day int) aoc.Solution {
 		return solve19(day)
 	case 20:
 		return solve20(day)
+	case 21:
+		return solve21(day)
 	}
 	panic("Invalid year")
 }
@@ -219,6 +222,14 @@ func solve20(day int) aoc.Solution {
 		return aoc20.Day09()
 	case 10:
 		return aoc20.Day10()
+	}
+	panic("Invalid day")
+}
+
+func solve21(day int) aoc.Solution {
+	switch day {
+	case 1:
+		return aoc21.Day01()
 	}
 	panic("Invalid day")
 }

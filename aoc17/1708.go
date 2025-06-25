@@ -51,19 +51,20 @@ type Instruction struct {
 }
 
 func (i Instruction) isSatisfied(value int) bool {
-	if i.op == "==" {
+	switch i.op {
+	case "==":
 		return value == i.value
-	} else if i.op == "!=" {
+	case "!=":
 		return value != i.value
-	} else if i.op == ">" {
+	case ">":
 		return value > i.value
-	} else if i.op == ">=" {
+	case ">=":
 		return value >= i.value
-	} else if i.op == "<" {
+	case "<":
 		return value < i.value
-	} else if i.op == "<=" {
+	case "<=":
 		return value <= i.value
-	} else {
+	default:
 		return false
 	}
 }

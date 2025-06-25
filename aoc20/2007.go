@@ -22,10 +22,7 @@ func Day07() Solution {
 		}
 	}
 	valid := ds.NewSet[string]()
-	q := ds.NewQueue[string]()
-	for _, color := range parents["shiny gold"] {
-		q.Enqueue(color)
-	}
+	q := ds.QueueFrom(parents["shiny gold"])
 	for q.Len() > 0 {
 		color := q.Dequeue()
 		valid.Add(color)
@@ -69,7 +66,7 @@ func countInside(color string, h Hierarchy) int {
 	total := 0
 	if fn.HasKey(h, color) {
 		for _, bag := range h[color] {
-			color2, count := bag.Str, bag.Int
+			color2, count := bag.Tuple()
 			total += count + (count * countInside(color2, h))
 		}
 	}

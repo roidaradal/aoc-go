@@ -25,8 +25,7 @@ func Day10() Solution {
 	// Part 2
 	count := make(map[int]int)
 	count[Last(numbers, 1)] = 1
-	i := len(numbers) - 2
-	for i >= 0 {
+	for i := len(numbers) - 2; i >= 0; i -= 1 {
 		curr := numbers[i]
 		valid := fn.Filter(numbers[i+1:i+4], func(x int) bool {
 			return x-curr <= 3
@@ -34,7 +33,6 @@ func Day10() Solution {
 		count[curr] = fn.Sum(fn.Map(valid, func(x int) int {
 			return count[x]
 		}))
-		i -= 1
 	}
 	part2 := count[numbers[0]]
 
