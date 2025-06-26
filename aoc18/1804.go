@@ -26,11 +26,11 @@ func Day04() Solution {
 	guards := make([]Int3, 0)
 	for guard := range sleep {
 		maxEntry := maxSleepEntry(sleep[guard])
-		count, minute := maxEntry[0], maxEntry[1]
+		count, minute := maxEntry.Tuple()
 		guards = append(guards, Int3{count, minute, guard})
 	}
 	maxEntry := slices.MaxFunc(guards, SortInt3)
-	minute, guard = maxEntry[1], maxEntry[2]
+	_, minute, guard = maxEntry.Tuple()
 	part2 := guard * minute
 
 	return NewSolution(part1, part2)

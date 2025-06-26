@@ -26,7 +26,7 @@ func Day08() Solution {
 				continue
 			}
 			top = stack.Pop()
-			child, meta = top[0], top[1]
+			child, meta = top.Tuple()
 			stack.Push(Int2{child - 1, meta})
 		} else {
 			child, meta = numbers[i], numbers[i+1]

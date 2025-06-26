@@ -18,10 +18,8 @@ func Day05() Solution {
 	length := len(word1)
 
 	// Part 2
-	charSet := ds.NewSet[byte]()
-	for _, char := range []byte(word) {
-		charSet.Add(LowerChar(char))
-	}
+	// charSet := ds.NewSet[byte]()
+	charSet := ds.SetFrom(fn.Map([]byte(word), LowerChar))
 	chars := charSet.Items()
 	slices.Sort(chars)
 	numChars := len(chars)

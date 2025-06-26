@@ -14,8 +14,8 @@ func Day03() Solution {
 	// Part 1
 	g := NewIntGrid(1000, 1000, 0)
 	for _, claim := range claims {
-		row, col := claim.coords[0], claim.coords[1]
-		h, w := claim.dims[0], claim.dims[1]
+		row, col := claim.coords.Tuple()
+		h, w := claim.dims.Tuple()
 		for dy := range h {
 			r := row + dy
 			for dx := range w {
@@ -38,8 +38,8 @@ func Day03() Solution {
 	g = NewIntGrid(1000, 1000, 0)
 	clean := ds.NewSet[int]()
 	for _, claim := range claims {
-		row, col := claim.coords[0], claim.coords[1]
-		h, w := claim.dims[0], claim.dims[1]
+		row, col := claim.coords.Tuple()
+		h, w := claim.dims.Tuple()
 		ok := true
 		for dy := range h {
 			r := row + dy

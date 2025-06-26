@@ -13,13 +13,13 @@ func Day02() Solution {
 	for _, d := range moves {
 		curr = Move(curr, d)
 	}
-	y, x := curr[0], curr[1]
+	y, x := curr.Tuple()
 	part1 := y * x
 
 	// Part 2
 	y, x, a := 0, 0, 0
 	for _, d := range moves {
-		dy, dx := d[0], d[1]
+		dy, dx := d.Tuple()
 		if dy == 0 {
 			x += dx
 			y += a * dx

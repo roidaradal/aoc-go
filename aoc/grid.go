@@ -28,8 +28,8 @@ func NewIntGrid(rows, cols, initial int) IntGrid {
 }
 
 func Move(c Coords, d Delta) Coords {
-	row, col := c[0], c[1]
-	dy, dx := d[0], d[1]
+	row, col := c.Tuple()
+	dy, dx := d.Tuple()
 	return Coords{row + dy, col + dx}
 }
 
@@ -39,9 +39,14 @@ func GridSum(grid IntGrid) int {
 	}))
 }
 
+func GridBounds[T any](items [][]T) Dims2 {
+	rows, cols := len(items), len(items[0])
+	return Dims2{rows, cols}
+}
+
 func Manhattan(c1 Coords, c2 Coords) int {
-	y1, x1 := c1[0], c1[1]
-	y2, x2 := c2[0], c2[1]
+	y1, x1 := c1.Tuple()
+	y2, x2 := c2.Tuple()
 	return fn.Abs(y2-y1) + fn.Abs(x2-x1)
 }
 
@@ -54,14 +59,14 @@ func InsideBounds(c Coords, maxBounds Dims2) bool {
 }
 
 func InsideBoundsFull(c Coords, maxBounds Dims2, minBounds Dims2) bool {
-	row, col := c[0], c[1]
-	minRows, minCols := minBounds[0], minBounds[1]
-	numRows, numCols := maxBounds[0], maxBounds[1]
+	row, col := c.Tuple()
+	minRows, minCols := minBounds.Tuple()
+	numRows, numCols := maxBounds.Tuple()
 	return minRows <= row && row < numRows && minCols <= col && col < numCols
 }
 
 func Surround8(c Coords) []Coords {
-	y, x := c[0], c[1]
+	y, x := c.Tuple()
 	return []Coords{
 		{y - 1, x - 1}, {y - 1, x}, {y - 1, x + 1},
 		{y - 0, x - 1}, {y - 0, x + 1},

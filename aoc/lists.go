@@ -56,3 +56,19 @@ func UniqueAppend[T comparable](items []T, item T) []T {
 	}
 	return items
 }
+
+func NumRange(start, end int) []int {
+	numbers := make([]int, 0)
+	for i := start; i < end; i++ {
+		numbers = append(numbers, i)
+	}
+	return numbers
+}
+
+func RevRange(start, end int) []int {
+	numbers := make([]int, 0)
+	for i := start; i > end; i-- {
+		numbers = append(numbers, i)
+	}
+	return numbers
+}

@@ -14,7 +14,7 @@ func Day10() Solution {
 	botValues := createBotValues(bots)
 
 	for _, p := range chips {
-		value, who := p[0], p[1]
+		value, who := p.Tuple()
 		botValues[who] = append(botValues[who], value)
 	}
 

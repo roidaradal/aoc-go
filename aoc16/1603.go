@@ -49,6 +49,6 @@ func countValidTriples(triples []Dims3) int {
 }
 
 func isValidTriple(t Dims3) bool {
-	a, b, c := t[0], t[1], t[2]
+	a, b, c := t.Tuple()
 	return (a+b > c) && (b+c > a) && (a+c > b)
 }

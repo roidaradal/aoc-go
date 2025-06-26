@@ -65,7 +65,7 @@ func data08(full bool) (IntGrid, []Command) {
 }
 
 func turnOn(grid IntGrid, p Int2) {
-	cols, rows := p[0], p[1]
+	cols, rows := p.Tuple()
 	for row := range rows {
 		for col := range cols {
 			grid[row][col] = 1
@@ -74,7 +74,7 @@ func turnOn(grid IntGrid, p Int2) {
 }
 
 func rotateRow(grid IntGrid, p Int2) {
-	rowIdx, steps := p[0], p[1]
+	rowIdx, steps := p.Tuple()
 	row := grid[rowIdx]
 	last := len(row) - 1
 	for range steps {
@@ -85,7 +85,7 @@ func rotateRow(grid IntGrid, p Int2) {
 
 func rotateCol(grid IntGrid, p Int2) {
 	numRows := len(grid)
-	colIdx, steps := p[0], p[1]
+	colIdx, steps := p.Tuple()
 	col := make([]int, numRows)
 	for i, line := range grid {
 		col[i] = line[colIdx]

@@ -27,8 +27,8 @@ func Day10() Solution {
 	sameLine := make(map[Line]*ds.Set[Coords])
 	for _, combo := range Combinations(asteroids, 2) {
 		a1, a2 := combo[0], combo[1]
-		y1, x1 := a1[0], a1[1]
-		y2, x2 := a2[0], a2[1]
+		y1, x1 := a1.Tuple()
+		y2, x2 := a2.Tuple()
 		if y1 == y2 {
 			if !fn.HasKey(sameRow, y1) {
 				sameRow[y1] = ds.NewSet[Coords]()
@@ -199,7 +199,7 @@ func Day10() Solution {
 	}
 
 	lastAsteroid := destroyed[goal-1]
-	y, x = lastAsteroid[0], lastAsteroid[1]
+	y, x = lastAsteroid.Tuple()
 	score := (x * 100) + y
 
 	return NewSolution(maxScore, score)
@@ -222,8 +222,8 @@ func lineEq(a1, a2 Coords) Line {
 	slices.SortFunc(asteroids, SortCoordsX)
 	a1, a2 = asteroids[0], asteroids[1]
 
-	y1, x1 := a1[0], a1[1]
-	y2, x2 := a2[0], a2[1]
+	y1, x1 := a1.Tuple()
+	y2, x2 := a2.Tuple()
 	dy := float64(y2 - y1)
 	dx := float64(x2 - x1)
 	m := dy / dx

@@ -43,7 +43,7 @@ func findHQ(moves []Int2, atVisitedTwice bool) Coords {
 	d := X
 	visited := ds.NewSet[Coords]()
 	for _, move := range moves {
-		turn, steps := move[0], move[1]
+		turn, steps := move.Tuple()
 		if d == X {
 			d = fn.Ternary(turn == left, L, R)
 		} else if turn == left {

@@ -24,7 +24,7 @@ func Day03() Solution {
 
 func data03(full bool, d Delta) []string {
 	lines := ReadLines(20, 3, full)
-	dy, dx := d[0], d[1]
+	dy, dx := d.Tuple()
 	h, w := len(lines), len(lines[0])
 	needW := float64((1 + dx) * numSteps(h, dy))
 	repeat := int(math.Ceil(needW / float64(w)))
@@ -45,7 +45,7 @@ func countSlope(d Delta, full bool) int {
 	steps := numSteps(height, dy)
 	for range steps {
 		curr = Move(curr, d)
-		row, col := curr[0], curr[1]
+		row, col := curr.Tuple()
 		if g[row][col] == '#' {
 			count += 1
 		}

@@ -24,7 +24,7 @@ func Day08() Solution {
 	part1 := f['1'] * f['2']
 
 	// Part 2
-	h, w := dims[0], dims[1]
+	h, w := dims.Tuple()
 	img := make([]rune, 0)
 	for i := range h * w {
 		for _, layer := range layers {
@@ -50,7 +50,7 @@ func Day08() Solution {
 
 func data08(full bool) ([]string, Dims2) {
 	dims := Dims2{6, 25}
-	h, w := dims[0], dims[1]
+	h, w := dims.Tuple()
 	layer := h * w
 	line := ReadFirstLine(19, 8, full)
 	img := make([]string, 0)

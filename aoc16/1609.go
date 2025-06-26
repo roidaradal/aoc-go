@@ -20,7 +20,7 @@ func Day09() Solution {
 }
 
 func data09(full bool) string {
-	return ReadLines(16, 9, full)[0]
+	return ReadFirstLine(16, 9, full)
 }
 
 func decompressLength(word string, skip bool) int {
@@ -36,8 +36,8 @@ func decompressLength(word string, skip bool) int {
 			continue
 		}
 		end := strings.Index(word[i:], ")") + i
-		p := ToIntList(word[i+1:end], "x")
-		size, repeat := p[0], p[1]
+		p := ToInt2(word[i+1:end], "x")
+		size, repeat := p.Tuple()
 		start := end + 1
 		for j := i; j < start; j++ {
 			count[j] = 0

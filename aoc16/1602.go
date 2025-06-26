@@ -48,12 +48,12 @@ func solveCode(pad Keypad, movesList []string) string {
 	for i, moves := range movesList {
 		for _, m := range moves {
 			nxt := Move(curr, T[m])
-			r, c := nxt[0], nxt[1]
+			r, c := nxt.Tuple()
 			if InsideBounds(nxt, pad.Bounds) && pad.Grid[r][c] != '0' {
 				curr = nxt
 			}
 		}
-		row, col := curr[0], curr[1]
+		row, col := curr.Tuple()
 		code[i] = pad.Grid[row][col]
 	}
 	return string(code)

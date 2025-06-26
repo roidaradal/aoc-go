@@ -73,8 +73,8 @@ func computeBounds(particles []Particle) (Coords, Coords) {
 
 func displayParticles(particles []Particle) {
 	c1, c2 := computeBounds(particles)
-	y1, x1 := c1[0], c1[1]
-	y2, x2 := c2[0], c2[1]
+	y1, x1 := c1.Tuple()
+	y2, x2 := c2.Tuple()
 	g := make(map[Coords]string)
 	for y := y1; y <= y2; y++ {
 		for x := x1; x <= x2; x++ {

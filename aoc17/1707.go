@@ -86,7 +86,7 @@ func data07(full bool) Tree {
 		if len(p) == 1 {
 			continue
 		}
-		if _, ok := t.children[name]; !ok {
+		if !fn.HasKey(t.children, name) {
 			t.children[name] = make([]string, 0)
 		}
 		for _, child := range fn.CleanSplit(p[1], ",") {

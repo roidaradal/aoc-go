@@ -12,7 +12,7 @@ func Day02() Solution {
 	total1, total2 := 0, 0
 	for _, dims := range items {
 		// Part 1
-		l, w, h := dims[0], dims[1], dims[2]
+		l, w, h := dims.Tuple()
 		lw, wh, lh := l*w, w*h, l*h
 		total1 += (2 * lw) + (2 * wh) + (2 * lh) + min(lw, wh, lh)
 

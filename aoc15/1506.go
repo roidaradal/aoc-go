@@ -19,7 +19,7 @@ func Day06() Solution {
 	commands := data06(mask, true)
 	grid := NewIntGrid(side, side, 0)
 	for _, cmd := range commands {
-		b, y1, x1, y2, x2 := cmd[0], cmd[1], cmd[2], cmd[3], cmd[4]
+		b, y1, x1, y2, x2 := cmd.Tuple()
 		for y := y1; y < y2; y++ {
 			for x := x1; x < x2; x++ {
 				if b == -1 {
@@ -41,7 +41,7 @@ func Day06() Solution {
 	commands = data06(mask, true)
 	grid = NewIntGrid(side, side, 0)
 	for _, cmd := range commands {
-		b, y1, x1, y2, x2 := cmd[0], cmd[1], cmd[2], cmd[3], cmd[4]
+		b, y1, x1, y2, x2 := cmd.Tuple()
 		for y := y1; y < y2; y++ {
 			for x := x1; x < x2; x++ {
 				value := grid[y][x] + b
@@ -60,7 +60,11 @@ var (
 	toggle string = "toggle"
 )
 
-type command = [5]int
+type command [5]int
+
+func (cmd command) Tuple() (int, int, int, int, int) {
+	return cmd[0], cmd[1], cmd[2], cmd[3], cmd[4]
+}
 
 func data06(mask map[string]int, full bool) []command {
 	return fn.Map(ReadLines(15, 6, full), func(line string) command {
@@ -75,10 +79,10 @@ func data06(mask map[string]int, full bool) []command {
 		p := fn.CleanSplit(line, "through")
 		head := Last(fn.SpaceSplit(p[0]), 1)
 		tail := p[1]
-		c1 := ToIntList(head, ",")
-		c2 := ToIntList(tail, ",")
-		x1, y1 := c1[0], c1[1]
-		x2, y2 := c2[0], c2[1]
+		c1 := ToInt2(head, ",")
+		c2 := ToInt2(tail, ",")
+		x1, y1 := c1.Tuple()
+		x2, y2 := c2.Tuple()
 		return command{b, y1, x1, y2 + 1, x2 + 1}
 	})
 }
