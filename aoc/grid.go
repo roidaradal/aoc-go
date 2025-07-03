@@ -65,6 +65,11 @@ func InsideBoundsFull(c Coords, maxBounds Dims2, minBounds Dims2) bool {
 	return minRows <= row && row < numRows && minCols <= col && col < numCols
 }
 
+func Surround4(c Coords) []Coords {
+	y, x := c.Tuple()
+	return []Coords{{y - 1, x}, {y, x - 1}, {y, x + 1}, {y + 1, x}}
+}
+
 func Surround8(c Coords) []Coords {
 	y, x := c.Tuple()
 	return []Coords{

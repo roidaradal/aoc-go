@@ -9,9 +9,15 @@ func ToIntList(line string, sep string) []int {
 	} else {
 		parts = fn.CleanSplit(line, sep)
 	}
-	return fn.Map(parts, func(x string) int {
-		return fn.ParseInt(x)
-	})
+	return fn.Map(parts, fn.ParseInt)
+}
+
+func ToIntLine(line string) []int {
+	digits := make([]string, 0)
+	for i := range len(line) {
+		digits = append(digits, string(line[i:i+1]))
+	}
+	return fn.Map(digits, fn.ParseInt)
 }
 
 func ToDims3(line string, sep string) Dims3 {
