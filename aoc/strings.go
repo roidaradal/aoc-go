@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+
+	"github.com/roidaradal/fn"
 )
 
 func MD5Hash(word string) string {
@@ -75,4 +77,12 @@ func GroupChunks(word string) []string {
 
 func RepeatChar(char rune, count int) string {
 	return string(slices.Repeat([]rune{char}, count))
+}
+
+func RuneToString(char rune) string {
+	return string([]rune{char})
+}
+
+func StringChars(text string) []string {
+	return fn.Map([]rune(text), RuneToString)
 }
