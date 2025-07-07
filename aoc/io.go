@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/io"
@@ -19,13 +20,13 @@ func dataPath(year int, day int, full bool) string {
 
 }
 
-func ReadRawLines(year int, day int, full bool) []string {
+func ReadRawLines(year int, day int, full bool, strip bool) []string {
 	path := dataPath(year, day, full)
 	text, err := io.ReadTextFile(path)
 	if err != nil {
 		log.Fatal("Error:", err)
 	}
-	lines := fn.CleanSplit(text, "\n")
+	lines := fn.Ternary(strip, fn.CleanSplit(text, "\n"), strings.Split(text, "\n"))
 	return lines
 }
 

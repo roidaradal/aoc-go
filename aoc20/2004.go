@@ -28,7 +28,7 @@ func Day04() Solution {
 func data04(full bool) []Passport {
 	passports := make([]Passport, 0)
 	p := make(Passport)
-	for _, line := range ReadRawLines(20, 4, full) {
+	for _, line := range ReadRawLines(20, 4, full, true) {
 		if line == "" {
 			passports = append(passports, p)
 			p = make(Passport)

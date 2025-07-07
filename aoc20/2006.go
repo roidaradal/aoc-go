@@ -25,7 +25,7 @@ func Day06() Solution {
 func data06(full bool) []Group {
 	groups := make([]Group, 0)
 	curr := make(Group, 0)
-	for _, line := range ReadRawLines(20, 6, full) {
+	for _, line := range ReadRawLines(20, 6, full, true) {
 		if line == "" {
 			groups = append(groups, curr)
 			curr = make(Group, 0)

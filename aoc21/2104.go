@@ -19,7 +19,7 @@ func Day04() Solution {
 }
 
 func data04(full bool) ([]int, []*Bingo) {
-	lines := ReadRawLines(21, 4, full)
+	lines := ReadRawLines(21, 4, full, true)
 	numbers := ToIntList(lines[0], ",")
 	cards := make([]*Bingo, 0)
 	card := make(IntGrid, 0)
