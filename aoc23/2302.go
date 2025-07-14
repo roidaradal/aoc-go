@@ -22,11 +22,11 @@ func Day02() Solution {
 	return NewSolution(total1, total2)
 }
 
-func data02(full bool) []Game {
-	return fn.Map(ReadLines(23, 2, full), func(line string) Game {
+func data02(full bool) []MarbleGame {
+	return fn.Map(ReadLines(23, 2, full), func(line string) MarbleGame {
 		p := fn.CleanSplit(line, ":")
 		id := fn.ParseInt(fn.SpaceSplit(p[0])[1])
-		game := Game{
+		game := MarbleGame{
 			id:    id,
 			draws: make([]Int3, 0),
 		}
@@ -37,12 +37,12 @@ func data02(full bool) []Game {
 	})
 }
 
-type Game struct {
+type MarbleGame struct {
 	id    int
 	draws []Int3
 }
 
-func (game *Game) addDraw(line string) {
+func (game *MarbleGame) addDraw(line string) {
 	r, g, b := 0, 0, 0
 	for _, part := range fn.CleanSplit(line, ",") {
 		p := fn.SpaceSplit(part)
@@ -60,7 +60,7 @@ func (game *Game) addDraw(line string) {
 	game.draws = append(game.draws, Int3{r, g, b})
 }
 
-func (game Game) isValid() bool {
+func (game MarbleGame) isValid() bool {
 	for _, draw := range game.draws {
 		r, g, b := draw.Tuple()
 		if r > 12 || g > 13 || b > 14 {
@@ -70,7 +70,7 @@ func (game Game) isValid() bool {
 	return true
 }
 
-func (game Game) power() int {
+func (game MarbleGame) power() int {
 	maxR, maxG, maxB := 0, 0, 0
 	for _, draw := range game.draws {
 		r, g, b := draw.Tuple()

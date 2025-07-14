@@ -44,6 +44,11 @@ func GridBounds[T any](items [][]T) Dims2 {
 	return Dims2{rows, cols}
 }
 
+func StringGridBounds(grid []string) Dims2 {
+	rows, cols := len(grid), len(grid[0])
+	return Dims2{rows, cols}
+}
+
 func Manhattan(c1 Coords, c2 Coords) int {
 	y1, x1 := c1.Tuple()
 	y2, x2 := c2.Tuple()
