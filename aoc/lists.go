@@ -65,6 +65,14 @@ func NumRange(start, end int) []int {
 	return numbers
 }
 
+func NumRangeInc(start, end, inc int) []int {
+	numbers := make([]int, 0)
+	for i := start; i < end; i += inc {
+		numbers = append(numbers, i)
+	}
+	return numbers
+}
+
 func RevRange(start, end int) []int {
 	numbers := make([]int, 0)
 	for i := start; i > end; i-- {
