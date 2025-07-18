@@ -2,6 +2,10 @@ package aoc
 
 import "cmp"
 
+func SortIntDesc(a, b int) int {
+	return cmp.Compare(b, a)
+}
+
 func SortCharIntDesc(a, b CharInt) int {
 	cmp1 := cmp.Compare(b.Int, a.Int)
 	if cmp1 != 0 {

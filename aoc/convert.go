@@ -3,12 +3,7 @@ package aoc
 import "github.com/roidaradal/fn"
 
 func ToIntList(line string, sep string) []int {
-	var parts []string
-	if sep == " " {
-		parts = fn.SpaceSplit(line)
-	} else {
-		parts = fn.CleanSplit(line, sep)
-	}
+	parts := splitParts(line, sep)
 	return fn.Map(parts, fn.ParseInt)
 }
 
@@ -36,4 +31,24 @@ func ToCharInt(line string) CharInt {
 		Char: chars[0],
 		Int:  fn.ParseInt(string(chars[1:])),
 	}
+}
+
+func ToStrInt(line string, sep string) StrInt {
+	parts := splitParts(line, sep)
+	return StrInt{Str: parts[0], Int: fn.ParseInt(parts[1])}
+}
+
+func ToStr2(line string, sep string) Str2 {
+	p := splitParts(line, sep)
+	return Str2{p[0], p[1]}
+}
+
+func splitParts(line string, sep string) []string {
+	var parts []string
+	if sep == " " {
+		parts = fn.SpaceSplit(line)
+	} else {
+		parts = fn.CleanSplit(line, sep)
+	}
+	return parts
 }
