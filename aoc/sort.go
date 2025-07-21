@@ -49,3 +49,11 @@ func SortCoordsX(a, b Coords) int {
 func SortCoordsY(a, b Coords) int {
 	return cmp.Compare(a[0], b[0])
 }
+
+func SortCoords(a, b Coords) int {
+	cmpY := SortCoordsY(a, b)
+	if cmpY != 0 {
+		return cmpY
+	}
+	return SortCoordsX(a, b)
+}
