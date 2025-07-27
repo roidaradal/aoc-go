@@ -80,3 +80,11 @@ func RevRange(start, end int) []int {
 	}
 	return numbers
 }
+
+func CountFreq[T comparable](items []T) map[T]int {
+	freq := make(map[T]int)
+	for _, item := range items {
+		freq[item] += 1
+	}
+	return freq
+}
