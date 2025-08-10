@@ -27,6 +27,11 @@ type StrInt struct {
 	Int int
 }
 
+type Vector struct {
+	Coords
+	Delta
+}
+
 func NewSolution[T any, V any](part1 T, part2 V) Solution {
 	sol1 := fmt.Sprintf("%v", part1)
 	sol2 := fmt.Sprintf("%v", part2)
@@ -63,4 +68,8 @@ func (p Int2) Tuple() (int, int) {
 
 func (p Int3) Tuple() (int, int, int) {
 	return p[0], p[1], p[2]
+}
+
+func (v Vector) Tuple() (Coords, Delta) {
+	return v.Coords, v.Delta
 }

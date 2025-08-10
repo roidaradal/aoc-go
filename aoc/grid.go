@@ -91,3 +91,9 @@ func GetCoordsY(c Coords) int {
 func GetCoordsX(c Coords) int {
 	return c[1]
 }
+
+func GetDelta(c1 Coords, c2 Coords) Delta {
+	y1, x1 := c1.Tuple()
+	y2, x2 := c2.Tuple()
+	return Delta{y2 - y1, x2 - x1}
+}
