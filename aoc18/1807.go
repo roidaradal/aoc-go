@@ -6,7 +6,10 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day07() Solution {
@@ -35,10 +38,10 @@ func Day07() Solution {
 		candidates := fn.Filter(taskCandidates(g, done), func(task string) bool {
 			return !ongoing.Contains(task)
 		})
-		availableEntries := fn.Filter(fn.MapEntries(queue), func(e fn.Entry[int, StrInt]) bool {
+		availableEntries := fn.Filter(dict.Entries(queue), func(e dict.Entry[int, StrInt]) bool {
 			return e.Value.Str == ""
 		})
-		available := fn.Map(availableEntries, func(e fn.Entry[int, StrInt]) int {
+		available := fn.Map(availableEntries, func(e dict.Entry[int, StrInt]) int {
 			return e.Key
 		})
 		count := min(len(candidates), len(available))
@@ -72,14 +75,18 @@ func Day07() Solution {
 
 func data07(full bool) *ds.Graph {
 	g := ds.NewGraph()
+	edges := make([][2]string, 0)
 	for _, line := range ReadLines(18, 7, full) {
-		p := fn.SpaceSplit(line)
+		p := str.SpaceSplit(line)
 		v1, v2 := p[1], Last(p, 3)
 		g.AddVertex(v1)
 		g.AddVertex(v2)
-		g.AddEdge(v2, v1)
+		edges = append(edges, [2]string{v2, v1})
 	}
-	g.InitEdges()
+	g.InitializeEdges()
+	for _, edge := range edges {
+		g.AddDirectedEdge(edge[0], edge[1])
+	}
 	return g
 }
 
@@ -89,7 +96,7 @@ func taskCandidates(g *ds.Graph, done []string) []string {
 		if slices.Contains(done, vertex) {
 			continue
 		}
-		allDone := fn.All(g.Edges(vertex), func(dep string) bool {
+		allDone := check.All(g.Neighbors(vertex), func(dep string) bool {
 			return slices.Contains(done, dep)
 		})
 		if allDone {

@@ -3,6 +3,7 @@ package aoc20
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day02() Solution {
@@ -25,8 +26,8 @@ func Day02() Solution {
 func data02(full bool) []Password {
 	return fn.Map(ReadLines(20, 2, full), func(line string) Password {
 		password := Password{}
-		p := fn.CleanSplit(line, ":")
-		h := fn.SpaceSplit(p[0])
+		p := str.CleanSplit(line, ":")
+		h := str.SpaceSplit(p[0])
 		nums := ToIntList(h[0], "-")
 		password.num1 = nums[0]
 		password.num2 = nums[1]

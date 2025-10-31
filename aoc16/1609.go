@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day09() Solution {
@@ -51,5 +51,5 @@ func decompressLength(word string, skip bool) int {
 			i = end + 1
 		}
 	}
-	return fn.Sum(count)
+	return list.Sum(count)
 }

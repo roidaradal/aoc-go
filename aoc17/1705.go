@@ -3,6 +3,7 @@ package aoc17
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 )
 
 func Day05() Solution {
@@ -18,7 +19,7 @@ func Day05() Solution {
 }
 
 func data05(full bool) []int {
-	return fn.Map(ReadLines(17, 5, full), fn.ParseInt)
+	return fn.Map(ReadLines(17, 5, full), conv.ParseInt)
 }
 
 func countJumps(full bool, clip bool) int {

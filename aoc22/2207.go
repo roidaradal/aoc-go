@@ -8,6 +8,9 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/str"
 )
 
 type FileSystem = map[string]*Item
@@ -59,7 +62,7 @@ func data07(full bool) FileSystem {
 	var cwd *Item = nil
 	for _, line := range ReadLines(22, 7, full) {
 		if strings.HasPrefix(line, cmdCD) {
-			name := fn.SpaceSplit(line)[2]
+			name := str.SpaceSplit(line)[2]
 			if name == ".." && cwd != nil {
 				cwd = cwd.parent
 			} else {
@@ -68,14 +71,14 @@ func data07(full bool) FileSystem {
 		} else if line == cmdLS {
 			continue
 		} else {
-			p := fn.SpaceSplit(line)
+			p := str.SpaceSplit(line)
 			head, tail := p[0], p[1]
 			var item *Item
 			var isNew bool
 			if head == "dir" {
 				item, isNew = getDir(fs, tail, cwd)
 			} else {
-				item, isNew = getFile(fs, tail, fn.ParseInt(head), cwd)
+				item, isNew = getFile(fs, tail, conv.ParseInt(head), cwd)
 			}
 			if isNew && cwd != nil {
 				cwd.children = append(cwd.children, item)
@@ -83,7 +86,7 @@ func data07(full bool) FileSystem {
 		}
 	}
 
-	dirPaths := fn.Filter(fn.MapKeys(fs), func(path string) bool {
+	dirPaths := fn.Filter(dict.Keys(fs), func(path string) bool {
 		return fs[path].isDir
 	})
 	slices.SortFunc(dirPaths, func(p1, p2 string) int {

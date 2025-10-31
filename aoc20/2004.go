@@ -5,7 +5,10 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day04() Solution {
@@ -33,8 +36,8 @@ func data04(full bool) []Passport {
 			passports = append(passports, p)
 			p = make(Passport)
 		} else {
-			for _, pair := range fn.SpaceSplit(line) {
-				parts := fn.CleanSplit(pair, ":")
+			for _, pair := range str.SpaceSplit(line) {
+				parts := str.CleanSplit(pair, ":")
 				k, v := parts[0], parts[1]
 				p[k] = v
 			}
@@ -49,8 +52,8 @@ type Passport = map[string]string
 var passportKeys = []string{"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}
 
 func hasAllKeys(p Passport) bool {
-	return fn.All(passportKeys, func(key string) bool {
-		return fn.HasKey(p, key)
+	return check.All(passportKeys, func(key string) bool {
+		return dict.HasKey(p, key)
 	})
 }
 
@@ -62,23 +65,23 @@ func isValidPassport(p Passport) bool {
 	for k, v := range p {
 		switch k {
 		case "byr":
-			byr := fn.ParseInt(v)
+			byr := conv.ParseInt(v)
 			if 1920 <= byr && byr <= 2002 {
 				ok += 1
 			}
 		case "iyr":
-			iyr := fn.ParseInt(v)
+			iyr := conv.ParseInt(v)
 			if 2010 <= iyr && iyr <= 2020 {
 				ok += 1
 			}
 		case "eyr":
-			eyr := fn.ParseInt(v)
+			eyr := conv.ParseInt(v)
 			if 2020 <= eyr && eyr <= 2030 {
 				ok += 1
 			}
 		case "hgt":
 			n := len(v)
-			hgt, unit := fn.ParseInt(v[:n-2]), v[n-2:]
+			hgt, unit := conv.ParseInt(v[:n-2]), v[n-2:]
 			if unit == "cm" && 150 <= hgt && hgt <= 193 {
 				ok += 1
 			}

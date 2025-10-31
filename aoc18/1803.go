@@ -5,7 +5,10 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day03() Solution {
@@ -24,7 +27,7 @@ func Day03() Solution {
 			}
 		}
 	}
-	total := fn.Sum(fn.Map(g, func(row []int) int {
+	total := list.Sum(fn.Map(g, func(row []int) int {
 		count := 0
 		for _, x := range row {
 			if x > 1 {
@@ -68,9 +71,9 @@ func Day03() Solution {
 func data03(full bool) []Claim {
 	return fn.Map(ReadLines(18, 3, full), func(line string) Claim {
 		claim := Claim{}
-		p := fn.CleanSplit(line, "@")
-		claim.id = fn.ParseInt(strings.TrimPrefix(p[0], "#"))
-		t := fn.CleanSplit(p[1], ":")
+		p := str.CleanSplit(line, "@")
+		claim.id = conv.ParseInt(strings.TrimPrefix(p[0], "#"))
+		t := str.CleanSplit(p[1], ":")
 		c := ToIntList(t[0], ",")
 		claim.coords = Coords{c[1], c[0]}
 		d := ToIntList(t[1], "x")

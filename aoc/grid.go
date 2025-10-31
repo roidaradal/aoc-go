@@ -1,6 +1,10 @@
 package aoc
 
-import "github.com/roidaradal/fn"
+import (
+	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
+)
 
 var (
 	U Delta = [2]int{-1, 0}
@@ -34,8 +38,8 @@ func Move(c Coords, d Delta) Coords {
 }
 
 func GridSum(grid IntGrid) int {
-	return fn.Sum(fn.Map(grid, func(line []int) int {
-		return fn.Sum(line)
+	return list.Sum(fn.Map(grid, func(line []int) int {
+		return list.Sum(line)
 	}))
 }
 
@@ -52,7 +56,7 @@ func StringGridBounds(grid []string) Dims2 {
 func Manhattan(c1 Coords, c2 Coords) int {
 	y1, x1 := c1.Tuple()
 	y2, x2 := c2.Tuple()
-	return fn.Abs(y2-y1) + fn.Abs(x2-x1)
+	return conv.Abs(y2-y1) + conv.Abs(x2-x1)
 }
 
 func ManhattanOrigin(c Coords) int {

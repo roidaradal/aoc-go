@@ -3,6 +3,7 @@ package aoc22
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
 	"github.com/roidaradal/fn/ds"
 )
 
@@ -37,11 +38,11 @@ func checkRowVisible(grid IntGrid, visible *ds.Set[Coords], c Coords) {
 	isLower := func(x int) bool {
 		return x < grid[row][col]
 	}
-	if fn.All(grid[row][:col], isLower) {
+	if check.All(grid[row][:col], isLower) {
 		visible.Add(c)
 		return
 	}
-	if fn.All(grid[row][col+1:], isLower) {
+	if check.All(grid[row][col+1:], isLower) {
 		visible.Add(c)
 	}
 }
@@ -57,14 +58,14 @@ func checkColVisible(grid IntGrid, visible *ds.Set[Coords], c Coords) {
 	above := fn.Map(NumRange(0, row), func(r int) int {
 		return grid[r][col]
 	})
-	if fn.All(above, isLower) {
+	if check.All(above, isLower) {
 		visible.Add(c)
 		return
 	}
 	below := fn.Map(NumRange(row+1, len(grid)), func(r int) int {
 		return grid[r][col]
 	})
-	if fn.All(below, isLower) {
+	if check.All(below, isLower) {
 		visible.Add(c)
 	}
 }

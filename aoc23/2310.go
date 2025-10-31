@@ -5,6 +5,7 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
 )
 
@@ -27,7 +28,7 @@ func Day10() Solution {
 			grid2[pt] = 'X'
 		}
 	}
-	inside := fn.Filter(fn.MapValues(grid2), func(tile rune) bool {
+	inside := fn.Filter(dict.Values(grid2), func(tile rune) bool {
 		return tile == 'X'
 	})
 	count := len(inside)
@@ -134,7 +135,7 @@ func bfsMaxDistance(grid *MazeGrid) int {
 	q := ds.NewQueue[CoordDist]()
 	q.Enqueue(CoordDist{grid.start, 0})
 	for q.Len() > 0 {
-		pair := q.Dequeue()
+		pair, _ := q.Dequeue()
 		node, d := pair.Tuple()
 		dist[node] = d
 		visited.Add(node)
@@ -145,7 +146,7 @@ func bfsMaxDistance(grid *MazeGrid) int {
 			q.Enqueue(CoordDist{node2, d + 1})
 		}
 	}
-	return slices.Max(fn.MapValues(dist))
+	return slices.Max(dict.Values(dist))
 }
 
 func dfsVisit(grid *MazeGrid) []Coords {
@@ -153,7 +154,7 @@ func dfsVisit(grid *MazeGrid) []Coords {
 	stack := ds.NewStack[Coords]()
 	stack.Push(grid.start)
 	for stack.Len() > 0 {
-		node := stack.Pop()
+		node, _ := stack.Pop()
 		if slices.Contains(points, node) {
 			continue
 		}
@@ -207,13 +208,13 @@ func floodFillMaze(grid map[Coords]rune) []Coords {
 			pts[y] = append(pts[y], x)
 		}
 	}
-	ymin := slices.Min(fn.MapKeys(pts))
+	ymin := slices.Min(dict.Keys(pts))
 	xmin := slices.Min(pts[ymin])
 	start := Coords{ymin + 1, xmin + 1}
 	stack := ds.NewStack[Coords]()
 	stack.Push(start)
 	for stack.Len() > 0 {
-		curr := stack.Pop()
+		curr, _ := stack.Pop()
 		if visited.Contains(curr) {
 			continue
 		}

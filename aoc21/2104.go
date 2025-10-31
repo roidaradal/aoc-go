@@ -3,7 +3,10 @@ package aoc21
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day04() Solution {
@@ -44,7 +47,7 @@ type Bingo struct {
 }
 
 func (b *Bingo) Mark(number int) {
-	if fn.HasKey(b.lookup, number) {
+	if dict.HasKey(b.lookup, number) {
 		pt := b.lookup[number]
 		b.marked[pt] = true
 	}
@@ -52,7 +55,7 @@ func (b *Bingo) Mark(number int) {
 
 func (b *Bingo) HasWon() bool {
 	for row := range b.rows {
-		bingo := fn.All(NumRange(0, b.cols), func(col int) bool {
+		bingo := check.All(NumRange(0, b.cols), func(col int) bool {
 			return b.marked[Coords{row, col}]
 		})
 		if bingo {
@@ -60,7 +63,7 @@ func (b *Bingo) HasWon() bool {
 		}
 	}
 	for col := range b.cols {
-		bingo := fn.All(NumRange(0, b.rows), func(row int) bool {
+		bingo := check.All(NumRange(0, b.rows), func(row int) bool {
 			return b.marked[Coords{row, col}]
 		})
 		if bingo {
@@ -71,10 +74,10 @@ func (b *Bingo) HasWon() bool {
 }
 
 func (b *Bingo) Score() int {
-	unmarked := fn.Filter(fn.MapKeys(b.marked), func(c Coords) bool {
+	unmarked := fn.Filter(dict.Keys(b.marked), func(c Coords) bool {
 		return !b.marked[c]
 	})
-	return fn.Sum(fn.Map(unmarked, func(c Coords) int {
+	return list.Sum(fn.Map(unmarked, func(c Coords) int {
 		row, col := c.Tuple()
 		return b.card[row][col]
 	}))

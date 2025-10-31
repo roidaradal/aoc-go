@@ -3,6 +3,8 @@ package aoc20
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day01() Solution {
@@ -18,13 +20,13 @@ func Day01() Solution {
 }
 
 func data01(full bool) []int {
-	return fn.Map(ReadLines(20, 1, full), fn.ParseInt)
+	return fn.Map(ReadLines(20, 1, full), conv.ParseInt)
 }
 
 func find2020Combo(numbers []int, take int) int {
 	for _, combo := range Combinations(numbers, take) {
-		if fn.Sum(combo) == 2020 {
-			return fn.Product(combo)
+		if list.Sum(combo) == 2020 {
+			return list.Product(combo)
 		}
 	}
 	return 0

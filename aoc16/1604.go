@@ -6,6 +6,8 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day04() Solution {
@@ -28,14 +30,14 @@ func Day04() Solution {
 
 func data04(full bool) []Room {
 	return fn.Map(ReadLines(16, 4, full), func(line string) Room {
-		p := fn.CleanSplit(line, "[")
+		p := str.CleanSplit(line, "[")
 		head, tail := p[0], p[1]
-		h := fn.CleanSplit(head, "-")
+		h := str.CleanSplit(head, "-")
 		lastIdx := len(h) - 1
 		return Room{
 			checksum: strings.TrimSuffix(tail, "]"),
 			name:     strings.Join(h[:lastIdx], "-"),
-			id:       fn.ParseInt(h[lastIdx]),
+			id:       conv.ParseInt(h[lastIdx]),
 		}
 	})
 }

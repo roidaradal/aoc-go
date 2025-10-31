@@ -5,6 +5,8 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day10() Solution {
@@ -30,7 +32,7 @@ func Day10() Solution {
 		valid := fn.Filter(numbers[i+1:i+4], func(x int) bool {
 			return x-curr <= 3
 		})
-		count[curr] = fn.Sum(fn.Map(valid, func(x int) int {
+		count[curr] = list.Sum(fn.Map(valid, func(x int) int {
 			return count[x]
 		}))
 	}
@@ -40,7 +42,7 @@ func Day10() Solution {
 }
 
 func data10(full bool) []int {
-	numbers := fn.Map(ReadLines(20, 10, full), fn.ParseInt)
+	numbers := fn.Map(ReadLines(20, 10, full), conv.ParseInt)
 	numbers = append(numbers, 0)
 	numbers = append(numbers, slices.Max(numbers)+3)
 	return numbers

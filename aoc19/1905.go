@@ -3,6 +3,7 @@ package aoc19
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 )
 
 func Day05() Solution {
@@ -26,7 +27,7 @@ func runProgram05(numbers []int, start int) int {
 	output := 0
 	for {
 		head, tail := commandParts(numbers[i])
-		cmd := fn.ParseInt(tail)
+		cmd := conv.ParseInt(tail)
 		if cmd == 99 {
 			break
 		}

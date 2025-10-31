@@ -2,7 +2,7 @@ package aoc17
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 )
 
 func Day01() Solution {
@@ -14,7 +14,7 @@ func Day01() Solution {
 	for i := range limit {
 		j := (i + 1) % limit
 		if word[i] == word[j] {
-			total1 += fn.ParseInt(string(word[i]))
+			total1 += conv.ParseInt(string(word[i]))
 		}
 	}
 
@@ -24,7 +24,7 @@ func Day01() Solution {
 	for i := range mid {
 		j := mid + i
 		if word[i] == word[j] {
-			total2 += fn.ParseInt(string(word[i])) * 2
+			total2 += conv.ParseInt(string(word[i])) * 2
 		}
 	}
 

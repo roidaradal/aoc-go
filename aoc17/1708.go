@@ -5,6 +5,9 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day08() Solution {
@@ -19,25 +22,25 @@ func Day08() Solution {
 		}
 	}
 	// Part 1
-	maxReg := slices.Max(fn.MapValues(reg))
+	maxReg := slices.Max(dict.Values(reg))
 	return NewSolution(maxReg, maxVal)
 }
 
 func data08(full bool) []Instruction {
 	return fn.Map(ReadLines(17, 8, full), func(line string) Instruction {
 		cmd := Instruction{}
-		p := fn.CleanSplit(line, " if ")
+		p := str.CleanSplit(line, " if ")
 		head, tail := p[0], p[1]
-		h := fn.SpaceSplit(head)
+		h := str.SpaceSplit(head)
 		cmd.targetReg = h[0]
-		cmd.inc = fn.ParseInt(h[2])
+		cmd.inc = conv.ParseInt(h[2])
 		if h[1] == "dec" {
 			cmd.inc *= -1
 		}
-		t := fn.SpaceSplit(tail)
+		t := str.SpaceSplit(tail)
 		cmd.condReg = t[0]
 		cmd.op = t[1]
-		cmd.value = fn.ParseInt(t[2])
+		cmd.value = conv.ParseInt(t[2])
 		return cmd
 	})
 }

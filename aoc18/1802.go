@@ -4,7 +4,7 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
 )
 
 func Day02() Solution {
@@ -13,7 +13,7 @@ func Day02() Solution {
 	// Part 1
 	count2, count3 := 0, 0
 	for _, word := range words {
-		freq := fn.MapValues(CharFreq(word, nil))
+		freq := dict.Values(CharFreq(word, nil))
 		if slices.Contains(freq, 2) {
 			count2 += 1
 		}

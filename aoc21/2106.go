@@ -2,7 +2,8 @@ package aoc21
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day06() Solution {
@@ -41,5 +42,5 @@ func simulateFish(fish []int, days int) int {
 		}
 		groups = groups2
 	}
-	return fn.Sum(fn.MapValues(groups))
+	return list.Sum(dict.Values(groups))
 }

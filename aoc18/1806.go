@@ -6,6 +6,7 @@ import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day06() Solution {
@@ -47,7 +48,7 @@ func Day06() Solution {
 	for row := range rows {
 		for col := range cols {
 			c := Coords{row, col}
-			total := fn.Sum(fn.Map(points, func(pt Coords) int {
+			total := list.Sum(fn.Map(points, func(pt Coords) int {
 				return Manhattan(c, pt)
 			}))
 			if total < 10_000 {

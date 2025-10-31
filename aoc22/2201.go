@@ -5,7 +5,8 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day01() Solution {
@@ -18,7 +19,7 @@ func Day01() Solution {
 	slices.SortFunc(calories, func(a, b int) int {
 		return cmp.Compare(b, a)
 	})
-	top3 := fn.Sum(calories[0:3])
+	top3 := list.Sum(calories[0:3])
 
 	return NewSolution(maxCal, top3)
 }
@@ -31,7 +32,7 @@ func data01(full bool) []int {
 			calories = append(calories, curr)
 			curr = 0
 		} else {
-			curr += fn.ParseInt(line)
+			curr += conv.ParseInt(line)
 		}
 	}
 	calories = append(calories, curr)

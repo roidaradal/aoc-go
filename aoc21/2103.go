@@ -3,6 +3,7 @@ package aoc21
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 )
 
 func Day03() Solution {
@@ -29,8 +30,8 @@ func Day03() Solution {
 			e = append(e, '1')
 		}
 	}
-	gb := fn.ParseBinary(string(g))
-	eb := fn.ParseBinary(string(e))
+	gb := conv.ParseBinary(string(g))
+	eb := conv.ParseBinary(string(e))
 	part1 := gb * eb
 
 	// Part 2
@@ -65,7 +66,7 @@ func filterMax(binaryNumbers []string) int {
 			break
 		}
 	}
-	return fn.ParseBinary(binaryNumbers[0])
+	return conv.ParseBinary(binaryNumbers[0])
 }
 
 func filterMin(binaryNumbers []string) int {
@@ -81,5 +82,5 @@ func filterMin(binaryNumbers []string) int {
 			break
 		}
 	}
-	return fn.ParseBinary(binaryNumbers[0])
+	return conv.ParseBinary(binaryNumbers[0])
 }

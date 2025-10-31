@@ -6,6 +6,7 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
 )
 
@@ -30,20 +31,20 @@ func Day10() Solution {
 		y1, x1 := a1.Tuple()
 		y2, x2 := a2.Tuple()
 		if y1 == y2 {
-			if !fn.HasKey(sameRow, y1) {
+			if dict.NoKey(sameRow, y1) {
 				sameRow[y1] = ds.NewSet[Coords]()
 			}
 			sameRow[y1].Add(a1)
 			sameRow[y1].Add(a2)
 		} else if x1 == x2 {
-			if !fn.HasKey(sameCol, x1) {
+			if dict.NoKey(sameCol, x1) {
 				sameCol[x1] = ds.NewSet[Coords]()
 			}
 			sameCol[x1].Add(a1)
 			sameCol[x1].Add(a2)
 		} else {
 			mb := lineEq(a1, a2)
-			if !fn.HasKey(sameLine, mb) {
+			if dict.NoKey(sameLine, mb) {
 				sameLine[mb] = ds.NewSet[Coords]()
 			}
 			sameLine[mb].Add(a1)
@@ -71,9 +72,9 @@ func Day10() Solution {
 	}
 
 	lines := make([][]Coords, 0)
-	lines = append(lines, fn.MapValues(oneRow)...)
-	lines = append(lines, fn.MapValues(oneCol)...)
-	lines = append(lines, fn.MapValues(oneLine)...)
+	lines = append(lines, dict.Values(oneRow)...)
+	lines = append(lines, dict.Values(oneCol)...)
+	lines = append(lines, dict.Values(oneLine)...)
 	for _, coords := range lines {
 		for i := range len(coords) - 1 {
 			a1, a2 := coords[i], coords[i+1]
@@ -84,7 +85,7 @@ func Day10() Solution {
 
 	scores := make([]AsteroidScore, len(asteroids))
 	for i, a := range asteroids {
-		vis := fn.Filter(fn.MapValues(visible[a]), func(ok bool) bool {
+		vis := fn.Filter(dict.Values(visible[a]), func(ok bool) bool {
 			return ok
 		})
 		scores[i] = AsteroidScore{

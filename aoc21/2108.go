@@ -7,7 +7,10 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/str"
 )
 
 type Pair = [2][]string
@@ -40,8 +43,8 @@ func Day08() Solution {
 
 func data08(full bool) []Pair {
 	return fn.Map(ReadLines(21, 8, full), func(line string) Pair {
-		p := fn.CleanSplit(line, "|")
-		return Pair{fn.SpaceSplit(p[0]), fn.SpaceSplit(p[1])}
+		p := str.CleanSplit(line, "|")
+		return Pair{str.SpaceSplit(p[0]), str.SpaceSplit(p[1])}
 	})
 }
 
@@ -110,7 +113,7 @@ func alignClues(clues1 Clues, clues2 Clues) map[string]string {
 		unmapped := ds.SetFrom(code)
 		for choices.Len() > 1 {
 			for _, c := range code {
-				if fn.HasKey(t, c) {
+				if dict.HasKey(t, c) {
 					unmapped.Delete(c)
 					choices.Delete(t[c])
 				}
@@ -128,7 +131,7 @@ func alignClues(clues1 Clues, clues2 Clues) map[string]string {
 
 func assign(b string, a string, t map[string]string, domain Domain) (map[string]string, Domain) {
 	t[b] = a
-	if fn.HasKey(domain, b) {
+	if dict.HasKey(domain, b) {
 		delete(domain, b)
 	}
 
@@ -164,5 +167,5 @@ func translateOutput(output []string, m map[string]string, t map[string]string) 
 
 	digit := fn.Translate(orig, m)
 	d := strings.Join(digit, "")
-	return fn.ParseInt(d)
+	return conv.ParseInt(d)
 }

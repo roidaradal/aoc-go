@@ -6,7 +6,9 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day03() Solution {
@@ -14,11 +16,11 @@ func Day03() Solution {
 
 	// Part 1
 	symbols := findSymbols(grid)
-	total1 := fn.Sum(findValidNumbers(grid, symbols))
+	total1 := list.Sum(findValidNumbers(grid, symbols))
 
 	// Part 2
 	gears := findGears(grid)
-	total2 := fn.Sum(findGearRatios(grid, gears))
+	total2 := list.Sum(findGearRatios(grid, gears))
 
 	return NewSolution(total1, total2)
 }
@@ -49,7 +51,7 @@ func findValidNumbers(grid []string, symbols []Coords) []int {
 			start, end := m[0], m[1]
 			rowRange := Int3{row, start, end}
 			if hasAdjacentSymbol(rowRange, symbols, bounds) {
-				number := fn.ParseInt(line[start:end])
+				number := conv.ParseInt(line[start:end])
 				numbers = append(numbers, number)
 			}
 		}
@@ -77,7 +79,7 @@ func findGearRatios(grid []string, gears []Coords) []int {
 		for _, m := range numberPattern.FindAllIndex([]byte(line), -1) {
 			start, end := m[0], m[1]
 			rowRange := Int3{row, start, end}
-			number := fn.ParseInt(line[start:end])
+			number := conv.ParseInt(line[start:end])
 			for _, c := range getAdjacentSymbols(rowRange, gears, bounds) {
 				adjacent[c] = append(adjacent[c], number)
 			}

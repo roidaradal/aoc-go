@@ -4,7 +4,8 @@ import (
 	"sort"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day10() Solution {
@@ -58,21 +59,21 @@ func data10(full bool) ([]Int2, map[int]Bot) {
 	chips := make([]Int2, 0)
 	bots := make(map[int]Bot)
 	for _, line := range ReadLines(16, 10, full) {
-		p := fn.SpaceSplit(line)
+		p := str.SpaceSplit(line)
 		N := len(p)
 		switch p[0] {
 		case "value":
-			value, who := fn.ParseInt(p[1]), fn.ParseInt(p[N-1])
+			value, who := conv.ParseInt(p[1]), conv.ParseInt(p[N-1])
 			chips = append(chips, Int2{value, who})
 		case "bot":
-			who := fn.ParseInt(p[1])
+			who := conv.ParseInt(p[1])
 			low := StrInt{
 				Str: p[5],
-				Int: fn.ParseInt(p[6]),
+				Int: conv.ParseInt(p[6]),
 			}
 			high := StrInt{
 				Str: p[N-2],
-				Int: fn.ParseInt(p[N-1]),
+				Int: conv.ParseInt(p[N-1]),
 			}
 			bots[who] = [2]StrInt{low, high}
 		}

@@ -3,14 +3,16 @@ package aoc18
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day01() Solution {
 	numbers := data01(true)
 
 	// Part 1
-	total := fn.Sum(numbers)
+	total := list.Sum(numbers)
 
 	// Part 2
 	limit := len(numbers)
@@ -29,5 +31,5 @@ func Day01() Solution {
 }
 
 func data01(full bool) []int {
-	return fn.Map(ReadLines(18, 1, full), fn.ParseInt)
+	return fn.Map(ReadLines(18, 1, full), conv.ParseInt)
 }

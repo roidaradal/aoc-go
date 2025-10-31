@@ -6,6 +6,10 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day04() Solution {
@@ -15,7 +19,7 @@ func Day04() Solution {
 	// Part 1
 	entries := make([]Int2, 0, len(sleep))
 	for guard, s := range sleep {
-		total := fn.Sum(fn.MapValues(s))
+		total := list.Sum(dict.Values(s))
 		entries = append(entries, Int2{total, guard})
 	}
 	guard := slices.MaxFunc(entries, SortInt2)[1]
@@ -46,16 +50,16 @@ func data04(full bool) []Int2 {
 	lines := ReadLines(18, 4, full)
 	slices.Sort(lines)
 	return fn.Map(lines, func(line string) Int2 {
-		p := fn.CleanSplit(line, "]")
+		p := str.CleanSplit(line, "]")
 		head, tail := p[0], p[1]
-		minute := fn.ParseInt(fn.CleanSplit(head, ":")[1])
+		minute := conv.ParseInt(str.CleanSplit(head, ":")[1])
 		if strings.Contains(tail, "asleep") {
 			return Int2{ON, minute}
 		} else if strings.Contains(tail, "wakes") {
 			return Int2{OFF, minute}
 		} else {
-			id := strings.TrimPrefix(fn.SpaceSplit(tail)[1], "#")
-			return Int2{GUARD, fn.ParseInt(id)}
+			id := strings.TrimPrefix(str.SpaceSplit(tail)[1], "#")
+			return Int2{GUARD, conv.ParseInt(id)}
 		}
 	})
 }
@@ -73,7 +77,7 @@ func processLogs(logs []Int2) map[int]map[int]int {
 		case ON:
 			end := logs[i+1][1]
 			for m := x; m < end; m++ {
-				if !fn.HasKey(sleep, guard) {
+				if dict.NoKey(sleep, guard) {
 					sleep[guard] = make(map[int]int)
 				}
 				sleep[guard][m] += 1

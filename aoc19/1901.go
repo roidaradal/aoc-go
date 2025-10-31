@@ -5,22 +5,24 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day01() Solution {
 	numbers := data01(true)
 
 	// Part 1
-	total1 := fn.Sum(fn.Map(numbers, fuel))
+	total1 := list.Sum(fn.Map(numbers, fuel))
 
 	// Part 2
-	total2 := fn.Sum(fn.Map(numbers, totalFuel))
+	total2 := list.Sum(fn.Map(numbers, totalFuel))
 
 	return NewSolution(total1, total2)
 }
 
 func data01(full bool) []int {
-	return fn.Map(ReadLines(19, 1, full), fn.ParseInt)
+	return fn.Map(ReadLines(19, 1, full), conv.ParseInt)
 }
 
 func fuel(x int) int {

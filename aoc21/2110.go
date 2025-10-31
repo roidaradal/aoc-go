@@ -4,7 +4,7 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
 )
 
@@ -21,7 +21,7 @@ func Day10() Solution {
 	total := 0
 	for _, line := range lines {
 		illegal := findIllegal(line)
-		if fn.HasKey(score1, illegal) {
+		if dict.HasKey(score1, illegal) {
 			total += score1[illegal]
 		}
 	}
@@ -68,8 +68,8 @@ var opener = map[rune]rune{
 func findIllegal(line string) rune {
 	stack := ds.NewStack[rune]()
 	for _, x := range line {
-		if fn.HasKey(closer, x) {
-			y := stack.Pop()
+		if dict.HasKey(closer, x) {
+			y, _ := stack.Pop()
 			if y != closer[x] {
 				return x
 			}
@@ -83,8 +83,8 @@ func findIllegal(line string) rune {
 func findIncomplete(line string) *string {
 	stack := ds.NewStack[rune]()
 	for _, x := range line {
-		if fn.HasKey(closer, x) {
-			y := stack.Pop()
+		if dict.HasKey(closer, x) {
+			y, _ := stack.Pop()
 			if y != closer[x] {
 				return nil
 			}
@@ -94,7 +94,8 @@ func findIncomplete(line string) *string {
 	}
 	mirror := make([]rune, 0)
 	for stack.Len() > 0 {
-		mirror = append(mirror, opener[stack.Pop()])
+		top, _ := stack.Pop()
+		mirror = append(mirror, opener[top])
 	}
 	incomplete := string(mirror)
 	return &incomplete

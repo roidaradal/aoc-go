@@ -6,6 +6,9 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day05() Solution {
@@ -48,10 +51,10 @@ func data05(full bool) ([][]rune, []Int3) {
 				stacks[idx] = append(stacks[idx], char)
 			}
 		} else {
-			p := fn.SpaceSplit(line)
-			count := fn.ParseInt(p[1])
-			src := fn.ParseInt(p[3]) - 1
-			dst := fn.ParseInt(p[5]) - 1
+			p := str.SpaceSplit(line)
+			count := conv.ParseInt(p[1])
+			src := conv.ParseInt(p[3]) - 1
+			dst := conv.ParseInt(p[5]) - 1
 			moves = append(moves, Int3{count, src, dst})
 		}
 	}
@@ -71,7 +74,7 @@ func processMoves(stacks [][]rune, moves []Int3, reverse bool) string {
 
 func transfer(stacks [][]rune, count int, idx1 int, idx2 int, reverse bool) {
 	s1, s2 := stacks[idx1], stacks[idx2]
-	move := fn.CopySlice(s1[:count])
+	move := list.Copy(s1[:count])
 	if reverse {
 		slices.Reverse(move)
 	}

@@ -3,6 +3,8 @@ package aoc21
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day02() Solution {
@@ -34,8 +36,8 @@ func Day02() Solution {
 
 func data02(full bool) []Delta {
 	return fn.Map(ReadLines(21, 2, full), func(line string) Delta {
-		p := fn.SpaceSplit(line)
-		cmd, x := p[0], fn.ParseInt(p[1])
+		p := str.SpaceSplit(line)
+		cmd, x := p[0], conv.ParseInt(p[1])
 		switch cmd {
 		case "forward":
 			return Delta{0, x}

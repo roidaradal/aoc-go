@@ -17,7 +17,7 @@ import (
 	"github.com/roidaradal/aoc-go/aoc22"
 	"github.com/roidaradal/aoc-go/aoc23"
 	"github.com/roidaradal/aoc-go/aoc24"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 )
 
 func main() {
@@ -28,8 +28,8 @@ func main() {
 	}
 
 	yydd := args[0]
-	year := fn.ParseInt(yydd[:2])
-	day := fn.ParseInt(yydd[2:])
+	year := conv.ParseInt(yydd[:2])
+	day := conv.ParseInt(yydd[2:])
 	testMode := len(args) >= 2 && args[1] == "test"
 
 	godotenv.Load()
@@ -325,6 +325,8 @@ func solve24(day int) aoc.Solution {
 		return aoc24.Day04()
 	case 5:
 		return aoc24.Day05()
+	case 6:
+		return aoc24.Day06()
 	}
 	panic("Invalid day")
 }

@@ -4,8 +4,9 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day09() Solution {
@@ -22,9 +23,9 @@ func Day09() Solution {
 
 func data09(full bool) (int, int) {
 	line := ReadFirstLine(18, 9, full)
-	p := fn.SpaceSplit(line)
-	numPlayers := fn.ParseInt(p[0])
-	lastMarble := fn.ParseInt(Last(p, 2))
+	p := str.SpaceSplit(line)
+	numPlayers := conv.ParseInt(p[0])
+	lastMarble := conv.ParseInt(Last(p, 2))
 	return numPlayers, lastMarble
 }
 

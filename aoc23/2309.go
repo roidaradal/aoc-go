@@ -3,6 +3,7 @@ package aoc23
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
 	"github.com/roidaradal/fn/ds"
 )
 
@@ -30,7 +31,7 @@ func data09(full bool) [][]int {
 func getNext(numbers []int) int {
 	gap := 0
 	diff := numbers
-	for !fn.AllEqual(diff, 0) {
+	for !check.AllEqual(diff, 0) {
 		diff = fn.Map(NumRange(1, len(diff)), func(i int) int {
 			return diff[i] - diff[i-1]
 		})
@@ -42,7 +43,7 @@ func getNext(numbers []int) int {
 func getPrev(numbers []int) int {
 	diff := numbers
 	fronts := []int{diff[0]}
-	for !fn.AllEqual(diff, 0) {
+	for !check.AllEqual(diff, 0) {
 		diff = fn.Map(NumRange(1, len(diff)), func(i int) int {
 			return diff[i] - diff[i-1]
 		})
@@ -50,9 +51,10 @@ func getPrev(numbers []int) int {
 	}
 	stack := ds.StackFrom(fronts)
 	for stack.Len() >= 2 {
-		b := stack.Pop()
-		a := stack.Pop()
+		b, _ := stack.Pop()
+		a, _ := stack.Pop()
 		stack.Push(a - b)
 	}
-	return stack.Top()
+	top, _ := stack.Top()
+	return top
 }

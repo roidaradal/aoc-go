@@ -5,6 +5,7 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day06() Solution {
@@ -76,8 +77,8 @@ func data06(mask map[string]int, full bool) []command {
 		} else if strings.HasPrefix(line, toggle) {
 			b = mask[toggle]
 		}
-		p := fn.CleanSplit(line, "through")
-		head := Last(fn.SpaceSplit(p[0]), 1)
+		p := str.CleanSplit(line, "through")
+		head := Last(str.SpaceSplit(p[0]), 1)
 		tail := p[1]
 		c1 := ToInt2(head, ",")
 		c2 := ToInt2(tail, ",")

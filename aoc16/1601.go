@@ -3,7 +3,9 @@ package aoc16
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day01() Solution {
@@ -31,9 +33,9 @@ func data01(full bool) []Int2 {
 		'R': right,
 	}
 	line := ReadFirstLine(16, 1, full)
-	return fn.Map(fn.CleanSplit(line, ","), func(move string) Int2 {
+	return fn.Map(str.CleanSplit(line, ","), func(move string) Int2 {
 		turn := T[move[0]]
-		steps := fn.ParseInt(move[1:])
+		steps := conv.ParseInt(move[1:])
 		return Int2{turn, steps}
 	})
 }

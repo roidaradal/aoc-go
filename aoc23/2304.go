@@ -5,7 +5,10 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day04() Solution {
@@ -25,8 +28,8 @@ func Day04() Solution {
 
 func data04(full bool) []CardGame {
 	return fn.Map(ReadLines(23, 4, full), func(line string) CardGame {
-		tail := fn.CleanSplit(line, ":")[1]
-		t := fn.CleanSplit(tail, "|")
+		tail := str.CleanSplit(line, ":")[1]
+		t := str.CleanSplit(tail, "|")
 		winners := ToIntList(t[0], " ")
 		numbers := ToIntList(t[1], " ")
 		return CardGame{
@@ -66,5 +69,5 @@ func countTotalCards(games []CardGame) int {
 			}
 		}
 	}
-	return fn.Sum(fn.MapValues(count))
+	return list.Sum(dict.Values(count))
 }

@@ -5,7 +5,9 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day09() Solution {
@@ -13,7 +15,7 @@ func Day09() Solution {
 
 	// Part 1
 	low := findLowPoints(grid)
-	total := fn.Sum(fn.Map(low, func(pt Int3) int {
+	total := list.Sum(fn.Map(low, func(pt Int3) int {
 		return pt[2] + 1
 	}))
 
@@ -37,7 +39,7 @@ func findLowPoints(grid IntGrid) []Int3 {
 	low := make([]Int3, 0)
 	for row, line := range grid {
 		for col, height := range line {
-			allHigher := fn.All(surrounding(grid, Coords{row, col}), func(t Int3) bool {
+			allHigher := check.All(surrounding(grid, Coords{row, col}), func(t Int3) bool {
 				return t[2] > height // compare height of surrounding to current
 			})
 			if allHigher {
@@ -66,7 +68,7 @@ func basinSize(grid IntGrid, center Coords) int {
 	stack := ds.NewStack[Coords]()
 	stack.Push(center)
 	for stack.Len() > 0 {
-		c := stack.Pop()
+		c, _ := stack.Pop()
 		visited.Add(c)
 		for _, t := range surrounding(grid, c) {
 			y, x, h := t.Tuple()

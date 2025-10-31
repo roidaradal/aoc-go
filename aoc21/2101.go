@@ -3,6 +3,8 @@ package aoc21
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day01() Solution {
@@ -19,8 +21,8 @@ func Day01() Solution {
 		if i < 3 {
 			continue
 		}
-		curr := fn.Sum(numbers[i-2 : i+1])
-		prev := fn.Sum(numbers[i-3 : i])
+		curr := list.Sum(numbers[i-2 : i+1])
+		prev := list.Sum(numbers[i-3 : i])
 		if curr > prev {
 			count2 += 1
 		}
@@ -29,5 +31,5 @@ func Day01() Solution {
 }
 
 func data01(full bool) []int {
-	return fn.Map(ReadLines(21, 1, full), fn.ParseInt)
+	return fn.Map(ReadLines(21, 1, full), conv.ParseInt)
 }

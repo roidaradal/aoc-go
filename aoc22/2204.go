@@ -3,6 +3,7 @@ package aoc22
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/str"
 )
 
 type Pair = [2]Int2
@@ -28,7 +29,7 @@ func Day04() Solution {
 
 func data04(full bool) []Pair {
 	return fn.Map(ReadLines(22, 4, full), func(line string) Pair {
-		p := fn.CleanSplit(line, ",")
+		p := str.CleanSplit(line, ",")
 		p1 := ToInt2(p[0], "-")
 		p2 := ToInt2(p[1], "-")
 		return Pair{p1, p2}

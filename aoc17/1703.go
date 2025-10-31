@@ -5,6 +5,9 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day03() Solution {
@@ -24,9 +27,9 @@ func Day03() Solution {
 	for value <= goal {
 		curr := spiralCoords(x)
 		near := fn.Filter(Surround8(curr), func(c Coords) bool {
-			return fn.HasKey(spiral, c)
+			return dict.HasKey(spiral, c)
 		})
-		value = fn.Sum(fn.Map(near, func(c Coords) int {
+		value = list.Sum(fn.Map(near, func(c Coords) int {
 			return values[spiral[c]]
 		}))
 		values = append(values, value)
@@ -38,7 +41,7 @@ func Day03() Solution {
 }
 
 func data03(full bool) int {
-	return fn.ParseInt(ReadFirstLine(17, 3, full))
+	return conv.ParseInt(ReadFirstLine(17, 3, full))
 }
 
 func spiralCoords(x int) Coords {

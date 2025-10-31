@@ -7,6 +7,7 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day10() Solution {
@@ -35,9 +36,9 @@ func Day10() Solution {
 
 func data10(full bool) []Particle {
 	return fn.Map(ReadLines(18, 10, full), func(line string) Particle {
-		p := fn.CleanSplit(line, ">")
-		head := fn.CleanSplit(p[0], "<")[1]
-		tail := fn.CleanSplit(p[1], "<")[1]
+		p := str.CleanSplit(line, ">")
+		head := str.CleanSplit(p[0], "<")[1]
+		tail := str.CleanSplit(p[1], "<")[1]
 		c := ToInt2(head, ",")
 		d := ToInt2(tail, ",")
 		return Particle{

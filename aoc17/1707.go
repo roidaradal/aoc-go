@@ -5,8 +5,11 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day07() Solution {
@@ -15,7 +18,7 @@ func Day07() Solution {
 	// Part 1
 	var root string
 	for _, name := range t.nodes {
-		if !fn.HasKey(t.parentOf, name) {
+		if dict.NoKey(t.parentOf, name) {
 			root = name
 			break
 		}
@@ -29,12 +32,12 @@ mainLoop:
 	for len(q) > 0 {
 		q2 := make([]string, 0)
 		for _, node := range q {
-			if !fn.HasKey(t.children, node) {
+			if dict.NoKey(t.children, node) {
 				weight[node] = t.weight[node]
 				continue
 			}
-			computable := fn.All(t.children[node], func(child string) bool {
-				return fn.HasKey(weight, child)
+			computable := check.All(t.children[node], func(child string) bool {
+				return dict.HasKey(weight, child)
 			})
 			if computable {
 				childWeights := ds.NewSet[int]()
@@ -78,18 +81,18 @@ func data07(full bool) Tree {
 		children: make(map[string][]string),
 	}
 	for _, line := range ReadLines(17, 7, full) {
-		p := fn.CleanSplit(line, "->")
-		node := fn.CleanSplit(p[0], "(")
+		p := str.CleanSplit(line, "->")
+		node := str.CleanSplit(p[0], "(")
 		name := node[0]
 		t.nodes = append(t.nodes, name)
-		t.weight[name] = fn.ParseInt(strings.TrimSuffix(node[1], ")"))
+		t.weight[name] = conv.ParseInt(strings.TrimSuffix(node[1], ")"))
 		if len(p) == 1 {
 			continue
 		}
-		if !fn.HasKey(t.children, name) {
+		if dict.NoKey(t.children, name) {
 			t.children[name] = make([]string, 0)
 		}
-		for _, child := range fn.CleanSplit(p[1], ",") {
+		for _, child := range str.CleanSplit(p[1], ",") {
 			t.parentOf[child] = name
 			t.children[name] = append(t.children[name], child)
 		}

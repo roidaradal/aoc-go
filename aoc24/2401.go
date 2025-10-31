@@ -4,7 +4,7 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 )
 
 func Day01() Solution {
@@ -15,7 +15,7 @@ func Day01() Solution {
 	slices.Sort(col2)
 	total1 := 0
 	for i := range len(col1) {
-		total1 += fn.Abs(col1[i] - col2[i])
+		total1 += conv.Abs(col1[i] - col2[i])
 	}
 
 	// Part 2

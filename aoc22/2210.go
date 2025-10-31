@@ -6,6 +6,8 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/str"
 )
 
 type CRT = [][]rune
@@ -41,11 +43,11 @@ func Day10() Solution {
 
 func data10(full bool) []StrInt {
 	return fn.Map(ReadLines(22, 10, full), func(line string) StrInt {
-		p := fn.SpaceSplit(line)
+		p := str.SpaceSplit(line)
 		cmd := p[0]
 		value := 0
 		if cmd == "addx" {
-			value = fn.ParseInt(p[1])
+			value = conv.ParseInt(p[1])
 		}
 		return StrInt{Str: cmd, Int: value}
 	})
@@ -64,6 +66,6 @@ func createCRT() CRT {
 func drawPixel(crt CRT, t int, x int, cols int) {
 	row := (t - 1) / cols
 	col := (t - 1) % cols
-	pixel := fn.Ternary(fn.Abs(x-col) <= 1, '#', '.')
+	pixel := fn.Ternary(conv.Abs(x-col) <= 1, '#', '.')
 	crt[row][col] = pixel
 }

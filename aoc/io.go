@@ -8,6 +8,7 @@ import (
 
 	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/io"
+	"github.com/roidaradal/fn/str"
 )
 
 func dataPath(year int, day int, full bool) string {
@@ -22,17 +23,17 @@ func dataPath(year int, day int, full bool) string {
 
 func ReadRawLines(year int, day int, full bool, strip bool) []string {
 	path := dataPath(year, day, full)
-	text, err := io.ReadTextFile(path)
+	text, err := io.ReadFile(path)
 	if err != nil {
 		log.Fatal("Error:", err)
 	}
-	lines := fn.Ternary(strip, fn.CleanSplit(text, "\n"), strings.Split(text, "\n"))
+	lines := fn.Ternary(strip, str.CleanSplit(text, "\n"), strings.Split(text, "\n"))
 	return lines
 }
 
 func ReadLines(year int, day int, full bool) []string {
 	path := dataPath(year, day, full)
-	lines, err := io.ReadTextLines(path)
+	lines, err := io.ReadLines(path)
 	if err != nil {
 		log.Fatal("Error:", err)
 	}
@@ -46,12 +47,12 @@ func ReadFirstLine(year int, day int, full bool) string {
 func GetSolution(year int, day int) Solution {
 	path := fmt.Sprintf("%s/solutions/all.csv", rootDir())
 	solutions := make(map[string]Solution)
-	lines, err := io.ReadTextLines(path)
+	lines, err := io.ReadLines(path)
 	if err != nil {
 		log.Fatal("Error:", err)
 	}
 	for _, line := range lines {
-		p := fn.CleanSplit(line, "|")
+		p := str.CleanSplit(line, "|")
 		k := fmt.Sprintf("%s%s", p[0], p[1])
 		v := Solution{p[2], p[3]}
 		solutions[k] = v

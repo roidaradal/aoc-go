@@ -5,6 +5,8 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day08() Solution {
@@ -34,7 +36,7 @@ type Command struct {
 func data08(full bool) (IntGrid, []Command) {
 	commands := make([]Command, 0)
 	for _, line := range ReadLines(16, 8, full) {
-		p := fn.SpaceSplit(line)
+		p := str.SpaceSplit(line)
 		lastIdx := len(p) - 1
 		if p[0] == "rect" {
 			cmd := Command{
@@ -43,16 +45,16 @@ func data08(full bool) (IntGrid, []Command) {
 			}
 			commands = append(commands, cmd)
 		} else if p[1] == "column" {
-			col := fn.ParseInt(fn.CleanSplit(p[2], "=")[1])
-			rot := fn.ParseInt(p[lastIdx])
+			col := conv.ParseInt(str.CleanSplit(p[2], "=")[1])
+			rot := conv.ParseInt(p[lastIdx])
 			cmd := Command{
 				Type: "col",
 				Int2: Int2{col, rot},
 			}
 			commands = append(commands, cmd)
 		} else if p[1] == "row" {
-			row := fn.ParseInt(fn.CleanSplit(p[2], "=")[1])
-			rot := fn.ParseInt(p[lastIdx])
+			row := conv.ParseInt(str.CleanSplit(p[2], "=")[1])
+			rot := conv.ParseInt(p[lastIdx])
 			cmd := Command{
 				Type: "row",
 				Int2: Int2{row, rot},

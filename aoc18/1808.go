@@ -15,8 +15,9 @@ func Day08() Solution {
 	stack.Push(Int2{child, meta})
 	total, i := 0, 2
 	for i < limit {
-		if stack.Top()[0] == 0 {
-			top := stack.Pop()
+		top, _ := stack.Top()
+		if top[0] == 0 {
+			top, _ := stack.Pop()
 			meta = top[1]
 			for m := range meta {
 				total += numbers[i+m]
@@ -25,7 +26,7 @@ func Day08() Solution {
 			if stack.IsEmpty() {
 				continue
 			}
-			top = stack.Pop()
+			top, _ = stack.Pop()
 			child, meta = top.Tuple()
 			stack.Push(Int2{child - 1, meta})
 		} else {
@@ -41,9 +42,9 @@ func Day08() Solution {
 	stack2.Push(Triple{child, meta, []int{}})
 	value, i := 0, 2
 	for i < limit {
-		top := stack2.Top()
+		top, _ := stack2.Top()
 		if top.child == len(top.values) {
-			top = stack2.Pop()
+			top, _ = stack2.Pop()
 			child, meta, values := top.child, top.meta, top.values
 			hasChild := child > 0
 			value = 0
@@ -61,7 +62,7 @@ func Day08() Solution {
 			if stack2.IsEmpty() {
 				break
 			}
-			top = stack2.Pop()
+			top, _ = stack2.Pop()
 			top.values = append(top.values, value)
 			stack2.Push(top)
 		} else {

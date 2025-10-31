@@ -3,7 +3,9 @@ package aoc20
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day08() Solution {
@@ -32,8 +34,8 @@ func Day08() Solution {
 
 func data08(full bool) []StrInt {
 	return fn.Map(ReadLines(20, 8, full), func(line string) StrInt {
-		p := fn.SpaceSplit(line)
-		return StrInt{Str: p[0], Int: fn.ParseInt(p[1])}
+		p := str.SpaceSplit(line)
+		return StrInt{Str: p[0], Int: conv.ParseInt(p[1])}
 	})
 }
 

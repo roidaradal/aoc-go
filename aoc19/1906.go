@@ -2,8 +2,10 @@ package aoc19
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day06() Solution {
@@ -27,7 +29,7 @@ func data06(full bool) *Tree {
 		parent: make(map[string]string),
 	}
 	for _, line := range ReadLines(19, 6, full) {
-		p := fn.CleanSplit(line, ")")
+		p := str.CleanSplit(line, ")")
 		node, child := p[0], p[1]
 		t.nodes.Add(node)
 		t.nodes.Add(child)
@@ -49,8 +51,9 @@ func bfsTraversal(t *Tree, start string, goal *string) int {
 	q := ds.NewQueue[StrInt]()
 	q.Enqueue(StrInt{Str: start, Int: 0})
 	for q.Len() > 0 {
-		node, depth := q.Dequeue().Tuple()
-		if fn.HasKey(visited, node) {
+		front, _ := q.Dequeue()
+		node, depth := front.Tuple()
+		if dict.HasKey(visited, node) {
 			continue
 		}
 		visited[node] = depth
@@ -58,11 +61,11 @@ func bfsTraversal(t *Tree, start string, goal *string) int {
 			return depth
 		}
 		for _, node2 := range t.edges[node] {
-			if !fn.HasKey(visited, node2) {
+			if dict.NoKey(visited, node2) {
 				q.Enqueue(StrInt{Str: node2, Int: depth + 1})
 			}
 		}
 	}
 
-	return fn.Sum(fn.MapValues(visited))
+	return list.Sum(dict.Values(visited))
 }

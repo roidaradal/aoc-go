@@ -3,6 +3,7 @@ package aoc24
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
 )
 
 func Day02() Solution {
@@ -34,10 +35,10 @@ func isSafe(numbers []int) bool {
 	diffs := fn.Map(NumRange(1, len(numbers)), func(i int) int {
 		return numbers[i] - numbers[i-1]
 	})
-	safeInc := fn.All(diffs, func(d int) bool {
+	safeInc := check.All(diffs, func(d int) bool {
 		return 1 <= d && d <= 3
 	})
-	safeDec := fn.All(diffs, func(d int) bool {
+	safeDec := check.All(diffs, func(d int) bool {
 		return -3 <= d && d <= -1
 	})
 	return safeInc || safeDec

@@ -8,6 +8,7 @@ import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day05() Solution {
@@ -32,10 +33,10 @@ func data05(full bool) ([]int, map[string][]Int3) {
 		if line == "" {
 			continue
 		} else if strings.HasPrefix(line, "seeds:") {
-			tail := fn.CleanSplit(line, ":")[1]
+			tail := str.CleanSplit(line, ":")[1]
 			seeds = ToIntList(tail, " ")
 		} else if strings.HasSuffix(line, "map:") {
-			key = fn.SpaceSplit(line)[0]
+			key = str.SpaceSplit(line)[0]
 			maps[key] = make([]Int3, 0)
 		} else {
 			p := ToIntList(line, " ")
@@ -98,7 +99,7 @@ func applyMapRangeChain(seeds []int, maps map[string][]Int3) []int {
 		key := fmt.Sprintf("%s-to-%s", seedChain[i], seedChain[i+1])
 		nextRanges := ds.NewQueue[Int2]()
 		for currRanges.Len() > 0 {
-			currRange := currRanges.Dequeue()
+			currRange, _ := currRanges.Dequeue()
 			found := false
 			for _, t := range rangeMap[key] {
 				start, end, diff := t.Tuple()
@@ -126,7 +127,8 @@ func applyMapRangeChain(seeds []int, maps map[string][]Int3) []int {
 	}
 	result := make([]int, 0)
 	for currRanges.Len() > 0 {
-		result = append(result, currRanges.Dequeue()[0])
+		front, _ := currRanges.Dequeue()
+		result = append(result, front[0])
 	}
 	return result
 }

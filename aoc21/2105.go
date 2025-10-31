@@ -5,6 +5,8 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/str"
 )
 
 type Line = [2]Coords
@@ -25,7 +27,7 @@ func data05(full bool) ([]Line, Dims2) {
 	rows, cols := 0, 0
 	lines := make([]Line, 0)
 	for _, text := range ReadLines(21, 5, full) {
-		p := fn.CleanSplit(text, "->")
+		p := str.CleanSplit(text, "->")
 		x1, y1 := ToInt2(p[0], ",").Tuple()
 		x2, y2 := ToInt2(p[1], ",").Tuple()
 		rows = max(rows, y1, y2)
@@ -45,7 +47,7 @@ func countIntersection(lines []Line, bounds Dims2, withDiagonal bool) int {
 			addVertical(g, y1, y2, x1)
 		} else if y1 == y2 {
 			addHorizontal(g, x1, x2, y1)
-		} else if withDiagonal && fn.Abs(y2-y1) == fn.Abs(x2-x1) {
+		} else if withDiagonal && conv.Abs(y2-y1) == conv.Abs(x2-x1) {
 			addDiagonal(g, x1, y1, x2, y2)
 		}
 	}

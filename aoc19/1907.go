@@ -3,6 +3,8 @@ package aoc19
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/conv"
 )
 
 func Day07() Solution {
@@ -53,7 +55,7 @@ func Day07() Solution {
 			if output != nil {
 				programs[p].inputs = append(programs[p].inputs, *output)
 			}
-			stop := fn.All(programs, func(p *Program) bool {
+			stop := check.All(programs, func(p *Program) bool {
 				return p.stop
 			})
 			if stop {
@@ -77,7 +79,7 @@ func runProgram07(p *Program) (*int, int) {
 	i := p.index
 	for {
 		head, tail := commandParts(p.numbers[i])
-		cmd := fn.ParseInt(tail)
+		cmd := conv.ParseInt(tail)
 		if cmd == 99 {
 			break
 		}

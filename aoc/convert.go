@@ -1,10 +1,14 @@
 package aoc
 
-import "github.com/roidaradal/fn"
+import (
+	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/str"
+)
 
 func ToIntList(line string, sep string) []int {
 	parts := splitParts(line, sep)
-	return fn.Map(parts, fn.ParseInt)
+	return fn.Map(parts, conv.ParseInt)
 }
 
 func ToIntLine(line string) []int {
@@ -12,7 +16,7 @@ func ToIntLine(line string) []int {
 	for i := range len(line) {
 		digits = append(digits, string(line[i:i+1]))
 	}
-	return fn.Map(digits, fn.ParseInt)
+	return fn.Map(digits, conv.ParseInt)
 }
 
 func ToDims3(line string, sep string) Dims3 {
@@ -29,13 +33,13 @@ func ToCharInt(line string) CharInt {
 	chars := []rune(line)
 	return CharInt{
 		Char: chars[0],
-		Int:  fn.ParseInt(string(chars[1:])),
+		Int:  conv.ParseInt(string(chars[1:])),
 	}
 }
 
 func ToStrInt(line string, sep string) StrInt {
 	parts := splitParts(line, sep)
-	return StrInt{Str: parts[0], Int: fn.ParseInt(parts[1])}
+	return StrInt{Str: parts[0], Int: conv.ParseInt(parts[1])}
 }
 
 func ToStr2(line string, sep string) Str2 {
@@ -46,9 +50,9 @@ func ToStr2(line string, sep string) Str2 {
 func splitParts(line string, sep string) []string {
 	var parts []string
 	if sep == " " {
-		parts = fn.SpaceSplit(line)
+		parts = str.SpaceSplit(line)
 	} else {
-		parts = fn.CleanSplit(line, sep)
+		parts = str.CleanSplit(line, sep)
 	}
 	return parts
 }

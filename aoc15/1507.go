@@ -7,6 +7,10 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/str"
 )
 
 func Day07() Solution {
@@ -35,12 +39,12 @@ func data07(full bool) []Operation {
 	binaryCommands := []string{AND, OR, LSHIFT, RSHIFT}
 	return fn.Map(ReadLines(15, 7, full), func(line string) Operation {
 		var opType, p1, p2 string
-		p := fn.CleanSplit(line, "->")
+		p := str.CleanSplit(line, "->")
 		expr, result := p[0], p[1]
 		found := false
 		for _, cmd := range binaryCommands {
 			if strings.Contains(expr, cmd) {
-				v := fn.CleanSplit(expr, cmd)
+				v := str.CleanSplit(expr, cmd)
 				p1, p2 = v[0], v[1]
 				opType = cmd
 				found = true
@@ -49,7 +53,7 @@ func data07(full bool) []Operation {
 		}
 		if !found {
 			if strings.Contains(expr, NOT) {
-				p1 = Last(fn.CleanSplit(expr, NOT), 1)
+				p1 = Last(str.CleanSplit(expr, NOT), 1)
 				opType = NOT
 			} else {
 				p1 = expr
@@ -122,7 +126,7 @@ func solveA(operations []Operation, override map[string]int) int {
 	for len(q) > 0 {
 		q2 := make([]Operation, 0)
 		for _, op := range q {
-			hasUnknown := fn.Any(op.Variables, func(v string) bool {
+			hasUnknown := check.Any(op.Variables, func(v string) bool {
 				_, found := value[v]
 				return !found
 			})
@@ -148,9 +152,9 @@ func solveA(operations []Operation, override map[string]int) int {
 				}
 				value[op.Result] = result
 			case LSHIFT:
-				value[op.Result] = value[var0] << fn.ParseInt(op.Param2)
+				value[op.Result] = value[var0] << conv.ParseInt(op.Param2)
 			case RSHIFT:
-				value[op.Result] = value[var0] >> fn.ParseInt(op.Param2)
+				value[op.Result] = value[var0] >> conv.ParseInt(op.Param2)
 			case NOT:
 				value[op.Result] = ^value[var0]
 			case LET:
@@ -161,7 +165,7 @@ func solveA(operations []Operation, override map[string]int) int {
 			}
 		}
 		q = q2
-		if fn.HasKey(value, "a") {
+		if dict.HasKey(value, "a") {
 			break
 		}
 	}

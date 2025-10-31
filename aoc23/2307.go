@@ -7,6 +7,7 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
 )
 
 func Day07() Solution {
@@ -89,7 +90,7 @@ func categoryScore(category string) int {
 
 func computeScore(cards string) int {
 	group := groupHand(cards)
-	counts := fn.MapValues(group)
+	counts := dict.Values(group)
 	slices.SortFunc(counts, SortIntDesc)
 	category := strings.Join(fn.Map(counts, strconv.Itoa), ",")
 	return categoryScore(category)
@@ -97,7 +98,7 @@ func computeScore(cards string) int {
 
 func computeScore2(cards string) int {
 	group := groupHand(cards)
-	if fn.HasKey(group, 'J') {
+	if dict.HasKey(group, 'J') {
 		values := make([]int, 0)
 		for k, v := range group {
 			if k != 'J' {

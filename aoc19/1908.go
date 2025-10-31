@@ -6,6 +6,7 @@ import (
 
 	. "github.com/roidaradal/aoc-go/aoc"
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dict"
 )
 
 func Day08() Solution {
@@ -16,7 +17,7 @@ func Day08() Solution {
 	for i, layer := range layers {
 		freq[i] = CharFreq(layer, nil)
 	}
-	entries := fn.Map(fn.MapKeys(freq), func(i int) Int2 {
+	entries := fn.Map(dict.Keys(freq), func(i int) Int2 {
 		return Int2{freq[i]['0'], i}
 	})
 	min0 := slices.MinFunc(entries, SortInt2)[1]

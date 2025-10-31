@@ -27,11 +27,15 @@ func Day09() Solution {
 		} else if char == '{' {
 			score := 1
 			if !stack.IsEmpty() {
-				score = stack.Top() + 1
+				if top, err := stack.Top(); err == nil {
+					score = top + 1
+				}
 			}
 			stack.Push(score)
 		} else if char == '}' {
-			total += stack.Pop()
+			if top, err := stack.Pop(); err == nil {
+				total += top
+			}
 		} else if char == '<' {
 			garbage = true
 		}
