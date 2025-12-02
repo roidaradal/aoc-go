@@ -63,11 +63,11 @@ func findExit(cfg *Config, start Coords, d Delta, previsit History, obstacle *Co
 
 		if !InsideBounds(nxt, cfg.bounds) {
 			break
-		} else if cfg.blocked.Contains(nxt) || (obstacle != nil && nxt == *obstacle) {
+		} else if cfg.blocked.Has(nxt) || (obstacle != nil && nxt == *obstacle) {
 			d = RightOf[d]
 		} else {
 			c = nxt
-			if obstacle != nil && dict.HasKey(visited, c) && visited[c].Contains(d) {
+			if obstacle != nil && dict.HasKey(visited, c) && visited[c].Has(d) {
 				stuckInLoop = true
 				break
 			}
@@ -89,7 +89,7 @@ func countLoopPoints(cfg *Config) int {
 
 		if !InsideBounds(nxt, cfg.bounds) {
 			break
-		} else if cfg.blocked.Contains(nxt) {
+		} else if cfg.blocked.Has(nxt) {
 			d = RightOf[d]
 		} else {
 			if dict.NoKey(visited, nxt) {

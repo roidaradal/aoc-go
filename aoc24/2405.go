@@ -4,8 +4,10 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/list"
 )
 
 type Rules = map[int]*ds.Set[int]
@@ -75,7 +77,7 @@ func correctOrderMid(page []int, rules Rules) int {
 			idx += 1
 		} else {
 			valid = false
-			indexes := fn.Map(common.Items(), func(x int) int {
+			indexes := list.Map(common.Items(), func(x int) int {
 				return slices.Index(page, x)
 			})
 			insert := slices.Max(indexes) + 1
@@ -84,10 +86,10 @@ func correctOrderMid(page []int, rules Rules) int {
 			page2 = append(page2, page[:insert]...)
 			page2 = append(page2, curr)
 			page2 = append(page2, page[insert:]...)
-			page = fn.Filter(page2, func(x int) bool {
+			page = list.Filter(page2, func(x int) bool {
 				return x != 0
 			})
 		}
 	}
-	return fn.Ternary(valid, 0, page[len(page)/2])
+	return lang.Ternary(valid, 0, page[len(page)/2])
 }

@@ -4,9 +4,8 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day10() Solution {
@@ -29,10 +28,10 @@ func Day10() Solution {
 	count[Last(numbers, 1)] = 1
 	for i := len(numbers) - 2; i >= 0; i -= 1 {
 		curr := numbers[i]
-		valid := fn.Filter(numbers[i+1:i+4], func(x int) bool {
+		valid := list.Filter(numbers[i+1:i+4], func(x int) bool {
 			return x-curr <= 3
 		})
-		count[curr] = list.Sum(fn.Map(valid, func(x int) int {
+		count[curr] = list.Sum(list.Map(valid, func(x int) int {
 			return count[x]
 		}))
 	}
@@ -42,7 +41,7 @@ func Day10() Solution {
 }
 
 func data10(full bool) []int {
-	numbers := fn.Map(ReadLines(20, 10, full), conv.ParseInt)
+	numbers := list.Map(ReadLines(20, 10, full), number.ParseInt)
 	numbers = append(numbers, 0)
 	numbers = append(numbers, slices.Max(numbers)+3)
 	return numbers

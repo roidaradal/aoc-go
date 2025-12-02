@@ -2,8 +2,7 @@ package aoc24
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day02() Solution {
@@ -26,19 +25,19 @@ func Day02() Solution {
 }
 
 func data02(full bool) [][]int {
-	return fn.Map(ReadLines(24, 2, full), func(line string) []int {
+	return list.Map(ReadLines(24, 2, full), func(line string) []int {
 		return ToIntList(line, " ")
 	})
 }
 
 func isSafe(numbers []int) bool {
-	diffs := fn.Map(NumRange(1, len(numbers)), func(i int) int {
+	diffs := list.Map(NumRange(1, len(numbers)), func(i int) int {
 		return numbers[i] - numbers[i-1]
 	})
-	safeInc := check.All(diffs, func(d int) bool {
+	safeInc := list.All(diffs, func(d int) bool {
 		return 1 <= d && d <= 3
 	})
-	safeDec := check.All(diffs, func(d int) bool {
+	safeDec := list.All(diffs, func(d int) bool {
 		return -3 <= d && d <= -1
 	})
 	return safeInc || safeDec

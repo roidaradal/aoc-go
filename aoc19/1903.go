@@ -4,7 +4,6 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
@@ -15,7 +14,7 @@ func Day03() Solution {
 	cross := crossingPoints(wires)
 
 	// Part 1
-	distances := fn.Map(dict.Keys(cross), ManhattanOrigin)
+	distances := list.Map(dict.Keys(cross), ManhattanOrigin)
 	closest1 := slices.Min(distances)
 
 	// Part 2
@@ -25,8 +24,8 @@ func Day03() Solution {
 }
 
 func data03(full bool) [][]CharInt {
-	return fn.Map(ReadLines(19, 3, full), func(line string) []CharInt {
-		return fn.Map(str.CleanSplit(line, ","), ToCharInt)
+	return list.Map(ReadLines(19, 3, full), func(line string) []CharInt {
+		return list.Map(str.CleanSplit(line, ","), ToCharInt)
 	})
 }
 

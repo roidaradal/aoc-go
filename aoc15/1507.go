@@ -6,10 +6,9 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/check"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -37,7 +36,7 @@ const (
 
 func data07(full bool) []Operation {
 	binaryCommands := []string{AND, OR, LSHIFT, RSHIFT}
-	return fn.Map(ReadLines(15, 7, full), func(line string) Operation {
+	return list.Map(ReadLines(15, 7, full), func(line string) Operation {
 		var opType, p1, p2 string
 		p := str.CleanSplit(line, "->")
 		expr, result := p[0], p[1]
@@ -126,7 +125,7 @@ func solveA(operations []Operation, override map[string]int) int {
 	for len(q) > 0 {
 		q2 := make([]Operation, 0)
 		for _, op := range q {
-			hasUnknown := check.Any(op.Variables, func(v string) bool {
+			hasUnknown := list.Any(op.Variables, func(v string) bool {
 				_, found := value[v]
 				return !found
 			})
@@ -152,9 +151,9 @@ func solveA(operations []Operation, override map[string]int) int {
 				}
 				value[op.Result] = result
 			case LSHIFT:
-				value[op.Result] = value[var0] << conv.ParseInt(op.Param2)
+				value[op.Result] = value[var0] << number.ParseInt(op.Param2)
 			case RSHIFT:
-				value[op.Result] = value[var0] >> conv.ParseInt(op.Param2)
+				value[op.Result] = value[var0] >> number.ParseInt(op.Param2)
 			case NOT:
 				value[op.Result] = ^value[var0]
 			case LET:

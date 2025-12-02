@@ -2,8 +2,8 @@ package aoc15
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day03() Solution {
@@ -37,7 +37,7 @@ func data03(full bool) []Delta {
 		'v': D,
 	}
 	line := ReadFirstLine(15, 3, full)
-	return fn.Translate([]rune(line), T)
+	return list.Translate([]rune(line), T)
 }
 
 func walk(moves []Delta) *ds.Set[Coords] {

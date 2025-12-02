@@ -2,8 +2,8 @@ package aoc23
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -25,9 +25,9 @@ func Day02() Solution {
 }
 
 func data02(full bool) []MarbleGame {
-	return fn.Map(ReadLines(23, 2, full), func(line string) MarbleGame {
+	return list.Map(ReadLines(23, 2, full), func(line string) MarbleGame {
 		p := str.CleanSplit(line, ":")
-		id := conv.ParseInt(str.SpaceSplit(p[0])[1])
+		id := number.ParseInt(str.SpaceSplit(p[0])[1])
 		game := MarbleGame{
 			id:    id,
 			draws: make([]Int3, 0),
@@ -48,7 +48,7 @@ func (game *MarbleGame) addDraw(line string) {
 	r, g, b := 0, 0, 0
 	for _, part := range str.CleanSplit(line, ",") {
 		p := str.SpaceSplit(part)
-		number := conv.ParseInt(p[0])
+		number := number.ParseInt(p[0])
 		color := p[1]
 		switch color {
 		case "red":

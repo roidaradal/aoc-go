@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day10() Solution {
@@ -16,7 +16,7 @@ func Day10() Solution {
 	product := numbers[0] * numbers[1]
 
 	// Part 2
-	lengths = fn.Map([]byte(line), func(b byte) int {
+	lengths = list.Map([]byte(line), func(b byte) int {
 		return int(b)
 	})
 	numbers = knotHash(lengths, 64)

@@ -6,7 +6,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func MD5Hash(word string) string {
@@ -84,5 +84,5 @@ func RuneToString(char rune) string {
 }
 
 func StringChars(text string) []string {
-	return fn.Map([]rune(text), RuneToString)
+	return list.Map([]rune(text), RuneToString)
 }

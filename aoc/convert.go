@@ -1,14 +1,14 @@
 package aoc
 
 import (
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
 func ToIntList(line string, sep string) []int {
 	parts := splitParts(line, sep)
-	return fn.Map(parts, conv.ParseInt)
+	return list.Map(parts, number.ParseInt)
 }
 
 func ToIntLine(line string) []int {
@@ -16,7 +16,7 @@ func ToIntLine(line string) []int {
 	for i := range len(line) {
 		digits = append(digits, string(line[i:i+1]))
 	}
-	return fn.Map(digits, conv.ParseInt)
+	return list.Map(digits, number.ParseInt)
 }
 
 func ToDims3(line string, sep string) Dims3 {
@@ -33,13 +33,13 @@ func ToCharInt(line string) CharInt {
 	chars := []rune(line)
 	return CharInt{
 		Char: chars[0],
-		Int:  conv.ParseInt(string(chars[1:])),
+		Int:  number.ParseInt(string(chars[1:])),
 	}
 }
 
 func ToStrInt(line string, sep string) StrInt {
 	parts := splitParts(line, sep)
-	return StrInt{Str: parts[0], Int: conv.ParseInt(parts[1])}
+	return StrInt{Str: parts[0], Int: number.ParseInt(parts[1])}
 }
 
 func ToStr2(line string, sep string) Str2 {

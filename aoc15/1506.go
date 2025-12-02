@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -68,7 +68,7 @@ func (cmd command) Tuple() (int, int, int, int, int) {
 }
 
 func data06(mask map[string]int, full bool) []command {
-	return fn.Map(ReadLines(15, 6, full), func(line string) command {
+	return list.Map(ReadLines(15, 6, full), func(line string) command {
 		b := 0
 		if strings.HasPrefix(line, on) {
 			b = mask[on]

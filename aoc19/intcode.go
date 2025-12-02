@@ -4,7 +4,7 @@ import (
 	"slices"
 	"strconv"
 
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/number"
 )
 
 func commandParts(number int) (string, string) {
@@ -23,7 +23,7 @@ func intcodeModes(cmd string, count int) []int {
 	digits := []rune(cmd)
 	slices.Reverse(digits)
 	for _, x := range digits {
-		m[i] = conv.ParseInt(string(x))
+		m[i] = number.ParseInt(string(x))
 		i += 1
 	}
 	return m

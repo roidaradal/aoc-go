@@ -4,9 +4,10 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day10() Solution {
@@ -28,7 +29,7 @@ func Day10() Solution {
 			grid2[pt] = 'X'
 		}
 	}
-	inside := fn.Filter(dict.Values(grid2), func(tile rune) bool {
+	inside := list.Filter(dict.Values(grid2), func(tile rune) bool {
 		return tile == 'X'
 	})
 	count := len(inside)
@@ -130,9 +131,10 @@ func (g *MazeGrid) createEdges() {
 }
 
 func bfsMaxDistance(grid *MazeGrid) int {
+	rows, cols := grid.bounds.Tuple()
 	dist := make(map[Coords]int)
 	visited := ds.NewSet[Coords]()
-	q := ds.NewQueue[CoordDist]()
+	q := ds.NewQueue[CoordDist](rows * cols)
 	q.Enqueue(CoordDist{grid.start, 0})
 	for q.Len() > 0 {
 		pair, _ := q.Dequeue()
@@ -140,7 +142,7 @@ func bfsMaxDistance(grid *MazeGrid) int {
 		dist[node] = d
 		visited.Add(node)
 		for _, node2 := range grid.edges[node] {
-			if visited.Contains(node2) {
+			if visited.Has(node2) {
 				continue
 			}
 			q.Enqueue(CoordDist{node2, d + 1})
@@ -150,8 +152,9 @@ func bfsMaxDistance(grid *MazeGrid) int {
 }
 
 func dfsVisit(grid *MazeGrid) []Coords {
+	rows, cols := grid.bounds.Tuple()
 	points := make([]Coords, 0)
-	stack := ds.NewStack[Coords]()
+	stack := ds.NewStack[Coords](rows * cols)
 	stack.Push(grid.start)
 	for stack.Len() > 0 {
 		node, _ := stack.Pop()
@@ -184,11 +187,11 @@ func createExpandedGrid(points []Coords, bounds Dims2) map[Coords]rune {
 	for _, pt := range points[1:] {
 		y, x := pt.Tuple()
 		if yprev == y {
-			xadd := fn.Ternary(x > xprev, 1, -1)
+			xadd := lang.Ternary(x > xprev, 1, -1)
 			pt = Coords{yprev * 2, (xprev * 2) + xadd}
 			grid[pt] = '#'
 		} else if xprev == x {
-			yadd := fn.Ternary(y > yprev, 1, -1)
+			yadd := lang.Ternary(y > yprev, 1, -1)
 			pt = Coords{(yprev * 2) + yadd, xprev * 2}
 			grid[pt] = '#'
 		}
@@ -211,16 +214,16 @@ func floodFillMaze(grid map[Coords]rune) []Coords {
 	ymin := slices.Min(dict.Keys(pts))
 	xmin := slices.Min(pts[ymin])
 	start := Coords{ymin + 1, xmin + 1}
-	stack := ds.NewStack[Coords]()
+	stack := ds.NewStack[Coords](10)
 	stack.Push(start)
 	for stack.Len() > 0 {
 		curr, _ := stack.Pop()
-		if visited.Contains(curr) {
+		if visited.Has(curr) {
 			continue
 		}
 		visited.Add(curr)
 		for _, nxt := range Surround4(curr) {
-			if visited.Contains(nxt) {
+			if visited.Has(nxt) {
 				continue
 			}
 			if grid[nxt] == '.' {

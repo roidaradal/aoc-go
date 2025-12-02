@@ -4,15 +4,14 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/ds"
 	"github.com/roidaradal/fn/list"
 )
 
 func Day06() Solution {
 	points := data06(true)
-	rows := slices.Max(fn.Map(points, GetCoordsY)) + 1
-	cols := slices.Max(fn.Map(points, GetCoordsX)) + 1
+	rows := slices.Max(list.Map(points, GetCoordsY)) + 1
+	cols := slices.Max(list.Map(points, GetCoordsX)) + 1
 
 	// Part 1
 	count := make(map[int]int, len(points))
@@ -37,7 +36,7 @@ func Day06() Solution {
 	}
 	entries := make([]Int2, 0)
 	for i, x := range count {
-		if !edge.Contains(i) {
+		if !edge.Has(i) {
 			entries = append(entries, Int2{x, i})
 		}
 	}
@@ -48,7 +47,7 @@ func Day06() Solution {
 	for row := range rows {
 		for col := range cols {
 			c := Coords{row, col}
-			total := list.Sum(fn.Map(points, func(pt Coords) int {
+			total := list.Sum(list.Map(points, func(pt Coords) int {
 				return Manhattan(c, pt)
 			}))
 			if total < 10_000 {
@@ -61,7 +60,7 @@ func Day06() Solution {
 }
 
 func data06(full bool) []Coords {
-	return fn.Map(ReadLines(18, 6, full), func(line string) Coords {
+	return list.Map(ReadLines(18, 6, full), func(line string) Coords {
 		c := ToInt2(line, ",")
 		return Coords{c[1], c[0]}
 	})
@@ -77,7 +76,7 @@ func findClosest(c Coords, points []Coords) *int {
 		entries = append(entries, Int2{d, i})
 	}
 	minDist := slices.MinFunc(entries, SortInt2)[0]
-	minEntries := fn.Filter(entries, func(e Int2) bool {
+	minEntries := list.Filter(entries, func(e Int2) bool {
 		return e[0] == minDist
 	})
 	if len(minEntries) != 1 {

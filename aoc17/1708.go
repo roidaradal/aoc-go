@@ -4,9 +4,9 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -27,20 +27,20 @@ func Day08() Solution {
 }
 
 func data08(full bool) []Instruction {
-	return fn.Map(ReadLines(17, 8, full), func(line string) Instruction {
+	return list.Map(ReadLines(17, 8, full), func(line string) Instruction {
 		cmd := Instruction{}
 		p := str.CleanSplit(line, " if ")
 		head, tail := p[0], p[1]
 		h := str.SpaceSplit(head)
 		cmd.targetReg = h[0]
-		cmd.inc = conv.ParseInt(h[2])
+		cmd.inc = number.ParseInt(h[2])
 		if h[1] == "dec" {
 			cmd.inc *= -1
 		}
 		t := str.SpaceSplit(tail)
 		cmd.condReg = t[0]
 		cmd.op = t[1]
-		cmd.value = conv.ParseInt(t[2])
+		cmd.value = number.ParseInt(t[2])
 		return cmd
 	})
 }

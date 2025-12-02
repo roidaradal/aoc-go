@@ -5,10 +5,9 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -49,17 +48,17 @@ const (
 func data04(full bool) []Int2 {
 	lines := ReadLines(18, 4, full)
 	slices.Sort(lines)
-	return fn.Map(lines, func(line string) Int2 {
+	return list.Map(lines, func(line string) Int2 {
 		p := str.CleanSplit(line, "]")
 		head, tail := p[0], p[1]
-		minute := conv.ParseInt(str.CleanSplit(head, ":")[1])
+		minute := number.ParseInt(str.CleanSplit(head, ":")[1])
 		if strings.Contains(tail, "asleep") {
 			return Int2{ON, minute}
 		} else if strings.Contains(tail, "wakes") {
 			return Int2{OFF, minute}
 		} else {
 			id := strings.TrimPrefix(str.SpaceSplit(tail)[1], "#")
-			return Int2{GUARD, conv.ParseInt(id)}
+			return Int2{GUARD, number.ParseInt(id)}
 		}
 	})
 }

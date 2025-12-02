@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -29,7 +29,7 @@ func Day04() Solution {
 }
 
 func data04(full bool) []Room {
-	return fn.Map(ReadLines(16, 4, full), func(line string) Room {
+	return list.Map(ReadLines(16, 4, full), func(line string) Room {
 		p := str.CleanSplit(line, "[")
 		head, tail := p[0], p[1]
 		h := str.CleanSplit(head, "-")
@@ -37,7 +37,7 @@ func data04(full bool) []Room {
 		return Room{
 			checksum: strings.TrimSuffix(tail, "]"),
 			name:     strings.Join(h[:lastIdx], "-"),
-			id:       conv.ParseInt(h[lastIdx]),
+			id:       number.ParseInt(h[lastIdx]),
 		}
 	})
 }
@@ -58,7 +58,7 @@ func (r Room) isReal() bool {
 		pairs = append(pairs, CharInt{Char: k, Int: v})
 	}
 	slices.SortFunc(pairs, SortCharIntDesc)
-	top5 := fn.Map(pairs[:5], func(pair CharInt) rune {
+	top5 := list.Map(pairs[:5], func(pair CharInt) rune {
 		return pair.Char
 	})
 	return string(top5) == r.checksum

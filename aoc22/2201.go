@@ -5,8 +5,8 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day01() Solution {
@@ -32,7 +32,7 @@ func data01(full bool) []int {
 			calories = append(calories, curr)
 			curr = 0
 		} else {
-			curr += conv.ParseInt(line)
+			curr += number.ParseInt(line)
 		}
 	}
 	calories = append(calories, curr)

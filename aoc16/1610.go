@@ -4,7 +4,7 @@ import (
 	"sort"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -63,17 +63,17 @@ func data10(full bool) ([]Int2, map[int]Bot) {
 		N := len(p)
 		switch p[0] {
 		case "value":
-			value, who := conv.ParseInt(p[1]), conv.ParseInt(p[N-1])
+			value, who := number.ParseInt(p[1]), number.ParseInt(p[N-1])
 			chips = append(chips, Int2{value, who})
 		case "bot":
-			who := conv.ParseInt(p[1])
+			who := number.ParseInt(p[1])
 			low := StrInt{
 				Str: p[5],
-				Int: conv.ParseInt(p[6]),
+				Int: number.ParseInt(p[6]),
 			}
 			high := StrInt{
 				Str: p[N-2],
-				Int: conv.ParseInt(p[N-1]),
+				Int: number.ParseInt(p[N-1]),
 			}
 			bots[who] = [2]StrInt{low, high}
 		}

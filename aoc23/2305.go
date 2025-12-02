@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -75,7 +75,7 @@ func plantTranslate(numbers []int, triples []Int3) []int {
 }
 
 func seedRanges(seeds []int) []Int2 {
-	return fn.Map(NumRangeInc(0, len(seeds), 2), func(i int) Int2 {
+	return list.Map(NumRangeInc(0, len(seeds), 2), func(i int) Int2 {
 		return Int2{seeds[i], seeds[i] + seeds[i+1] - 1}
 	})
 }
@@ -97,7 +97,7 @@ func applyMapRangeChain(seeds []int, maps map[string][]Int3) []int {
 	rangeMap := mapRanges(maps)
 	for i := range len(seedChain) - 1 {
 		key := fmt.Sprintf("%s-to-%s", seedChain[i], seedChain[i+1])
-		nextRanges := ds.NewQueue[Int2]()
+		nextRanges := ds.NewQueue[Int2](currRanges.Len())
 		for currRanges.Len() > 0 {
 			currRange, _ := currRanges.Dequeue()
 			found := false

@@ -4,7 +4,7 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day02() Solution {
@@ -25,7 +25,7 @@ func Day02() Solution {
 }
 
 func data02(full bool) []Dims3 {
-	return fn.Map(ReadLines(15, 2, full), func(line string) Dims3 {
+	return list.Map(ReadLines(15, 2, full), func(line string) Dims3 {
 		return ToDims3(line, "x")
 	})
 }

@@ -2,8 +2,8 @@ package aoc19
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day05() Solution {
@@ -27,7 +27,7 @@ func runProgram05(numbers []int, start int) int {
 	output := 0
 	for {
 		head, tail := commandParts(numbers[i])
-		cmd := conv.ParseInt(tail)
+		cmd := number.ParseInt(tail)
 		if cmd == 99 {
 			break
 		}
@@ -45,9 +45,9 @@ func runProgram05(numbers []int, start int) int {
 			case 2:
 				numbers[out] = a * b
 			case 7:
-				numbers[out] = fn.Ternary(a < b, 1, 0)
+				numbers[out] = lang.Ternary(a < b, 1, 0)
 			case 8:
-				numbers[out] = fn.Ternary(a == b, 1, 0)
+				numbers[out] = lang.Ternary(a == b, 1, 0)
 			}
 			i += 4
 		case 3:
@@ -66,7 +66,7 @@ func runProgram05(numbers []int, start int) int {
 			m := intcodeModes(head, 2)
 			m1, m2 := m[0], m[1]
 			isZero := intcodeParam(p1, m1, numbers) == 0
-			doJump := fn.Ternary(cmd == 6, isZero, !isZero)
+			doJump := lang.Ternary(cmd == 6, isZero, !isZero)
 			if doJump {
 				i = intcodeParam(p2, m2, numbers)
 			} else {

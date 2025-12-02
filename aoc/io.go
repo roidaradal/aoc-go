@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/io"
+	"github.com/roidaradal/fn/lang"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -27,13 +27,13 @@ func ReadRawLines(year int, day int, full bool, strip bool) []string {
 	if err != nil {
 		log.Fatal("Error:", err)
 	}
-	lines := fn.Ternary(strip, str.CleanSplit(text, "\n"), strings.Split(text, "\n"))
+	lines := lang.Ternary(strip, str.CleanSplit(text, "\n"), strings.Split(text, "\n"))
 	return lines
 }
 
 func ReadLines(year int, day int, full bool) []string {
 	path := dataPath(year, day, full)
-	lines, err := io.ReadLines(path)
+	lines, err := io.ReadNonEmptyLines(path)
 	if err != nil {
 		log.Fatal("Error:", err)
 	}

@@ -2,7 +2,7 @@ package aoc22
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -50,7 +50,7 @@ func Day02() Solution {
 }
 
 func data02(T map[string]int, full bool) []Int2 {
-	return fn.Map(ReadLines(22, 2, full), func(line string) Int2 {
+	return list.Map(ReadLines(22, 2, full), func(line string) Int2 {
 		p := str.CleanSplit(line, " ")
 		return Int2{T[p[0]], T[p[1]]}
 	})

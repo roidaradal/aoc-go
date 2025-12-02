@@ -4,10 +4,10 @@ import (
 	"math"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/lang"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day03() Solution {
@@ -26,10 +26,10 @@ func Day03() Solution {
 	x, value := 2, 0
 	for value <= goal {
 		curr := spiralCoords(x)
-		near := fn.Filter(Surround8(curr), func(c Coords) bool {
+		near := list.Filter(Surround8(curr), func(c Coords) bool {
 			return dict.HasKey(spiral, c)
 		})
-		value = list.Sum(fn.Map(near, func(c Coords) int {
+		value = list.Sum(list.Map(near, func(c Coords) int {
 			return values[spiral[c]]
 		}))
 		values = append(values, value)
@@ -41,7 +41,7 @@ func Day03() Solution {
 }
 
 func data03(full bool) int {
-	return conv.ParseInt(ReadFirstLine(17, 3, full))
+	return number.ParseInt(ReadFirstLine(17, 3, full))
 }
 
 func spiralCoords(x int) Coords {
@@ -75,7 +75,7 @@ func spiralOffset(x int, layer int) (byte, int) {
 		}
 
 		mid := (c1 + c2) / 2
-		offset := fn.Ternary(i < 2, x-mid, mid-x)
+		offset := lang.Ternary(i < 2, x-mid, mid-x)
 		return side[i], offset
 	}
 	return 'C', 0

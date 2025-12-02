@@ -2,9 +2,8 @@ package aoc22
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/check"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day08() Solution {
@@ -27,45 +26,45 @@ func Day08() Solution {
 }
 
 func data08(full bool) IntGrid {
-	return fn.Map(ReadLines(22, 8, full), ToIntLine)
+	return list.Map(ReadLines(22, 8, full), ToIntLine)
 }
 
 func checkRowVisible(grid IntGrid, visible *ds.Set[Coords], c Coords) {
-	if visible.Contains(c) {
+	if visible.Has(c) {
 		return
 	}
 	row, col := c.Tuple()
 	isLower := func(x int) bool {
 		return x < grid[row][col]
 	}
-	if check.All(grid[row][:col], isLower) {
+	if list.All(grid[row][:col], isLower) {
 		visible.Add(c)
 		return
 	}
-	if check.All(grid[row][col+1:], isLower) {
+	if list.All(grid[row][col+1:], isLower) {
 		visible.Add(c)
 	}
 }
 
 func checkColVisible(grid IntGrid, visible *ds.Set[Coords], c Coords) {
-	if visible.Contains(c) {
+	if visible.Has(c) {
 		return
 	}
 	row, col := c.Tuple()
 	isLower := func(x int) bool {
 		return x < grid[row][col]
 	}
-	above := fn.Map(NumRange(0, row), func(r int) int {
+	above := list.Map(NumRange(0, row), func(r int) int {
 		return grid[r][col]
 	})
-	if check.All(above, isLower) {
+	if list.All(above, isLower) {
 		visible.Add(c)
 		return
 	}
-	below := fn.Map(NumRange(row+1, len(grid)), func(r int) int {
+	below := list.Map(NumRange(row+1, len(grid)), func(r int) int {
 		return grid[r][col]
 	})
-	if check.All(below, isLower) {
+	if list.All(below, isLower) {
 		visible.Add(c)
 	}
 }

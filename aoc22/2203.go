@@ -43,7 +43,7 @@ func commonScore(word string) int {
 	for i, char := range word {
 		if i < mid {
 			chars.Add(char)
-		} else if chars.Contains(char) {
+		} else if chars.Has(char) {
 			return score(char)
 		}
 	}
@@ -55,7 +55,7 @@ func badgeScore(words []string) int {
 	for i := 1; i < len(words); i++ {
 		uncommon := ds.SetFrom(common.Items())
 		for _, char := range words[i] {
-			if uncommon.Contains(char) {
+			if uncommon.Has(char) {
 				uncommon.Delete(char)
 			}
 		}

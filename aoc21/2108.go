@@ -6,10 +6,10 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -25,7 +25,7 @@ func Day08() Solution {
 	lengthOptions := []int{2, 3, 4, 7}
 	total1 := 0
 	for _, pair := range pairs {
-		valid := fn.Filter(pair[1], func(x string) bool {
+		valid := list.Filter(pair[1], func(x string) bool {
 			return slices.Contains(lengthOptions, len(x))
 		})
 		total1 += len(valid)
@@ -42,7 +42,7 @@ func Day08() Solution {
 }
 
 func data08(full bool) []Pair {
-	return fn.Map(ReadLines(21, 8, full), func(line string) Pair {
+	return list.Map(ReadLines(21, 8, full), func(line string) Pair {
 		p := str.CleanSplit(line, "|")
 		return Pair{str.SpaceSplit(p[0]), str.SpaceSplit(p[1])}
 	})
@@ -160,12 +160,12 @@ func assign(b string, a string, t map[string]string, domain Domain) (map[string]
 func translateOutput(output []string, m map[string]string, t map[string]string) int {
 	orig := make([]string, 0)
 	for _, code := range output {
-		out := fn.Translate(fn.Map([]rune(code), RuneToString), t)
+		out := list.Translate(list.Map([]rune(code), RuneToString), t)
 		slices.Sort(out)
 		orig = append(orig, strings.Join(out, ""))
 	}
 
-	digit := fn.Translate(orig, m)
+	digit := list.Translate(orig, m)
 	d := strings.Join(digit, "")
-	return conv.ParseInt(d)
+	return number.ParseInt(d)
 }

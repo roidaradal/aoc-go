@@ -5,10 +5,10 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/lang"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day03() Solution {
@@ -51,7 +51,7 @@ func findValidNumbers(grid []string, symbols []Coords) []int {
 			start, end := m[0], m[1]
 			rowRange := Int3{row, start, end}
 			if hasAdjacentSymbol(rowRange, symbols, bounds) {
-				number := conv.ParseInt(line[start:end])
+				number := number.ParseInt(line[start:end])
 				numbers = append(numbers, number)
 			}
 		}
@@ -79,7 +79,7 @@ func findGearRatios(grid []string, gears []Coords) []int {
 		for _, m := range numberPattern.FindAllIndex([]byte(line), -1) {
 			start, end := m[0], m[1]
 			rowRange := Int3{row, start, end}
-			number := conv.ParseInt(line[start:end])
+			number := number.ParseInt(line[start:end])
 			for _, c := range getAdjacentSymbols(rowRange, gears, bounds) {
 				adjacent[c] = append(adjacent[c], number)
 			}
@@ -115,8 +115,8 @@ func getAdjacent(rowRange Int3, bounds Dims2) []Coords {
 	x0, x3 := x1-1, x2+1
 	adjacent := make([]Coords, 0)
 
-	start := fn.Ternary(x0 >= 0, x0, x1)
-	end := fn.Ternary(x3 <= cols, x3, x2)
+	start := lang.Ternary(x0 >= 0, x0, x1)
+	end := lang.Ternary(x3 <= cols, x3, x2)
 	addAbove := y0 >= 0
 	addBelow := y2 < rows
 	for _, x := range NumRange(start, end) {

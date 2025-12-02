@@ -4,8 +4,6 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/check"
 	"github.com/roidaradal/fn/ds"
 	"github.com/roidaradal/fn/list"
 )
@@ -15,12 +13,12 @@ func Day09() Solution {
 
 	// Part 1
 	low := findLowPoints(grid)
-	total := list.Sum(fn.Map(low, func(pt Int3) int {
+	total := list.Sum(list.Map(low, func(pt Int3) int {
 		return pt[2] + 1
 	}))
 
 	// Part 2
-	basins := fn.Map(low, func(t Int3) int {
+	basins := list.Map(low, func(t Int3) int {
 		y, x, _ := t.Tuple()
 		return basinSize(grid, Coords{y, x})
 	})
@@ -32,14 +30,14 @@ func Day09() Solution {
 }
 
 func data09(full bool) IntGrid {
-	return fn.Map(ReadLines(21, 9, full), ToIntLine)
+	return list.Map(ReadLines(21, 9, full), ToIntLine)
 }
 
 func findLowPoints(grid IntGrid) []Int3 {
 	low := make([]Int3, 0)
 	for row, line := range grid {
 		for col, height := range line {
-			allHigher := check.All(surrounding(grid, Coords{row, col}), func(t Int3) bool {
+			allHigher := list.All(surrounding(grid, Coords{row, col}), func(t Int3) bool {
 				return t[2] > height // compare height of surrounding to current
 			})
 			if allHigher {
@@ -64,15 +62,16 @@ func surrounding(grid IntGrid, center Coords) []Int3 {
 }
 
 func basinSize(grid IntGrid, center Coords) int {
+	rows, cols := GridBounds(grid).Tuple()
 	visited := ds.NewSet[Coords]()
-	stack := ds.NewStack[Coords]()
+	stack := ds.NewStack[Coords](rows * cols)
 	stack.Push(center)
 	for stack.Len() > 0 {
 		c, _ := stack.Pop()
 		visited.Add(c)
 		for _, t := range surrounding(grid, c) {
 			y, x, h := t.Tuple()
-			if h == 9 || visited.Contains(Coords{y, x}) {
+			if h == 9 || visited.Has(Coords{y, x}) {
 				continue
 			}
 			stack.Push(Coords{y, x})

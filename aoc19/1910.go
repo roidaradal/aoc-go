@@ -5,9 +5,9 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 type Line = [2]float64
@@ -85,7 +85,7 @@ func Day10() Solution {
 
 	scores := make([]AsteroidScore, len(asteroids))
 	for i, a := range asteroids {
-		vis := fn.Filter(dict.Values(visible[a]), func(ok bool) bool {
+		vis := list.Filter(dict.Values(visible[a]), func(ok bool) bool {
 			return ok
 		})
 		scores[i] = AsteroidScore{
@@ -113,12 +113,12 @@ func Day10() Solution {
 	slices.SortFunc(diag, func(a, b LinePoints) int {
 		return cmp.Compare(a.slope, b.slope)
 	})
-	ndiag := fn.Map(fn.Filter(diag, func(lp LinePoints) bool {
+	ndiag := list.Map(list.Filter(diag, func(lp LinePoints) bool {
 		return lp.slope < 0
 	}), func(lp LinePoints) []Coords {
 		return lp.points
 	})
-	pdiag := fn.Map(fn.Filter(diag, func(lp LinePoints) bool {
+	pdiag := list.Map(list.Filter(diag, func(lp LinePoints) bool {
 		return lp.slope > 0
 	}), func(lp LinePoints) []Coords {
 		return lp.points

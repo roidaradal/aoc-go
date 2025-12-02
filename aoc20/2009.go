@@ -4,9 +4,8 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day09() Solution {
@@ -44,7 +43,7 @@ mainLoop:
 }
 
 func data09(full bool) []int {
-	return fn.Map(ReadLines(20, 9, full), conv.ParseInt)
+	return list.Map(ReadLines(20, 9, full), number.ParseInt)
 }
 
 func hasPairSum(target int, numbers []int) bool {

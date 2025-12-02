@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -25,7 +25,7 @@ func Day08() Solution {
 	}
 
 	// Part 2
-	starts := fn.Filter(dict.Keys(m), func(k string) bool {
+	starts := list.Filter(dict.Keys(m), func(k string) bool {
 		return strings.HasSuffix(k, "A")
 	})
 	counts := make([]int, 0)
@@ -48,7 +48,7 @@ func Day08() Solution {
 func data08(full bool) ([]int, map[string]Str2) {
 	lines := ReadRawLines(23, 8, full, true)
 	T := map[rune]int{'L': 0, 'R': 1}
-	moves := fn.Translate([]rune(lines[0]), T)
+	moves := list.Translate([]rune(lines[0]), T)
 	m := make(map[string]Str2)
 	for _, line := range lines[2:] {
 		p := str.CleanSplit(line, "=")

@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day03() Solution {
@@ -28,7 +28,7 @@ func data03(full bool, d Delta) []string {
 	h, w := len(lines), len(lines[0])
 	needW := float64((1 + dx) * numSteps(h, dy))
 	repeat := int(math.Ceil(needW / float64(w)))
-	return fn.Map(lines, func(line string) string {
+	return list.Map(lines, func(line string) string {
 		return strings.Repeat(line, repeat)
 	})
 }

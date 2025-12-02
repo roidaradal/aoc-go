@@ -4,11 +4,9 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/check"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day05() Solution {
@@ -38,7 +36,7 @@ var (
 )
 
 func isNice(word string) bool {
-	hasInvalid := check.Any(invalids, func(invalid string) bool {
+	hasInvalid := list.Any(invalids, func(invalid string) bool {
 		return strings.Contains(word, invalid)
 	})
 	if hasInvalid {
@@ -50,7 +48,7 @@ func isNice(word string) bool {
 	}
 
 	freq := CharFreq(word, nil)
-	numVowels := list.Sum(fn.Map(vowels, func(vowel rune) int {
+	numVowels := list.Sum(list.Map(vowels, func(vowel rune) int {
 		return freq[vowel]
 	}))
 	return numVowels >= 3
@@ -65,7 +63,7 @@ func isNice2(word string) bool {
 	for _, idxs := range pairs {
 		if len(idxs) >= 3 {
 			return true
-		} else if len(idxs) == 2 && conv.Abs(idxs[0]-idxs[1]) >= 2 {
+		} else if len(idxs) == 2 && number.Abs(idxs[0]-idxs[1]) >= 2 {
 			return true
 		}
 	}

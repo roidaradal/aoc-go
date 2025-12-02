@@ -7,9 +7,9 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn/check"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day05() Solution {
@@ -44,15 +44,15 @@ func Day05() Solution {
 		if !ok {
 			break
 		}
-		if !indexes.Contains(hash[5]) {
+		if !indexes.Has(hash[5]) {
 			continue
 		}
-		idx := conv.ParseInt(string(hash[5]))
+		idx := number.ParseInt(string(hash[5]))
 		if pwdChars[idx] == '.' {
 			pwdChars[idx] = hash[6]
 			fmt.Println(string(pwdChars))
 		}
-		allSet := check.All(pwdChars, func(char byte) bool {
+		allSet := list.All(pwdChars, func(char byte) bool {
 			return char != '.'
 		})
 		if allSet {

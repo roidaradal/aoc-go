@@ -4,7 +4,7 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day05() Solution {
@@ -40,9 +40,9 @@ func data05(full bool) []Seat {
 		'L': 0,
 		'R': 1,
 	}
-	return fn.Map(ReadLines(20, 5, full), func(line string) Seat {
-		row := fn.Translate([]rune(line[:7]), T)
-		col := fn.Translate([]rune(line[7:]), T)
+	return list.Map(ReadLines(20, 5, full), func(line string) Seat {
+		row := list.Translate([]rune(line[:7]), T)
+		col := list.Translate([]rune(line[7:]), T)
 		return Seat{row, col}
 	})
 }

@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day07() Solution {
@@ -33,7 +33,7 @@ func Day07() Solution {
 }
 
 func data07(full bool) []StrInt {
-	return fn.Map(ReadLines(23, 7, full), func(line string) StrInt {
+	return list.Map(ReadLines(23, 7, full), func(line string) StrInt {
 		return ToStrInt(line, " ")
 	})
 }
@@ -92,7 +92,7 @@ func computeScore(cards string) int {
 	group := groupHand(cards)
 	counts := dict.Values(group)
 	slices.SortFunc(counts, SortIntDesc)
-	category := strings.Join(fn.Map(counts, strconv.Itoa), ",")
+	category := strings.Join(list.Map(counts, strconv.Itoa), ",")
 	return categoryScore(category)
 }
 
@@ -110,7 +110,7 @@ func computeScore2(cards string) int {
 		}
 		slices.SortFunc(values, SortIntDesc)
 		values[0] = values[0] + group['J']
-		category := strings.Join(fn.Map(values, strconv.Itoa), ",")
+		category := strings.Join(list.Map(values, strconv.Itoa), ",")
 		return categoryScore(category)
 	} else {
 		return computeScore(cards)

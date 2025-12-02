@@ -2,7 +2,8 @@ package aoc22
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -28,7 +29,7 @@ func Day04() Solution {
 }
 
 func data04(full bool) []Pair {
-	return fn.Map(ReadLines(22, 4, full), func(line string) Pair {
+	return list.Map(ReadLines(22, 4, full), func(line string) Pair {
 		p := str.CleanSplit(line, ",")
 		p1 := ToInt2(p[0], "-")
 		p2 := ToInt2(p[1], "-")
@@ -50,5 +51,5 @@ func isSupersetPair(pair Pair) bool {
 func isOverlappingPair(pair Pair) bool {
 	s1, e1 := pair[0].Tuple()
 	s2, e2 := pair[1].Tuple()
-	return fn.Ternary(s1 < s2, s2 <= e1, s1 <= e2)
+	return lang.Ternary(s1 < s2, s2 <= e1, s1 <= e2)
 }

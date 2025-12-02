@@ -5,8 +5,8 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day08() Solution {
@@ -17,7 +17,7 @@ func Day08() Solution {
 	for i, layer := range layers {
 		freq[i] = CharFreq(layer, nil)
 	}
-	entries := fn.Map(dict.Keys(freq), func(i int) Int2 {
+	entries := list.Map(dict.Keys(freq), func(i int) Int2 {
 		return Int2{freq[i]['0'], i}
 	})
 	min0 := slices.MinFunc(entries, SortInt2)[1]
@@ -42,7 +42,7 @@ func Day08() Solution {
 		'0': ' ',
 	}
 	for i := 0; i < len(img); i += w {
-		row := fn.Translate(img[i:i+w], T)
+		row := list.Translate(img[i:i+w], T)
 		fmt.Println(string(row))
 	}
 

@@ -2,7 +2,7 @@ package aoc24
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day04() Solution {
@@ -90,7 +90,7 @@ func findNextPositions(grid []string, bounds Dims2, vectors []Vector, letter byt
 
 func isXMAS(diag1 string, diag2 string) bool {
 	diags := []string{diag1, diag2}
-	return check.All(diags, func(diag string) bool {
+	return list.All(diags, func(diag string) bool {
 		return diag == "MAS" || diag == "SAM"
 	})
 }

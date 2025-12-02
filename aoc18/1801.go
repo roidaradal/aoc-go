@@ -2,10 +2,9 @@ package aoc18
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day01() Solution {
@@ -20,7 +19,7 @@ func Day01() Solution {
 	i, curr := 0, 0
 	for {
 		curr += numbers[i]
-		if done.Contains(curr) {
+		if done.Has(curr) {
 			break
 		}
 		done.Add(curr)
@@ -31,5 +30,5 @@ func Day01() Solution {
 }
 
 func data01(full bool) []int {
-	return fn.Map(ReadLines(18, 1, full), conv.ParseInt)
+	return list.Map(ReadLines(18, 1, full), number.ParseInt)
 }

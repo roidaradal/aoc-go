@@ -48,7 +48,7 @@ type Tree struct {
 
 func bfsTraversal(t *Tree, start string, goal *string) int {
 	visited := make(map[string]int)
-	q := ds.NewQueue[StrInt]()
+	q := ds.NewQueue[StrInt](t.nodes.Len())
 	q.Enqueue(StrInt{Str: start, Int: 0})
 	for q.Len() > 0 {
 		front, _ := q.Dequeue()

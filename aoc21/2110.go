@@ -66,7 +66,7 @@ var opener = map[rune]rune{
 }
 
 func findIllegal(line string) rune {
-	stack := ds.NewStack[rune]()
+	stack := ds.NewStack[rune](len(line))
 	for _, x := range line {
 		if dict.HasKey(closer, x) {
 			y, _ := stack.Pop()
@@ -81,7 +81,7 @@ func findIllegal(line string) rune {
 }
 
 func findIncomplete(line string) *string {
-	stack := ds.NewStack[rune]()
+	stack := ds.NewStack[rune](len(line))
 	for _, x := range line {
 		if dict.HasKey(closer, x) {
 			y, _ := stack.Pop()

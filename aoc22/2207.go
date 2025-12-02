@@ -7,9 +7,9 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -78,7 +78,7 @@ func data07(full bool) FileSystem {
 			if head == "dir" {
 				item, isNew = getDir(fs, tail, cwd)
 			} else {
-				item, isNew = getFile(fs, tail, conv.ParseInt(head), cwd)
+				item, isNew = getFile(fs, tail, number.ParseInt(head), cwd)
 			}
 			if isNew && cwd != nil {
 				cwd.children = append(cwd.children, item)
@@ -86,7 +86,7 @@ func data07(full bool) FileSystem {
 		}
 	}
 
-	dirPaths := fn.Filter(dict.Keys(fs), func(path string) bool {
+	dirPaths := list.Filter(dict.Keys(fs), func(path string) bool {
 		return fs[path].isDir
 	})
 	slices.SortFunc(dirPaths, func(p1, p2 string) int {

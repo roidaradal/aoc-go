@@ -4,10 +4,10 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -53,7 +53,7 @@ func data07(full bool) Hierarchy {
 		p = p[:len(p)-1] // remove 'bags'
 		color := strings.Join(p, " ")
 		bags := str.CleanSplit(tail, ",")
-		h[color] = fn.Map(bags, bagCount)
+		h[color] = list.Map(bags, bagCount)
 	}
 	return h
 }
@@ -61,7 +61,7 @@ func data07(full bool) Hierarchy {
 func bagCount(text string) StrInt {
 	p := str.SpaceSplit(text)
 	color := strings.Join(p[1:len(p)-1], " ")
-	count := conv.ParseInt(p[0])
+	count := number.ParseInt(p[0])
 	return StrInt{Str: color, Int: count}
 }
 

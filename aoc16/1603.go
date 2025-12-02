@@ -2,7 +2,7 @@ package aoc16
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day03() Solution {
@@ -19,7 +19,7 @@ func Day03() Solution {
 }
 
 func data03(full bool) []Dims3 {
-	return fn.Map(ReadLines(16, 3, full), func(line string) Dims3 {
+	return list.Map(ReadLines(16, 3, full), func(line string) Dims3 {
 		return ToDims3(line, " ")
 	})
 }

@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"math"
 	"slices"
+	"sync"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day05() Solution {
@@ -19,19 +20,32 @@ func Day05() Solution {
 
 	// Part 2
 	// charSet := ds.NewSet[byte]()
-	charSet := ds.SetFrom(fn.Map([]byte(word), LowerChar))
+	charSet := ds.SetFrom(list.Map([]byte(word), LowerChar))
 	chars := charSet.Items()
 	slices.Sort(chars)
 	numChars := len(chars)
 	minLength := math.MaxInt
+	// Run concurrently
+	var wg sync.WaitGroup
+	lengthCh := make(chan int, len(chars))
 	for i, skipChar := range chars {
-		chars2 := fn.Filter([]byte(word), func(char byte) bool {
-			return LowerChar(char) != skipChar
+		wg.Go(func() {
+			chars2 := list.Filter([]byte(word), func(char byte) bool {
+				return LowerChar(char) != skipChar
+			})
+			word2 := fullyCompress(string(chars2))
+			wordLen := len(word2)
+			lengthCh <- wordLen
+			// minLength = min(minLength, wordLen)
+			fmt.Printf("%.02d / %.02d - %c - %d\n", i+1, numChars, skipChar, wordLen)
 		})
-		word2 := fullyCompress(string(chars2))
-		wordLen := len(word2)
+	}
+	go func() {
+		wg.Wait()
+		close(lengthCh)
+	}()
+	for wordLen := range lengthCh {
 		minLength = min(minLength, wordLen)
-		fmt.Printf("%.02d / %.02d - %c - %d\n", i+1, numChars, skipChar, wordLen)
 	}
 
 	return NewSolution(length, minLength)

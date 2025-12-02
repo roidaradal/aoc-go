@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day04() Solution {
@@ -46,7 +46,7 @@ func isValid2(number int) bool {
 		return false
 	}
 
-	sizes := fn.Map(GroupChunks(x), func(chunk string) int {
+	sizes := list.Map(GroupChunks(x), func(chunk string) int {
 		return len(chunk)
 	})
 	return slices.Contains(sizes, 2)

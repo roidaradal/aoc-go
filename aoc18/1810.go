@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -35,7 +35,7 @@ func Day10() Solution {
 }
 
 func data10(full bool) []Particle {
-	return fn.Map(ReadLines(18, 10, full), func(line string) Particle {
+	return list.Map(ReadLines(18, 10, full), func(line string) Particle {
 		p := str.CleanSplit(line, ">")
 		head := str.CleanSplit(p[0], "<")[1]
 		tail := str.CleanSplit(p[1], "<")[1]
@@ -61,10 +61,10 @@ func computeArea(particles []Particle) int {
 }
 
 func computeBounds(particles []Particle) (Coords, Coords) {
-	ys := fn.Map(particles, func(p Particle) int {
+	ys := list.Map(particles, func(p Particle) int {
 		return p.Coords[0]
 	})
-	xs := fn.Map(particles, func(p Particle) int {
+	xs := list.Map(particles, func(p Particle) int {
 		return p.Coords[1]
 	})
 	x1, y1 := slices.Min(xs), slices.Min(ys)

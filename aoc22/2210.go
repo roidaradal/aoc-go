@@ -5,8 +5,9 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -22,7 +23,7 @@ func Day10() Solution {
 	x, t, total := 1, 0, 0
 	for _, pair := range commands {
 		cmd, param := pair.Tuple()
-		steps := fn.Ternary(cmd == "addx", 2, 1)
+		steps := lang.Ternary(cmd == "addx", 2, 1)
 		for range steps {
 			t += 1
 			drawPixel(crt, t, x, cols)
@@ -42,12 +43,12 @@ func Day10() Solution {
 }
 
 func data10(full bool) []StrInt {
-	return fn.Map(ReadLines(22, 10, full), func(line string) StrInt {
+	return list.Map(ReadLines(22, 10, full), func(line string) StrInt {
 		p := str.SpaceSplit(line)
 		cmd := p[0]
 		value := 0
 		if cmd == "addx" {
-			value = conv.ParseInt(p[1])
+			value = number.ParseInt(p[1])
 		}
 		return StrInt{Str: cmd, Int: value}
 	})
@@ -66,6 +67,6 @@ func createCRT() CRT {
 func drawPixel(crt CRT, t int, x int, cols int) {
 	row := (t - 1) / cols
 	col := (t - 1) % cols
-	pixel := fn.Ternary(conv.Abs(x-col) <= 1, '#', '.')
+	pixel := lang.Ternary(number.Abs(x-col) <= 1, '#', '.')
 	crt[row][col] = pixel
 }

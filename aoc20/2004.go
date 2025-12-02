@@ -5,9 +5,9 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn/check"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -52,7 +52,7 @@ type Passport = map[string]string
 var passportKeys = []string{"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}
 
 func hasAllKeys(p Passport) bool {
-	return check.All(passportKeys, func(key string) bool {
+	return list.All(passportKeys, func(key string) bool {
 		return dict.HasKey(p, key)
 	})
 }
@@ -65,23 +65,23 @@ func isValidPassport(p Passport) bool {
 	for k, v := range p {
 		switch k {
 		case "byr":
-			byr := conv.ParseInt(v)
+			byr := number.ParseInt(v)
 			if 1920 <= byr && byr <= 2002 {
 				ok += 1
 			}
 		case "iyr":
-			iyr := conv.ParseInt(v)
+			iyr := number.ParseInt(v)
 			if 2010 <= iyr && iyr <= 2020 {
 				ok += 1
 			}
 		case "eyr":
-			eyr := conv.ParseInt(v)
+			eyr := number.ParseInt(v)
 			if 2020 <= eyr && eyr <= 2030 {
 				ok += 1
 			}
 		case "hgt":
 			n := len(v)
-			hgt, unit := conv.ParseInt(v[:n-2]), v[n-2:]
+			hgt, unit := number.ParseInt(v[:n-2]), v[n-2:]
 			if unit == "cm" && 150 <= hgt && hgt <= 193 {
 				ok += 1
 			}

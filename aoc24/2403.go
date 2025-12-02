@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day03() Solution {
@@ -51,7 +51,7 @@ func Day03() Solution {
 
 	total2 := 0
 	for _, cmd := range commands {
-		invalid := check.Any(ignore, func(x Int2) bool {
+		invalid := list.Any(ignore, func(x Int2) bool {
 			return x[0] <= cmd.Int && cmd.Int <= x[1]
 		})
 		if !invalid {

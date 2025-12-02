@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -16,17 +16,17 @@ func Day06() Solution {
 	// Part 1
 	total1 := 1
 	for i, limit := range times {
-		breakers := fn.Filter(computeOutcomes(limit), func(d int) bool {
+		breakers := list.Filter(computeOutcomes(limit), func(d int) bool {
 			return d > bests[i]
 		})
 		total1 *= len(breakers)
 	}
 
 	// Part 2
-	newLimit := strings.Join(fn.Map(times, strconv.Itoa), "")
-	newBest := strings.Join(fn.Map(bests, strconv.Itoa), "")
-	limit, best := conv.ParseInt(newLimit), conv.ParseInt(newBest)
-	breakers := fn.Filter(computeOutcomes(limit), func(d int) bool {
+	newLimit := strings.Join(list.Map(times, strconv.Itoa), "")
+	newBest := strings.Join(list.Map(bests, strconv.Itoa), "")
+	limit, best := number.ParseInt(newLimit), number.ParseInt(newBest)
+	breakers := list.Filter(computeOutcomes(limit), func(d int) bool {
 		return d > best
 	})
 	total2 := len(breakers)
@@ -36,13 +36,13 @@ func Day06() Solution {
 
 func data06(full bool) ([]int, []int) {
 	lines := ReadLines(23, 6, full)
-	times := fn.Map(str.SpaceSplit(lines[0])[1:], conv.ParseInt)
-	bests := fn.Map(str.SpaceSplit(lines[1])[1:], conv.ParseInt)
+	times := list.Map(str.SpaceSplit(lines[0])[1:], number.ParseInt)
+	bests := list.Map(str.SpaceSplit(lines[1])[1:], number.ParseInt)
 	return times, bests
 }
 
 func computeOutcomes(limit int) []int {
-	return fn.Map(NumRange(0, limit+1), func(hold int) int {
+	return list.Map(NumRange(0, limit+1), func(hold int) int {
 		return hold * (limit - hold)
 	})
 }

@@ -2,8 +2,9 @@ package aoc21
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day03() Solution {
@@ -30,8 +31,8 @@ func Day03() Solution {
 			e = append(e, '1')
 		}
 	}
-	gb := conv.ParseBinary(string(g))
-	eb := conv.ParseBinary(string(e))
+	gb := number.ParseBinary(string(g))
+	eb := number.ParseBinary(string(e))
 	part1 := gb * eb
 
 	// Part 2
@@ -47,7 +48,7 @@ func data03(full bool) []string {
 }
 
 func countIndex(binaryNumbers []string, index int) int {
-	valid := fn.Filter(binaryNumbers, func(code string) bool {
+	valid := list.Filter(binaryNumbers, func(code string) bool {
 		return code[index] == '1'
 	})
 	return len(valid)
@@ -58,15 +59,15 @@ func filterMax(binaryNumbers []string) int {
 	for i := range bitLength {
 		c1 := countIndex(binaryNumbers, i)
 		c0 := len(binaryNumbers) - c1
-		maxBit := fn.Ternary(c1 >= c0, '1', '0')
-		binaryNumbers = fn.Filter(binaryNumbers, func(code string) bool {
+		maxBit := lang.Ternary(c1 >= c0, '1', '0')
+		binaryNumbers = list.Filter(binaryNumbers, func(code string) bool {
 			return code[i] == byte(maxBit)
 		})
 		if len(binaryNumbers) == 1 {
 			break
 		}
 	}
-	return conv.ParseBinary(binaryNumbers[0])
+	return number.ParseBinary(binaryNumbers[0])
 }
 
 func filterMin(binaryNumbers []string) int {
@@ -74,13 +75,13 @@ func filterMin(binaryNumbers []string) int {
 	for i := range bitLength {
 		c1 := countIndex(binaryNumbers, i)
 		c0 := len(binaryNumbers) - c1
-		minBit := fn.Ternary(c0 <= c1, '0', '1')
-		binaryNumbers = fn.Filter(binaryNumbers, func(code string) bool {
+		minBit := lang.Ternary(c0 <= c1, '0', '1')
+		binaryNumbers = list.Filter(binaryNumbers, func(code string) bool {
 			return code[i] == byte(minBit)
 		})
 		if len(binaryNumbers) == 1 {
 			break
 		}
 	}
-	return conv.ParseBinary(binaryNumbers[0])
+	return number.ParseBinary(binaryNumbers[0])
 }

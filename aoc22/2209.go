@@ -2,9 +2,9 @@ package aoc22
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -35,9 +35,9 @@ func Day09() Solution {
 }
 
 func data09(full bool) []Step {
-	return fn.Map(ReadLines(22, 9, full), func(line string) Step {
+	return list.Map(ReadLines(22, 9, full), func(line string) Step {
 		p := str.SpaceSplit(line)
-		d := conv.ParseInt(p[1])
+		d := number.ParseInt(p[1])
 		switch p[0] {
 		case "U":
 			return Step{U, d}
@@ -91,7 +91,7 @@ func moveChain(pos []Coords, step Step, visited *ds.Set[Coords]) []Coords {
 func isAdjacent(head, tail Coords) bool {
 	y1, x1 := head.Tuple()
 	y2, x2 := tail.Tuple()
-	dy, dx := conv.Abs(y2-y1), conv.Abs(x2-x1)
+	dy, dx := number.Abs(y2-y1), number.Abs(x2-x1)
 	return dy <= 1 && dx <= 1
 }
 

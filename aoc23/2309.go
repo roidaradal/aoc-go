@@ -2,9 +2,8 @@ package aoc23
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/check"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day09() Solution {
@@ -23,7 +22,7 @@ func Day09() Solution {
 }
 
 func data09(full bool) [][]int {
-	return fn.Map(ReadLines(23, 9, full), func(line string) []int {
+	return list.Map(ReadLines(23, 9, full), func(line string) []int {
 		return ToIntList(line, " ")
 	})
 }
@@ -31,8 +30,8 @@ func data09(full bool) [][]int {
 func getNext(numbers []int) int {
 	gap := 0
 	diff := numbers
-	for !check.AllEqual(diff, 0) {
-		diff = fn.Map(NumRange(1, len(diff)), func(i int) int {
+	for !list.AllEqual(diff, 0) {
+		diff = list.Map(NumRange(1, len(diff)), func(i int) int {
 			return diff[i] - diff[i-1]
 		})
 		gap += Last(diff, 1)
@@ -43,8 +42,8 @@ func getNext(numbers []int) int {
 func getPrev(numbers []int) int {
 	diff := numbers
 	fronts := []int{diff[0]}
-	for !check.AllEqual(diff, 0) {
-		diff = fn.Map(NumRange(1, len(diff)), func(i int) int {
+	for !list.AllEqual(diff, 0) {
+		diff = list.Map(NumRange(1, len(diff)), func(i int) int {
 			return diff[i] - diff[i-1]
 		})
 		fronts = append(fronts, diff[0])

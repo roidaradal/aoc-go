@@ -2,7 +2,7 @@ package aoc15
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/lang"
 )
 
 func Day01() Solution {
@@ -25,7 +25,7 @@ func data01(full bool) string {
 func elevatorFloor(line string, goal *int) int {
 	level := 0
 	for i, x := range line {
-		level += fn.Ternary(x == '(', 1, -1)
+		level += lang.Ternary(x == '(', 1, -1)
 		if goal != nil && level == *goal {
 			return i + 1
 		}

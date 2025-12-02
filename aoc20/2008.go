@@ -2,9 +2,10 @@ package aoc20
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -33,9 +34,9 @@ func Day08() Solution {
 }
 
 func data08(full bool) []StrInt {
-	return fn.Map(ReadLines(20, 8, full), func(line string) StrInt {
+	return list.Map(ReadLines(20, 8, full), func(line string) StrInt {
 		p := str.SpaceSplit(line)
-		return StrInt{Str: p[0], Int: conv.ParseInt(p[1])}
+		return StrInt{Str: p[0], Int: number.ParseInt(p[1])}
 	})
 }
 
@@ -44,7 +45,7 @@ func runCodes(codes []StrInt) (int, bool) {
 	done := ds.NewSet[int]()
 	numCodes := len(codes)
 	for {
-		if done.Contains(i) {
+		if done.Has(i) {
 			return x, true
 		}
 		if i >= numCodes {
@@ -69,7 +70,7 @@ func flipNopJmp(codes []StrInt, idx int) []StrInt {
 	codes2 := make([]StrInt, len(codes))
 	copy(codes2, codes)
 	cmd, y := codes2[idx].Tuple()
-	cmd2 := fn.Ternary(cmd == "jmp", "nop", "jmp")
+	cmd2 := lang.Ternary(cmd == "jmp", "nop", "jmp")
 	codes2[idx] = StrInt{Str: cmd2, Int: y}
 	return codes2
 }

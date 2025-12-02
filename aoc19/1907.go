@@ -2,9 +2,9 @@ package aoc19
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/check"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day07() Solution {
@@ -55,7 +55,7 @@ func Day07() Solution {
 			if output != nil {
 				programs[p].inputs = append(programs[p].inputs, *output)
 			}
-			stop := check.All(programs, func(p *Program) bool {
+			stop := list.All(programs, func(p *Program) bool {
 				return p.stop
 			})
 			if stop {
@@ -79,7 +79,7 @@ func runProgram07(p *Program) (*int, int) {
 	i := p.index
 	for {
 		head, tail := commandParts(p.numbers[i])
-		cmd := conv.ParseInt(tail)
+		cmd := number.ParseInt(tail)
 		if cmd == 99 {
 			break
 		}
@@ -97,9 +97,9 @@ func runProgram07(p *Program) (*int, int) {
 			case 2:
 				p.numbers[out] = a * b
 			case 7:
-				p.numbers[out] = fn.Ternary(a < b, 1, 0)
+				p.numbers[out] = lang.Ternary(a < b, 1, 0)
 			case 8:
-				p.numbers[out] = fn.Ternary(a == b, 1, 0)
+				p.numbers[out] = lang.Ternary(a == b, 1, 0)
 			}
 			i += 4
 		case 3:
@@ -116,7 +116,7 @@ func runProgram07(p *Program) (*int, int) {
 			m := intcodeModes(head, 2)
 			m1, m2 := m[0], m[1]
 			isZero := intcodeParam(p1, m1, p.numbers) == 0
-			doJump := fn.Ternary(cmd == 6, isZero, !isZero)
+			doJump := lang.Ternary(cmd == 6, isZero, !isZero)
 			if doJump {
 				i = intcodeParam(p2, m2, p.numbers)
 			} else {

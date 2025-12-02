@@ -5,10 +5,10 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn/check"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -36,7 +36,7 @@ mainLoop:
 				weight[node] = t.weight[node]
 				continue
 			}
-			computable := check.All(t.children[node], func(child string) bool {
+			computable := list.All(t.children[node], func(child string) bool {
 				return dict.HasKey(weight, child)
 			})
 			if computable {
@@ -85,7 +85,7 @@ func data07(full bool) Tree {
 		node := str.CleanSplit(p[0], "(")
 		name := node[0]
 		t.nodes = append(t.nodes, name)
-		t.weight[name] = conv.ParseInt(strings.TrimSuffix(node[1], ")"))
+		t.weight[name] = number.ParseInt(strings.TrimSuffix(node[1], ")"))
 		if len(p) == 1 {
 			continue
 		}

@@ -2,7 +2,7 @@ package aoc24
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
 	"github.com/roidaradal/fn/list"
@@ -33,13 +33,14 @@ func Day10() Solution {
 }
 
 func data10(full bool) [][]int {
-	return fn.Map(ReadLines(24, 10, full), ToIntLine)
+	return list.Map(ReadLines(24, 10, full), ToIntLine)
 }
 
 func count9(start Coords, grid [][]int) map[Coords]int {
 	bounds := GridBounds(grid)
+	rows, cols := bounds.Tuple()
 	goals := make(map[Coords]int)
-	q := ds.NewQueue[Coords]()
+	q := ds.NewQueue[Coords](rows * cols)
 	q.Enqueue(start)
 	for !q.IsEmpty() {
 		c, _ := q.Dequeue()

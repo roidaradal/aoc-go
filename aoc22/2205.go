@@ -5,9 +5,8 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -52,9 +51,9 @@ func data05(full bool) ([][]rune, []Int3) {
 			}
 		} else {
 			p := str.SpaceSplit(line)
-			count := conv.ParseInt(p[1])
-			src := conv.ParseInt(p[3]) - 1
-			dst := conv.ParseInt(p[5]) - 1
+			count := number.ParseInt(p[1])
+			src := number.ParseInt(p[3]) - 1
+			dst := number.ParseInt(p[5]) - 1
 			moves = append(moves, Int3{count, src, dst})
 		}
 	}
@@ -66,7 +65,7 @@ func processMoves(stacks [][]rune, moves []Int3, reverse bool) string {
 		count, idx1, idx2 := move.Tuple()
 		transfer(stacks, count, idx1, idx2, reverse)
 	}
-	top := fn.Map(stacks, func(stack []rune) rune {
+	top := list.Map(stacks, func(stack []rune) rune {
 		return stack[0]
 	})
 	return string(top)

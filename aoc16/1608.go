@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -45,16 +45,16 @@ func data08(full bool) (IntGrid, []Command) {
 			}
 			commands = append(commands, cmd)
 		} else if p[1] == "column" {
-			col := conv.ParseInt(str.CleanSplit(p[2], "=")[1])
-			rot := conv.ParseInt(p[lastIdx])
+			col := number.ParseInt(str.CleanSplit(p[2], "=")[1])
+			rot := number.ParseInt(p[lastIdx])
 			cmd := Command{
 				Type: "col",
 				Int2: Int2{col, rot},
 			}
 			commands = append(commands, cmd)
 		} else if p[1] == "row" {
-			row := conv.ParseInt(str.CleanSplit(p[2], "=")[1])
-			rot := conv.ParseInt(p[lastIdx])
+			row := number.ParseInt(str.CleanSplit(p[2], "=")[1])
+			rot := number.ParseInt(p[lastIdx])
 			cmd := Command{
 				Type: "row",
 				Int2: Int2{row, rot},
@@ -105,7 +105,7 @@ func displayGrid(grid IntGrid) {
 	for _, line := range grid {
 		out := make([]rune, len(line))
 		for i, x := range line {
-			out[i] = fn.Ternary(x == 0, ' ', '#')
+			out[i] = lang.Ternary(x == 0, ' ', '#')
 		}
 		fmt.Println(string(out))
 	}

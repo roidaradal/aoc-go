@@ -4,8 +4,8 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -24,8 +24,8 @@ func Day09() Solution {
 func data09(full bool) (int, int) {
 	line := ReadFirstLine(18, 9, full)
 	p := str.SpaceSplit(line)
-	numPlayers := conv.ParseInt(p[0])
-	lastMarble := conv.ParseInt(Last(p, 2))
+	numPlayers := number.ParseInt(p[0])
+	lastMarble := number.ParseInt(Last(p, 2))
 	return numPlayers, lastMarble
 }
 
@@ -45,8 +45,7 @@ func maxScore(numPlayers, lastMarble int) int {
 			prev7.Remove()
 		} else {
 			next1 := curr.Next
-			next2 := next1.Next
-			curr = next1.AddBetween(next2, m)
+			curr = next1.AddAfter(m)
 		}
 		player = (player + 1) % numPlayers
 	}

@@ -4,10 +4,9 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -27,7 +26,7 @@ func Day03() Solution {
 			}
 		}
 	}
-	total := list.Sum(fn.Map(g, func(row []int) int {
+	total := list.Sum(list.Map(g, func(row []int) int {
 		count := 0
 		for _, x := range row {
 			if x > 1 {
@@ -53,7 +52,7 @@ func Day03() Solution {
 				} else {
 					ok = false
 					owner := g[r][c]
-					if clean.Contains(owner) {
+					if clean.Has(owner) {
 						clean.Delete(owner)
 					}
 				}
@@ -69,10 +68,10 @@ func Day03() Solution {
 }
 
 func data03(full bool) []Claim {
-	return fn.Map(ReadLines(18, 3, full), func(line string) Claim {
+	return list.Map(ReadLines(18, 3, full), func(line string) Claim {
 		claim := Claim{}
 		p := str.CleanSplit(line, "@")
-		claim.id = conv.ParseInt(strings.TrimPrefix(p[0], "#"))
+		claim.id = number.ParseInt(strings.TrimPrefix(p[0], "#"))
 		t := str.CleanSplit(p[1], ":")
 		c := ToIntList(t[0], ",")
 		claim.coords = Coords{c[1], c[0]}

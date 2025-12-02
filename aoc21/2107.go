@@ -5,9 +5,8 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 )
 
 func Day07() Solution {
@@ -17,16 +16,16 @@ func Day07() Solution {
 	// Part 1
 	mid := len(numbers) / 2
 	median := numbers[mid]
-	total := list.Sum(fn.Map(numbers, func(x int) int {
-		return conv.Abs(median - x)
+	total := list.Sum(list.Map(numbers, func(x int) int {
+		return number.Abs(median - x)
 	}))
 
 	// Part 2
 	start, end := numbers[0], Last(numbers, 1)
 	minCost := math.MaxInt
 	for target := range NumRange(start, end+1) {
-		cost := list.Sum(fn.Map(numbers, func(x int) int {
-			return list.Sum(NumRange(0, conv.Abs(target-x)+1))
+		cost := list.Sum(list.Map(numbers, func(x int) int {
+			return list.Sum(NumRange(0, number.Abs(target-x)+1))
 		}))
 		minCost = min(minCost, cost)
 	}

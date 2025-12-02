@@ -4,7 +4,6 @@ import (
 	"math"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
 	"github.com/roidaradal/fn/list"
@@ -27,7 +26,7 @@ func Day04() Solution {
 }
 
 func data04(full bool) []CardGame {
-	return fn.Map(ReadLines(23, 4, full), func(line string) CardGame {
+	return list.Map(ReadLines(23, 4, full), func(line string) CardGame {
 		tail := str.CleanSplit(line, ":")[1]
 		t := str.CleanSplit(tail, "|")
 		winners := ToIntList(t[0], " ")

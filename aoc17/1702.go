@@ -5,7 +5,7 @@ import (
 	"sort"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day02() Solution {
@@ -29,7 +29,7 @@ func Day02() Solution {
 }
 
 func data02(full bool) [][]int {
-	return fn.Map(ReadLines(17, 2, full), func(line string) []int {
+	return list.Map(ReadLines(17, 2, full), func(line string) []int {
 		return ToIntList(line, " ")
 	})
 }

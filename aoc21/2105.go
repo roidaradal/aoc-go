@@ -4,8 +4,8 @@ import (
 	"slices"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -47,7 +47,7 @@ func countIntersection(lines []Line, bounds Dims2, withDiagonal bool) int {
 			addVertical(g, y1, y2, x1)
 		} else if y1 == y2 {
 			addHorizontal(g, x1, x2, y1)
-		} else if withDiagonal && conv.Abs(y2-y1) == conv.Abs(x2-x1) {
+		} else if withDiagonal && number.Abs(y2-y1) == number.Abs(x2-x1) {
 			addDiagonal(g, x1, y1, x2, y2)
 		}
 	}
@@ -81,8 +81,8 @@ func addHorizontal(g IntGrid, x1, x2, y int) {
 }
 
 func addDiagonal(g IntGrid, x1, y1, x2, y2 int) {
-	xs := fn.Ternary(x1 < x2, NumRange(x1, x2+1), RevRange(x1, x2-1))
-	ys := fn.Ternary(y1 < y2, NumRange(y1, y2+1), RevRange(y1, y2-1))
+	xs := lang.Ternary(x1 < x2, NumRange(x1, x2+1), RevRange(x1, x2-1))
+	ys := lang.Ternary(y1 < y2, NumRange(y1, y2+1), RevRange(y1, y2-1))
 	for i := range len(xs) {
 		y, x := ys[i], xs[i]
 		g[y][x] += 1

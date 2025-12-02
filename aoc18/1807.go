@@ -5,22 +5,20 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/check"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
 func Day07() Solution {
 	g := data07(true)
-	limit := len(g.Vertices())
+	limit := len(g.Vertices)
 
 	// Part 1
 	done := make([]string, 0)
 	for range limit {
-		task := nextTask(g, done)
-		done = append(done, task)
+		done = append(done, nextTask(g, done))
 	}
 	order := strings.Join(done, "")
 
@@ -35,13 +33,13 @@ func Day07() Solution {
 		queue[i] = emptyTask
 	}
 	for len(done) < limit {
-		candidates := fn.Filter(taskCandidates(g, done), func(task string) bool {
-			return !ongoing.Contains(task)
+		candidates := list.Filter(taskCandidates(g, done), func(task string) bool {
+			return ongoing.HasNo(task)
 		})
-		availableEntries := fn.Filter(dict.Entries(queue), func(e dict.Entry[int, StrInt]) bool {
+		availableEntries := list.Filter(dict.Entries(queue), func(e dict.Entry[int, StrInt]) bool {
 			return e.Value.Str == ""
 		})
-		available := fn.Map(availableEntries, func(e dict.Entry[int, StrInt]) int {
+		available := list.Map(availableEntries, func(e dict.Entry[int, StrInt]) int {
 			return e.Key
 		})
 		count := min(len(candidates), len(available))
@@ -52,8 +50,7 @@ func Day07() Solution {
 		}
 
 		for worker := range workers {
-			work := queue[worker]
-			task, left := work.Tuple()
+			task, left := queue[worker].Tuple()
 			if task == "" {
 				continue
 			}
@@ -66,7 +63,6 @@ func Day07() Solution {
 				queue[worker] = StrInt{Str: task, Int: left}
 			}
 		}
-
 		timer += 1
 	}
 
@@ -76,14 +72,17 @@ func Day07() Solution {
 func data07(full bool) *ds.Graph {
 	g := ds.NewGraph()
 	edges := make([][2]string, 0)
+	vertices := ds.NewSet[ds.Vertex]()
 	for _, line := range ReadLines(18, 7, full) {
 		p := str.SpaceSplit(line)
 		v1, v2 := p[1], Last(p, 3)
-		g.AddVertex(v1)
-		g.AddVertex(v2)
+		vertices.Add(v1)
+		vertices.Add(v2)
 		edges = append(edges, [2]string{v2, v1})
 	}
-	g.InitializeEdges()
+	for _, v := range vertices.Items() {
+		g.AddVertex(v)
+	}
 	for _, edge := range edges {
 		g.AddDirectedEdge(edge[0], edge[1])
 	}
@@ -92,11 +91,11 @@ func data07(full bool) *ds.Graph {
 
 func taskCandidates(g *ds.Graph, done []string) []string {
 	candidates := make([]string, 0)
-	for _, vertex := range g.Vertices() {
+	for _, vertex := range g.Vertices {
 		if slices.Contains(done, vertex) {
 			continue
 		}
-		allDone := check.All(g.Neighbors(vertex), func(dep string) bool {
+		allDone := list.All(g.Neighbors(vertex), func(dep string) bool {
 			return slices.Contains(done, dep)
 		})
 		if allDone {

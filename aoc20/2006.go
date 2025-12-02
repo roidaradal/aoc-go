@@ -2,9 +2,9 @@ package aoc20
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dict"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/list"
 )
 
 type Group = []string
@@ -56,7 +56,7 @@ func countAllYes(group Group) int {
 		}
 	}
 	groupSize := len(group)
-	allYes := fn.Filter(dict.Keys(count), func(k rune) bool {
+	allYes := list.Filter(dict.Keys(count), func(k rune) bool {
 		return count[k] == groupSize
 	})
 	return len(allYes)

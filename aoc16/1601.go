@@ -2,9 +2,10 @@ package aoc16
 
 import (
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/conv"
 	"github.com/roidaradal/fn/ds"
+	"github.com/roidaradal/fn/lang"
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/number"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -33,9 +34,9 @@ func data01(full bool) []Int2 {
 		'R': right,
 	}
 	line := ReadFirstLine(16, 1, full)
-	return fn.Map(str.CleanSplit(line, ","), func(move string) Int2 {
+	return list.Map(str.CleanSplit(line, ","), func(move string) Int2 {
 		turn := T[move[0]]
-		steps := conv.ParseInt(move[1:])
+		steps := number.ParseInt(move[1:])
 		return Int2{turn, steps}
 	})
 }
@@ -47,7 +48,7 @@ func findHQ(moves []Int2, atVisitedTwice bool) Coords {
 	for _, move := range moves {
 		turn, steps := move.Tuple()
 		if d == X {
-			d = fn.Ternary(turn == left, L, R)
+			d = lang.Ternary(turn == left, L, R)
 		} else if turn == left {
 			d = LeftOf[d]
 		} else if turn == right {
@@ -55,7 +56,7 @@ func findHQ(moves []Int2, atVisitedTwice bool) Coords {
 		}
 		for range steps {
 			curr = Move(curr, d)
-			if atVisitedTwice && visited.Contains(curr) {
+			if atVisitedTwice && visited.Has(curr) {
 				return curr
 			}
 			visited.Add(curr)

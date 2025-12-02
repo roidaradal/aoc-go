@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	. "github.com/roidaradal/aoc-go/aoc"
-	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/list"
 )
 
 func Day06() Solution {
@@ -39,7 +39,7 @@ func data06(full bool) []int {
 }
 
 func bankState(banks []int) string {
-	state := fn.Map(banks, func(bank int) string {
+	state := list.Map(banks, func(bank int) string {
 		return fmt.Sprintf("%d", bank)
 	})
 	return strings.Join(state, ",")
