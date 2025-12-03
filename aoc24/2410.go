@@ -38,9 +38,8 @@ func data10(full bool) [][]int {
 
 func count9(start Coords, grid [][]int) map[Coords]int {
 	bounds := GridBounds(grid)
-	rows, cols := bounds.Tuple()
 	goals := make(map[Coords]int)
-	q := ds.NewQueue[Coords](rows * cols)
+	q := ds.NewQueue[Coords]()
 	q.Enqueue(start)
 	for !q.IsEmpty() {
 		c, _ := q.Dequeue()

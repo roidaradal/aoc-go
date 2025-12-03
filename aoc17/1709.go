@@ -12,7 +12,7 @@ func Day09() Solution {
 	i, limit := 0, len(stream)
 	count, total := 0, 0
 	garbage := false
-	stack := ds.NewStack[int](limit)
+	stack := ds.NewStack[int]()
 	for i < limit {
 		char := stream[i]
 		if garbage {

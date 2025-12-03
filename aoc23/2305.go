@@ -97,7 +97,7 @@ func applyMapRangeChain(seeds []int, maps map[string][]Int3) []int {
 	rangeMap := mapRanges(maps)
 	for i := range len(seedChain) - 1 {
 		key := fmt.Sprintf("%s-to-%s", seedChain[i], seedChain[i+1])
-		nextRanges := ds.NewQueue[Int2](currRanges.Len())
+		nextRanges := ds.NewQueue[Int2]()
 		for currRanges.Len() > 0 {
 			currRange, _ := currRanges.Dequeue()
 			found := false

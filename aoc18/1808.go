@@ -11,7 +11,7 @@ func Day08() Solution {
 
 	// Part 1
 	child, meta := numbers[0], numbers[1]
-	stack := ds.NewStack[Int2](limit)
+	stack := ds.NewStack[Int2]()
 	stack.Push(Int2{child, meta})
 	total, i := 0, 2
 	for i < limit {
@@ -38,7 +38,7 @@ func Day08() Solution {
 
 	// Part 2
 	child, meta = numbers[0], numbers[1]
-	stack2 := ds.NewStack[Triple](limit)
+	stack2 := ds.NewStack[Triple]()
 	stack2.Push(Triple{child, meta, []int{}})
 	value, i := 0, 2
 	for i < limit {

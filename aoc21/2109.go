@@ -62,9 +62,8 @@ func surrounding(grid IntGrid, center Coords) []Int3 {
 }
 
 func basinSize(grid IntGrid, center Coords) int {
-	rows, cols := GridBounds(grid).Tuple()
 	visited := ds.NewSet[Coords]()
-	stack := ds.NewStack[Coords](rows * cols)
+	stack := ds.NewStack[Coords]()
 	stack.Push(center)
 	for stack.Len() > 0 {
 		c, _ := stack.Pop()

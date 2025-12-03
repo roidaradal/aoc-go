@@ -131,10 +131,9 @@ func (g *MazeGrid) createEdges() {
 }
 
 func bfsMaxDistance(grid *MazeGrid) int {
-	rows, cols := grid.bounds.Tuple()
 	dist := make(map[Coords]int)
 	visited := ds.NewSet[Coords]()
-	q := ds.NewQueue[CoordDist](rows * cols)
+	q := ds.NewQueue[CoordDist]()
 	q.Enqueue(CoordDist{grid.start, 0})
 	for q.Len() > 0 {
 		pair, _ := q.Dequeue()
@@ -152,9 +151,8 @@ func bfsMaxDistance(grid *MazeGrid) int {
 }
 
 func dfsVisit(grid *MazeGrid) []Coords {
-	rows, cols := grid.bounds.Tuple()
 	points := make([]Coords, 0)
-	stack := ds.NewStack[Coords](rows * cols)
+	stack := ds.NewStack[Coords]()
 	stack.Push(grid.start)
 	for stack.Len() > 0 {
 		node, _ := stack.Pop()
@@ -214,7 +212,7 @@ func floodFillMaze(grid map[Coords]rune) []Coords {
 	ymin := slices.Min(dict.Keys(pts))
 	xmin := slices.Min(pts[ymin])
 	start := Coords{ymin + 1, xmin + 1}
-	stack := ds.NewStack[Coords](10)
+	stack := ds.NewStack[Coords]()
 	stack.Push(start)
 	for stack.Len() > 0 {
 		curr, _ := stack.Pop()
