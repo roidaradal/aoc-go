@@ -88,3 +88,24 @@ func CountFreq[T comparable](items []T) map[T]int {
 	}
 	return freq
 }
+
+func MergeRanges(ranges []Int2) []Int2 {
+	slices.SortFunc(ranges, SortInt2)
+	result := make([]Int2, 0)
+	currStart, currEnd := ranges[0].Tuple()
+	for _, r := range ranges[1:] {
+		nextStart, nextEnd := r.Tuple()
+		if currStart <= nextStart && nextEnd <= currEnd {
+			continue // subset
+		}
+
+		if nextStart <= currEnd {
+			currEnd = nextEnd // overlap
+		} else {
+			result = append(result, Int2{currStart, currEnd})
+			currStart, currEnd = nextStart, nextEnd
+		}
+	}
+	result = append(result, Int2{currStart, currEnd})
+	return result
+}
