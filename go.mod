@@ -4,7 +4,7 @@ go 1.25.4
 
 require (
 	github.com/joho/godotenv v1.5.1
-	github.com/roidaradal/fn v0.5.13
+	github.com/roidaradal/fn v0.5.16
 	gonum.org/v1/gonum v0.16.0
 )
 
