@@ -356,6 +356,8 @@ func solve25(day int) aoc.Solution {
 		return aoc25.Day05()
 	case 6:
 		return aoc25.Day06()
+	case 7:
+		return aoc25.Day07()
 	}
 	panic("Invalid day")
 }
