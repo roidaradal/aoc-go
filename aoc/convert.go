@@ -29,6 +29,11 @@ func ToInt2(line string, sep string) Int2 {
 	return Int2{p[0], p[1]}
 }
 
+func ToInt3(line string, sep string) Int3 {
+	p := ToIntList(line, sep)
+	return Int3{p[0], p[1], p[2]}
+}
+
 func ToCharInt(line string) CharInt {
 	chars := []rune(line)
 	return CharInt{

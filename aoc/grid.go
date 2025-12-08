@@ -1,6 +1,8 @@
 package aoc
 
 import (
+	"math"
+
 	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/number"
 )
@@ -60,6 +62,12 @@ func Manhattan(c1 Coords, c2 Coords) int {
 
 func ManhattanOrigin(c Coords) int {
 	return Manhattan(c, Coords{0, 0})
+}
+
+func Euclidean3(p1 Int3, p2 Int3) float64 {
+	return math.Sqrt(list.Sum(list.Map(list.NumRange(0, 3), func(i int) float64 {
+		return math.Pow(float64(p2[i])-float64(p1[i]), 2)
+	})))
 }
 
 func InsideBounds(c Coords, maxBounds Dims2) bool {
